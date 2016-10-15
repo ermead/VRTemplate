@@ -1,0 +1,467 @@
+// !$*UTF8*$!
+{
+	archiveVersion = 1;
+	classes = {
+	};
+	objectVersion = 46;
+	objects = {
+
+/* Begin PBXBuildFile section */
+		CA1C25F352D93A5E344AB96F /* libPods-VRTemplate.a in Frameworks */ = {isa = PBXBuildFile; fileRef = B7B5CF30B4247AB7561DB134 /* libPods-VRTemplate.a */; };
+		D71C25A91DB1DEF500B8FFA0 /* GameController.swift in Sources */ = {isa = PBXBuildFile; fileRef = D71C25A81DB1DEF500B8FFA0 /* GameController.swift */; };
+		D71C25AB1DB1E54A00B8FFA0 /* SetUpCompassPoints.swift in Sources */ = {isa = PBXBuildFile; fileRef = D71C25AA1DB1E54A00B8FFA0 /* SetUpCompassPoints.swift */; };
+		D72DAAD91DB1B9EC007940C7 /* HeadTransformExtension.swift in Sources */ = {isa = PBXBuildFile; fileRef = D72DAACC1DB1B9EC007940C7 /* HeadTransformExtension.swift */; };
+		D72DAADA1DB1B9EC007940C7 /* Info.plist in Resources */ = {isa = PBXBuildFile; fileRef = D72DAACD1DB1B9EC007940C7 /* Info.plist */; };
+		D72DAADB1DB1B9EC007940C7 /* SceneKitVRRenderer.swift in Sources */ = {isa = PBXBuildFile; fileRef = D72DAACE1DB1B9EC007940C7 /* SceneKitVRRenderer.swift */; };
+		D72DAADC1DB1B9EC007940C7 /* ViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = D72DAACF1DB1B9EC007940C7 /* ViewController.swift */; };
+		D72DAADE1DB1B9EC007940C7 /* VRControllerSwift.swift in Sources */ = {isa = PBXBuildFile; fileRef = D72DAAD21DB1B9EC007940C7 /* VRControllerSwift.swift */; };
+		D72DAADF1DB1B9EC007940C7 /* AppDelegate.swift in Sources */ = {isa = PBXBuildFile; fileRef = D72DAAD31DB1B9EC007940C7 /* AppDelegate.swift */; };
+		D72DAAE01DB1B9EC007940C7 /* Assets.xcassets in Resources */ = {isa = PBXBuildFile; fileRef = D72DAAD41DB1B9EC007940C7 /* Assets.xcassets */; };
+		D72DAAE11DB1B9EC007940C7 /* Base.lproj in Resources */ = {isa = PBXBuildFile; fileRef = D72DAAD51DB1B9EC007940C7 /* Base.lproj */; };
+		D72DAAE21DB1B9EC007940C7 /* RenderLoop.swift in Sources */ = {isa = PBXBuildFile; fileRef = D72DAAD61DB1B9EC007940C7 /* RenderLoop.swift */; };
+		D72DAAE61DB1BD40007940C7 /* MyTestScene.swift in Sources */ = {isa = PBXBuildFile; fileRef = D72DAAE51DB1BD40007940C7 /* MyTestScene.swift */; };
+		D72DAAE81DB1BD66007940C7 /* CylinderLine.swift in Sources */ = {isa = PBXBuildFile; fileRef = D72DAAE71DB1BD66007940C7 /* CylinderLine.swift */; };
+		D72DAAEA1DB1BD8B007940C7 /* art.scnassets in Resources */ = {isa = PBXBuildFile; fileRef = D72DAAE91DB1BD8B007940C7 /* art.scnassets */; };
+		D72DAAEC1DB1BDD8007940C7 /* Grass.png in Resources */ = {isa = PBXBuildFile; fileRef = D72DAAEB1DB1BDD8007940C7 /* Grass.png */; };
+		D72DAAEE1DB1BDE0007940C7 /* BG.png in Resources */ = {isa = PBXBuildFile; fileRef = D72DAAED1DB1BDE0007940C7 /* BG.png */; };
+		D72DAAF71DB1C5C0007940C7 /* VRBaseScene.swift in Sources */ = {isa = PBXBuildFile; fileRef = D72DAAF61DB1C5C0007940C7 /* VRBaseScene.swift */; };
+		D72DAAF91DB1C696007940C7 /* VRScene_01.swift in Sources */ = {isa = PBXBuildFile; fileRef = D72DAAF81DB1C696007940C7 /* VRScene_01.swift */; };
+/* End PBXBuildFile section */
+
+/* Begin PBXFileReference section */
+		269A6692DDDCDCF382138121 /* Pods-VRTemplate.release.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = "Pods-VRTemplate.release.xcconfig"; path = "Pods/Target Support Files/Pods-VRTemplate/Pods-VRTemplate.release.xcconfig"; sourceTree = "<group>"; };
+		5D2984CEDD4B1361D6D67492 /* Pods-VRTemplate.debug.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = "Pods-VRTemplate.debug.xcconfig"; path = "Pods/Target Support Files/Pods-VRTemplate/Pods-VRTemplate.debug.xcconfig"; sourceTree = "<group>"; };
+		B7B5CF30B4247AB7561DB134 /* libPods-VRTemplate.a */ = {isa = PBXFileReference; explicitFileType = archive.ar; includeInIndex = 0; name = "libPods-VRTemplate.a"; path = "../../../../../../../../../Users/ericmead/Library/Developer/Xcode/DerivedData/VRTemplate-hhrzlodygubapsbsdomjsszkkmns/Build/Products/Debug-iphoneos/libPods-VRTemplate.a"; sourceTree = SDKROOT; };
+		D71C25A81DB1DEF500B8FFA0 /* GameController.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = GameController.swift; sourceTree = "<group>"; };
+		D71C25AA1DB1E54A00B8FFA0 /* SetUpCompassPoints.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = SetUpCompassPoints.swift; sourceTree = "<group>"; };
+		D72DAACB1DB1B9EB007940C7 /* VRTemplate-Bridging-Header.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = "VRTemplate-Bridging-Header.h"; sourceTree = "<group>"; };
+		D72DAACC1DB1B9EC007940C7 /* HeadTransformExtension.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = HeadTransformExtension.swift; sourceTree = "<group>"; };
+		D72DAACD1DB1B9EC007940C7 /* Info.plist */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text.plist.xml; path = Info.plist; sourceTree = "<group>"; };
+		D72DAACE1DB1B9EC007940C7 /* SceneKitVRRenderer.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = SceneKitVRRenderer.swift; sourceTree = "<group>"; };
+		D72DAACF1DB1B9EC007940C7 /* ViewController.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = ViewController.swift; sourceTree = "<group>"; };
+		D72DAAD11DB1B9EC007940C7 /* VRControllerProtocol.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = VRControllerProtocol.h; sourceTree = "<group>"; };
+		D72DAAD21DB1B9EC007940C7 /* VRControllerSwift.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = VRControllerSwift.swift; sourceTree = "<group>"; };
+		D72DAAD31DB1B9EC007940C7 /* AppDelegate.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = AppDelegate.swift; sourceTree = "<group>"; };
+		D72DAAD41DB1B9EC007940C7 /* Assets.xcassets */ = {isa = PBXFileReference; lastKnownFileType = folder.assetcatalog; path = Assets.xcassets; sourceTree = "<group>"; };
+		D72DAAD51DB1B9EC007940C7 /* Base.lproj */ = {isa = PBXFileReference; lastKnownFileType = folder; path = Base.lproj; sourceTree = "<group>"; };
+		D72DAAD61DB1B9EC007940C7 /* RenderLoop.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = RenderLoop.swift; sourceTree = "<group>"; };
+		D72DAAE51DB1BD40007940C7 /* MyTestScene.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = MyTestScene.swift; sourceTree = "<group>"; };
+		D72DAAE71DB1BD66007940C7 /* CylinderLine.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = CylinderLine.swift; sourceTree = "<group>"; };
+		D72DAAE91DB1BD8B007940C7 /* art.scnassets */ = {isa = PBXFileReference; lastKnownFileType = wrapper.scnassets; path = art.scnassets; sourceTree = "<group>"; };
+		D72DAAEB1DB1BDD8007940C7 /* Grass.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = Grass.png; sourceTree = "<group>"; };
+		D72DAAED1DB1BDE0007940C7 /* BG.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = BG.png; sourceTree = "<group>"; };
+		D72DAAF61DB1C5C0007940C7 /* VRBaseScene.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = VRBaseScene.swift; sourceTree = "<group>"; };
+		D72DAAF81DB1C696007940C7 /* VRScene_01.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = VRScene_01.swift; sourceTree = "<group>"; };
+		D7F523401DB1AB0600583D51 /* VRTemplate.app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; path = VRTemplate.app; sourceTree = BUILT_PRODUCTS_DIR; };
+/* End PBXFileReference section */
+
+/* Begin PBXFrameworksBuildPhase section */
+		D7F5233D1DB1AB0600583D51 /* Frameworks */ = {
+			isa = PBXFrameworksBuildPhase;
+			buildActionMask = 2147483647;
+			files = (
+				CA1C25F352D93A5E344AB96F /* libPods-VRTemplate.a in Frameworks */,
+			);
+			runOnlyForDeploymentPostprocessing = 0;
+		};
+/* End PBXFrameworksBuildPhase section */
+
+/* Begin PBXGroup section */
+		41D5A7F2AC8A71B5D3618BD2 /* Pods */ = {
+			isa = PBXGroup;
+			children = (
+				5D2984CEDD4B1361D6D67492 /* Pods-VRTemplate.debug.xcconfig */,
+				269A6692DDDCDCF382138121 /* Pods-VRTemplate.release.xcconfig */,
+			);
+			name = Pods;
+			sourceTree = "<group>";
+		};
+		5A32D1D53CB8B6106FEC1321 /* Frameworks */ = {
+			isa = PBXGroup;
+			children = (
+				B7B5CF30B4247AB7561DB134 /* libPods-VRTemplate.a */,
+			);
+			name = Frameworks;
+			sourceTree = "<group>";
+		};
+		D71C25AC1DB1EF8700B8FFA0 /* Deprecated */ = {
+			isa = PBXGroup;
+			children = (
+				D72DAAE51DB1BD40007940C7 /* MyTestScene.swift */,
+			);
+			name = Deprecated;
+			sourceTree = "<group>";
+		};
+		D71C25AD1DB1F01500B8FFA0 /* VRBaseScene */ = {
+			isa = PBXGroup;
+			children = (
+				D72DAAF61DB1C5C0007940C7 /* VRBaseScene.swift */,
+			);
+			name = VRBaseScene;
+			sourceTree = "<group>";
+		};
+		D72DAAEF1DB1BE32007940C7 /* Artwork */ = {
+			isa = PBXGroup;
+			children = (
+				D72DAAEB1DB1BDD8007940C7 /* Grass.png */,
+				D72DAAED1DB1BDE0007940C7 /* BG.png */,
+			);
+			name = Artwork;
+			sourceTree = "<group>";
+		};
+		D72DAAF01DB1BE7F007940C7 /* VR Boilerplate */ = {
+			isa = PBXGroup;
+			children = (
+				D72DAACD1DB1B9EC007940C7 /* Info.plist */,
+				D72DAACB1DB1B9EB007940C7 /* VRTemplate-Bridging-Header.h */,
+				D72DAAD61DB1B9EC007940C7 /* RenderLoop.swift */,
+				D72DAACE1DB1B9EC007940C7 /* SceneKitVRRenderer.swift */,
+				D72DAAF31DB1BF2A007940C7 /* ExampleScene */,
+				D72DAAD31DB1B9EC007940C7 /* AppDelegate.swift */,
+			);
+			name = "VR Boilerplate";
+			sourceTree = "<group>";
+		};
+		D72DAAF11DB1BE94007940C7 /* Helpers */ = {
+			isa = PBXGroup;
+			children = (
+				D71C25AA1DB1E54A00B8FFA0 /* SetUpCompassPoints.swift */,
+				D71C25A81DB1DEF500B8FFA0 /* GameController.swift */,
+				D72DAAE71DB1BD66007940C7 /* CylinderLine.swift */,
+				D72DAACC1DB1B9EC007940C7 /* HeadTransformExtension.swift */,
+			);
+			name = Helpers;
+			sourceTree = "<group>";
+		};
+		D72DAAF21DB1BED0007940C7 /* Protocols */ = {
+			isa = PBXGroup;
+			children = (
+				D72DAAD11DB1B9EC007940C7 /* VRControllerProtocol.h */,
+			);
+			name = Protocols;
+			sourceTree = "<group>";
+		};
+		D72DAAF31DB1BF2A007940C7 /* ExampleScene */ = {
+			isa = PBXGroup;
+			children = (
+				D72DAAD21DB1B9EC007940C7 /* VRControllerSwift.swift */,
+			);
+			name = ExampleScene;
+			sourceTree = "<group>";
+		};
+		D7F523371DB1AB0600583D51 = {
+			isa = PBXGroup;
+			children = (
+				D72DAAF81DB1C696007940C7 /* VRScene_01.swift */,
+				D72DAACF1DB1B9EC007940C7 /* ViewController.swift */,
+				D71C25AD1DB1F01500B8FFA0 /* VRBaseScene */,
+				D72DAAE91DB1BD8B007940C7 /* art.scnassets */,
+				D72DAAEF1DB1BE32007940C7 /* Artwork */,
+				D72DAAF21DB1BED0007940C7 /* Protocols */,
+				D72DAAF11DB1BE94007940C7 /* Helpers */,
+				D72DAAF01DB1BE7F007940C7 /* VR Boilerplate */,
+				D72DAAD41DB1B9EC007940C7 /* Assets.xcassets */,
+				D72DAAD51DB1B9EC007940C7 /* Base.lproj */,
+				D7F523411DB1AB0600583D51 /* Products */,
+				41D5A7F2AC8A71B5D3618BD2 /* Pods */,
+				5A32D1D53CB8B6106FEC1321 /* Frameworks */,
+				D71C25AC1DB1EF8700B8FFA0 /* Deprecated */,
+			);
+			sourceTree = "<group>";
+		};
+		D7F523411DB1AB0600583D51 /* Products */ = {
+			isa = PBXGroup;
+			children = (
+				D7F523401DB1AB0600583D51 /* VRTemplate.app */,
+			);
+			name = Products;
+			sourceTree = "<group>";
+		};
+/* End PBXGroup section */
+
+/* Begin PBXNativeTarget section */
+		D7F5233F1DB1AB0600583D51 /* VRTemplate */ = {
+			isa = PBXNativeTarget;
+			buildConfigurationList = D7F523541DB1AB0600583D51 /* Build configuration list for PBXNativeTarget "VRTemplate" */;
+			buildPhases = (
+				25D9F56DBD46225CF18D41D9 /* 📦 Check Pods Manifest.lock */,
+				D7F5233C1DB1AB0600583D51 /* Sources */,
+				D7F5233D1DB1AB0600583D51 /* Frameworks */,
+				D7F5233E1DB1AB0600583D51 /* Resources */,
+				25FC0275565F29A14E7EA05B /* 📦 Embed Pods Frameworks */,
+				6C0324C18DA3CC3DBA76ADED /* 📦 Copy Pods Resources */,
+			);
+			buildRules = (
+			);
+			dependencies = (
+			);
+			name = VRTemplate;
+			productName = VRTemplate;
+			productReference = D7F523401DB1AB0600583D51 /* VRTemplate.app */;
+			productType = "com.apple.product-type.application";
+		};
+/* End PBXNativeTarget section */
+
+/* Begin PBXProject section */
+		D7F523381DB1AB0600583D51 /* Project object */ = {
+			isa = PBXProject;
+			attributes = {
+				LastSwiftUpdateCheck = 0730;
+				LastUpgradeCheck = 0730;
+				ORGANIZATIONNAME = "Eric Mead";
+				TargetAttributes = {
+					D7F5233F1DB1AB0600583D51 = {
+						CreatedOnToolsVersion = 7.3.1;
+					};
+				};
+			};
+			buildConfigurationList = D7F5233B1DB1AB0600583D51 /* Build configuration list for PBXProject "VRTemplate" */;
+			compatibilityVersion = "Xcode 3.2";
+			developmentRegion = English;
+			hasScannedForEncodings = 0;
+			knownRegions = (
+				en,
+				Base,
+			);
+			mainGroup = D7F523371DB1AB0600583D51;
+			productRefGroup = D7F523411DB1AB0600583D51 /* Products */;
+			projectDirPath = "";
+			projectRoot = "";
+			targets = (
+				D7F5233F1DB1AB0600583D51 /* VRTemplate */,
+			);
+		};
+/* End PBXProject section */
+
+/* Begin PBXResourcesBuildPhase section */
+		D7F5233E1DB1AB0600583D51 /* Resources */ = {
+			isa = PBXResourcesBuildPhase;
+			buildActionMask = 2147483647;
+			files = (
+				D72DAAE01DB1B9EC007940C7 /* Assets.xcassets in Resources */,
+				D72DAAEA1DB1BD8B007940C7 /* art.scnassets in Resources */,
+				D72DAAEE1DB1BDE0007940C7 /* BG.png in Resources */,
+				D72DAAE11DB1B9EC007940C7 /* Base.lproj in Resources */,
+				D72DAADA1DB1B9EC007940C7 /* Info.plist in Resources */,
+				D72DAAEC1DB1BDD8007940C7 /* Grass.png in Resources */,
+			);
+			runOnlyForDeploymentPostprocessing = 0;
+		};
+/* End PBXResourcesBuildPhase section */
+
+/* Begin PBXShellScriptBuildPhase section */
+		25D9F56DBD46225CF18D41D9 /* 📦 Check Pods Manifest.lock */ = {
+			isa = PBXShellScriptBuildPhase;
+			buildActionMask = 2147483647;
+			files = (
+			);
+			inputPaths = (
+			);
+			name = "📦 Check Pods Manifest.lock";
+			outputPaths = (
+			);
+			runOnlyForDeploymentPostprocessing = 0;
+			shellPath = /bin/sh;
+			shellScript = "diff \"${PODS_ROOT}/../Podfile.lock\" \"${PODS_ROOT}/Manifest.lock\" > /dev/null\nif [[ $? != 0 ]] ; then\n    cat << EOM\nerror: The sandbox is not in sync with the Podfile.lock. Run 'pod install' or update your CocoaPods installation.\nEOM\n    exit 1\nfi\n";
+			showEnvVarsInLog = 0;
+		};
+		25FC0275565F29A14E7EA05B /* 📦 Embed Pods Frameworks */ = {
+			isa = PBXShellScriptBuildPhase;
+			buildActionMask = 2147483647;
+			files = (
+			);
+			inputPaths = (
+			);
+			name = "📦 Embed Pods Frameworks";
+			outputPaths = (
+			);
+			runOnlyForDeploymentPostprocessing = 0;
+			shellPath = /bin/sh;
+			shellScript = "\"${SRCROOT}/Pods/Target Support Files/Pods-VRTemplate/Pods-VRTemplate-frameworks.sh\"\n";
+			showEnvVarsInLog = 0;
+		};
+		6C0324C18DA3CC3DBA76ADED /* 📦 Copy Pods Resources */ = {
+			isa = PBXShellScriptBuildPhase;
+			buildActionMask = 2147483647;
+			files = (
+			);
+			inputPaths = (
+			);
+			name = "📦 Copy Pods Resources";
+			outputPaths = (
+			);
+			runOnlyForDeploymentPostprocessing = 0;
+			shellPath = /bin/sh;
+			shellScript = "\"${SRCROOT}/Pods/Target Support Files/Pods-VRTemplate/Pods-VRTemplate-resources.sh\"\n";
+			showEnvVarsInLog = 0;
+		};
+/* End PBXShellScriptBuildPhase section */
+
+/* Begin PBXSourcesBuildPhase section */
+		D7F5233C1DB1AB0600583D51 /* Sources */ = {
+			isa = PBXSourcesBuildPhase;
+			buildActionMask = 2147483647;
+			files = (
+				D72DAAF91DB1C696007940C7 /* VRScene_01.swift in Sources */,
+				D72DAAE61DB1BD40007940C7 /* MyTestScene.swift in Sources */,
+				D72DAADF1DB1B9EC007940C7 /* AppDelegate.swift in Sources */,
+				D72DAADC1DB1B9EC007940C7 /* ViewController.swift in Sources */,
+				D72DAADE1DB1B9EC007940C7 /* VRControllerSwift.swift in Sources */,
+				D71C25A91DB1DEF500B8FFA0 /* GameController.swift in Sources */,
+				D72DAADB1DB1B9EC007940C7 /* SceneKitVRRenderer.swift in Sources */,
+				D71C25AB1DB1E54A00B8FFA0 /* SetUpCompassPoints.swift in Sources */,
+				D72DAAE81DB1BD66007940C7 /* CylinderLine.swift in Sources */,
+				D72DAAF71DB1C5C0007940C7 /* VRBaseScene.swift in Sources */,
+				D72DAAD91DB1B9EC007940C7 /* HeadTransformExtension.swift in Sources */,
+				D72DAAE21DB1B9EC007940C7 /* RenderLoop.swift in Sources */,
+			);
+			runOnlyForDeploymentPostprocessing = 0;
+		};
+/* End PBXSourcesBuildPhase section */
+
+/* Begin XCBuildConfiguration section */
+		D7F523521DB1AB0600583D51 /* Debug */ = {
+			isa = XCBuildConfiguration;
+			buildSettings = {
+				ALWAYS_SEARCH_USER_PATHS = NO;
+				CLANG_ANALYZER_NONNULL = YES;
+				CLANG_CXX_LANGUAGE_STANDARD = "gnu++0x";
+				CLANG_CXX_LIBRARY = "libc++";
+				CLANG_ENABLE_MODULES = YES;
+				CLANG_ENABLE_OBJC_ARC = YES;
+				CLANG_WARN_BOOL_CONVERSION = YES;
+				CLANG_WARN_CONSTANT_CONVERSION = YES;
+				CLANG_WARN_DIRECT_OBJC_ISA_USAGE = YES_ERROR;
+				CLANG_WARN_EMPTY_BODY = YES;
+				CLANG_WARN_ENUM_CONVERSION = YES;
+				CLANG_WARN_INT_CONVERSION = YES;
+				CLANG_WARN_OBJC_ROOT_CLASS = YES_ERROR;
+				CLANG_WARN_UNREACHABLE_CODE = YES;
+				CLANG_WARN__DUPLICATE_METHOD_MATCH = YES;
+				"CODE_SIGN_IDENTITY[sdk=iphoneos*]" = "iPhone Developer";
+				COPY_PHASE_STRIP = NO;
+				DEBUG_INFORMATION_FORMAT = "dwarf-with-dsym";
+				ENABLE_STRICT_OBJC_MSGSEND = YES;
+				ENABLE_TESTABILITY = YES;
+				GCC_C_LANGUAGE_STANDARD = gnu99;
+				GCC_DYNAMIC_NO_PIC = NO;
+				GCC_NO_COMMON_BLOCKS = YES;
+				GCC_OPTIMIZATION_LEVEL = 0;
+				GCC_PREPROCESSOR_DEFINITIONS = (
+					"DEBUG=1",
+					"$(inherited)",
+				);
+				GCC_WARN_64_TO_32_BIT_CONVERSION = YES;
+				GCC_WARN_ABOUT_RETURN_TYPE = YES_ERROR;
+				GCC_WARN_UNDECLARED_SELECTOR = YES;
+				GCC_WARN_UNINITIALIZED_AUTOS = YES_AGGRESSIVE;
+				GCC_WARN_UNUSED_FUNCTION = YES;
+				GCC_WARN_UNUSED_VARIABLE = YES;
+				IPHONEOS_DEPLOYMENT_TARGET = 9.3;
+				MTL_ENABLE_DEBUG_INFO = YES;
+				ONLY_ACTIVE_ARCH = YES;
+				SDKROOT = iphoneos;
+				SWIFT_OPTIMIZATION_LEVEL = "-Onone";
+				TARGETED_DEVICE_FAMILY = "1,2";
+			};
+			name = Debug;
+		};
+		D7F523531DB1AB0600583D51 /* Release */ = {
+			isa = XCBuildConfiguration;
+			buildSettings = {
+				ALWAYS_SEARCH_USER_PATHS = NO;
+				CLANG_ANALYZER_NONNULL = YES;
+				CLANG_CXX_LANGUAGE_STANDARD = "gnu++0x";
+				CLANG_CXX_LIBRARY = "libc++";
+				CLANG_ENABLE_MODULES = YES;
+				CLANG_ENABLE_OBJC_ARC = YES;
+				CLANG_WARN_BOOL_CONVERSION = YES;
+				CLANG_WARN_CONSTANT_CONVERSION = YES;
+				CLANG_WARN_DIRECT_OBJC_ISA_USAGE = YES_ERROR;
+				CLANG_WARN_EMPTY_BODY = YES;
+				CLANG_WARN_ENUM_CONVERSION = YES;
+				CLANG_WARN_INT_CONVERSION = YES;
+				CLANG_WARN_OBJC_ROOT_CLASS = YES_ERROR;
+				CLANG_WARN_UNREACHABLE_CODE = YES;
+				CLANG_WARN__DUPLICATE_METHOD_MATCH = YES;
+				"CODE_SIGN_IDENTITY[sdk=iphoneos*]" = "iPhone Developer";
+				COPY_PHASE_STRIP = NO;
+				DEBUG_INFORMATION_FORMAT = "dwarf-with-dsym";
+				ENABLE_NS_ASSERTIONS = NO;
+				ENABLE_STRICT_OBJC_MSGSEND = YES;
+				GCC_C_LANGUAGE_STANDARD = gnu99;
+				GCC_NO_COMMON_BLOCKS = YES;
+				GCC_WARN_64_TO_32_BIT_CONVERSION = YES;
+				GCC_WARN_ABOUT_RETURN_TYPE = YES_ERROR;
+				GCC_WARN_UNDECLARED_SELECTOR = YES;
+				GCC_WARN_UNINITIALIZED_AUTOS = YES_AGGRESSIVE;
+				GCC_WARN_UNUSED_FUNCTION = YES;
+				GCC_WARN_UNUSED_VARIABLE = YES;
+				IPHONEOS_DEPLOYMENT_TARGET = 9.3;
+				MTL_ENABLE_DEBUG_INFO = NO;
+				SDKROOT = iphoneos;
+				TARGETED_DEVICE_FAMILY = "1,2";
+				VALIDATE_PRODUCT = YES;
+			};
+			name = Release;
+		};
+		D7F523551DB1AB0600583D51 /* Debug */ = {
+			isa = XCBuildConfiguration;
+			baseConfigurationReference = 5D2984CEDD4B1361D6D67492 /* Pods-VRTemplate.debug.xcconfig */;
+			buildSettings = {
+				ASSETCATALOG_COMPILER_APPICON_NAME = AppIcon;
+				CLANG_ENABLE_MODULES = YES;
+				ENABLE_BITCODE = NO;
+				INFOPLIST_FILE = VRTemplate/Info.plist;
+				IPHONEOS_DEPLOYMENT_TARGET = 9.3;
+				LD_RUNPATH_SEARCH_PATHS = "$(inherited) @executable_path/Frameworks";
+				PRODUCT_BUNDLE_IDENTIFIER = com.mysite.VRTemplate;
+				PRODUCT_NAME = "$(TARGET_NAME)";
+				SWIFT_OBJC_BRIDGING_HEADER = "VRTemplate-Bridging-Header.h";
+				SWIFT_OPTIMIZATION_LEVEL = "-Onone";
+				TARGETED_DEVICE_FAMILY = 1;
+			};
+			name = Debug;
+		};
+		D7F523561DB1AB0600583D51 /* Release */ = {
+			isa = XCBuildConfiguration;
+			baseConfigurationReference = 269A6692DDDCDCF382138121 /* Pods-VRTemplate.release.xcconfig */;
+			buildSettings = {
+				ASSETCATALOG_COMPILER_APPICON_NAME = AppIcon;
+				CLANG_ENABLE_MODULES = YES;
+				ENABLE_BITCODE = NO;
+				INFOPLIST_FILE = VRTemplate/Info.plist;
+				IPHONEOS_DEPLOYMENT_TARGET = 9.3;
+				LD_RUNPATH_SEARCH_PATHS = "$(inherited) @executable_path/Frameworks";
+				PRODUCT_BUNDLE_IDENTIFIER = com.mysite.VRTemplate;
+				PRODUCT_NAME = "$(TARGET_NAME)";
+				SWIFT_OBJC_BRIDGING_HEADER = "VRTemplate-Bridging-Header.h";
+				TARGETED_DEVICE_FAMILY = 1;
+			};
+			name = Release;
+		};
+/* End XCBuildConfiguration section */
+
+/* Begin XCConfigurationList section */
+		D7F5233B1DB1AB0600583D51 /* Build configuration list for PBXProject "VRTemplate" */ = {
+			isa = XCConfigurationList;
+			buildConfigurations = (
+				D7F523521DB1AB0600583D51 /* Debug */,
+				D7F523531DB1AB0600583D51 /* Release */,
+			);
+			defaultConfigurationIsVisible = 0;
+			defaultConfigurationName = Release;
+		};
+		D7F523541DB1AB0600583D51 /* Build configuration list for PBXNativeTarget "VRTemplate" */ = {
+			isa = XCConfigurationList;
+			buildConfigurations = (
+				D7F523551DB1AB0600583D51 /* Debug */,
+				D7F523561DB1AB0600583D51 /* Release */,
+			);
+			defaultConfigurationIsVisible = 0;
+			defaultConfigurationName = Release;
+		};
+/* End XCConfigurationList section */
+	};
+	rootObject = D7F523381DB1AB0600583D51 /* Project object */;
+}
