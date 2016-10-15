@@ -155,7 +155,7 @@ class VRBaseScene : NSObject, VRControllerProtocol, SCNPhysicsContactDelegate {
         }
         
         
-        if usingExtendedGamePad == true {
+        //if usingExtendedGamePad == true {
             
             let moveX = (control?.leftThumbstickRight)! - (control?.leftThumbstickLeft)!
             let moveY = (control?.rightThumbstickUp)! - (control?.rightThumbstickDown)!
@@ -164,11 +164,17 @@ class VRBaseScene : NSObject, VRControllerProtocol, SCNPhysicsContactDelegate {
             
             let actionH = SCNAction.rotateByAngle(CGFloat(GLKMathDegreesToRadians(rotateBy)), aroundAxis: SCNVector3Make(0, 1, 0), duration: 0.1)
             cameraNode.runAction(actionH)
-            
-            let newTransform = self.moveCamera(cameraNode.transform, x: moveX, y: moveY, z: moveZ)
+        
+        if usingExtendedGamePad == true {
+            let newTransform = self.moveCamera(cameraNode, x: moveX, y: moveY, z: moveZ)
             cameraNode.transform = newTransform
-            
+        } else {
+            let newTransform = self.moveCamera(cameraNode, x: moveX, y: moveY, z: moveZ)
+            cameraNode.transform = newTransform
         }
+        
+            
+        //}
         
         cursor.position = headTransform.rotateVector(SCNVector3(0, -3, -20));
     
@@ -368,6 +374,10 @@ extension VRBaseScene {
         cameraNode.position.z -= speed
         case backKey: print("back")
         cameraNode.position.z += speed
+        case upKey: print("up")
+        cameraNode.position.y += speed
+        case downKey: print("down")
+        cameraNode.position.y -= speed
         case quitKey: cameraNode.position = SCNVector3Zero
             
         default: return
@@ -404,22 +414,24 @@ extension VRBaseScene {
         
     }
   
-    func moveCamera(matrix: SCNMatrix4, x: Float, y: Float, z: Float)->SCNMatrix4
+    func moveCamera(node: SCNNode, x: Float, y: Float, z: Float)->SCNMatrix4
     {
         
         let x: Float = x
         let y: Float = y
         let z: Float = z
         
-        var cameraTransform = cameraNode.transform
-        
-        let rotatedPosition: SCNVector3  = multipliedByRotation(SCNVector3Make(x, y, z), rotation: cameraNode.rotation)
+        var cameraTransform = node.transform
+  
+        let rotatedPosition: SCNVector3  = multipliedByRotation(SCNVector3Make(x, y, z), rotation: node.rotation)
         
         cameraTransform = SCNMatrix4Translate(cameraTransform, rotatedPosition.x, rotatedPosition.y, rotatedPosition.z)
         
         return cameraTransform
         
     }
+    
+
     
 }
 
