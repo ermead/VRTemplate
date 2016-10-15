@@ -26,6 +26,7 @@
 		D72DAAEE1DB1BDE0007940C7 /* BG.png in Resources */ = {isa = PBXBuildFile; fileRef = D72DAAED1DB1BDE0007940C7 /* BG.png */; };
 		D72DAAF71DB1C5C0007940C7 /* VRBaseScene.swift in Sources */ = {isa = PBXBuildFile; fileRef = D72DAAF61DB1C5C0007940C7 /* VRBaseScene.swift */; };
 		D72DAAF91DB1C696007940C7 /* VRScene_01.swift in Sources */ = {isa = PBXBuildFile; fileRef = D72DAAF81DB1C696007940C7 /* VRScene_01.swift */; };
+		D7F5AEFD1DB2508500559545 /* waterTexture.jpg in Resources */ = {isa = PBXBuildFile; fileRef = D7F5AEFC1DB2508500559545 /* waterTexture.jpg */; };
 /* End PBXBuildFile section */
 
 /* Begin PBXFileReference section */
@@ -53,6 +54,7 @@
 		D72DAAF61DB1C5C0007940C7 /* VRBaseScene.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = VRBaseScene.swift; sourceTree = "<group>"; };
 		D72DAAF81DB1C696007940C7 /* VRScene_01.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = VRScene_01.swift; sourceTree = "<group>"; };
 		D7F523401DB1AB0600583D51 /* VRTemplate.app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; path = VRTemplate.app; sourceTree = BUILT_PRODUCTS_DIR; };
+		D7F5AEFC1DB2508500559545 /* waterTexture.jpg */ = {isa = PBXFileReference; lastKnownFileType = image.jpeg; path = waterTexture.jpg; sourceTree = "<group>"; };
 /* End PBXFileReference section */
 
 /* Begin PBXFrameworksBuildPhase section */
@@ -103,6 +105,7 @@
 		D72DAAEF1DB1BE32007940C7 /* Artwork */ = {
 			isa = PBXGroup;
 			children = (
+				D7F5AEFC1DB2508500559545 /* waterTexture.jpg */,
 				D72DAAEB1DB1BDD8007940C7 /* Grass.png */,
 				D72DAAED1DB1BDE0007940C7 /* BG.png */,
 			);
@@ -240,6 +243,7 @@
 			files = (
 				D72DAAE01DB1B9EC007940C7 /* Assets.xcassets in Resources */,
 				D72DAAEA1DB1BD8B007940C7 /* art.scnassets in Resources */,
+				D7F5AEFD1DB2508500559545 /* waterTexture.jpg in Resources */,
 				D72DAAEE1DB1BDE0007940C7 /* BG.png in Resources */,
 				D72DAAE11DB1B9EC007940C7 /* Base.lproj in Resources */,
 				D72DAADA1DB1B9EC007940C7 /* Info.plist in Resources */,

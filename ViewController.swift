@@ -73,7 +73,7 @@ class ViewController: UIViewController, GVRCardboardViewDelegate, UITextFieldDel
         textbox.delegate = self
         self.view.addSubview(textbox)
         //uncomment this next line to automatically select
-        //textbox.becomeFirstResponder()
+        textbox.becomeFirstResponder()
         
         // Get notified every time the text changes, so we can save it
         notificationCenter.addObserver(self,

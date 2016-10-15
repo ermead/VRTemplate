@@ -117,7 +117,7 @@ class VRScene_01: VRBaseScene {
         waveSkinner.skeleton?.position = SCNVector3Zero
         waveSkinner.skeleton?.position.y -= 10
         waveNode.addChildNode(wave!)
-        waveSkinner.skeleton?.scale = SCNVector3Make(100, 100, 10)
+        waveSkinner.skeleton?.scale = SCNVector3Make(10, 10, 10)
         world.addChildNode(waveNode)
         
         
