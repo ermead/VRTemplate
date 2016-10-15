@@ -45,6 +45,7 @@ enum CC: Int {
     
     case bullet = 1
     case destroyable
+    case floor
     
 }
 
@@ -139,11 +140,24 @@ class VRBaseScene : NSObject, VRControllerProtocol, SCNPhysicsContactDelegate {
         }
     }
     
-    func bulletDidHitDestroyable(node: SCNNode){
+    func bulletDidHitDestroyable(node: SCNNode, with: String){
+        
+        guard node.physicsBody?.categoryBitMask == CC.destroyable.rawValue else {return}
+        
+        print("\(with) hit something")
+        
+        if with == "grappling hook" {
+            
+            let action = SCNAction.moveTo(node.position, duration: 1)
+            cameraNode.runAction(action)
+            
+        } else {
         
         let action = SCNAction.moveBy(SCNVector3Make(0, 3, 0), duration: 0.2)
         let action2 = action.reversedAction()
         node.runAction(SCNAction.sequence([action, action2]))
+        
+        }
         
     }
     
@@ -214,12 +228,12 @@ class VRBaseScene : NSObject, VRControllerProtocol, SCNPhysicsContactDelegate {
         
         if control?.rightTriggerPressed == true {
             let pos = positionLine
-            shootBullet(pos, to: projected, color: UIColor.redColor(), size: 0.25)
+            shootBullet(pos, to: projected, color: UIColor.redColor(), size: 0.25, name: "bullet")
         }
         
         if control?.leftTriggerPressed == true {
             let pos = positionLine
-            shootBullet(pos, to: projected, color: UIColor.blueColor(), size: 0.25)
+            shootBullet(pos, to: projected, color: UIColor.blueColor(), size: 0.25, name: "grappling hook")
         }
         
         let hits = things.hitTestWithSegmentFromPoint(position, toPoint: p2, options: [SCNHitTestFirstFoundOnlyKey: true]);
@@ -246,12 +260,13 @@ class VRBaseScene : NSObject, VRControllerProtocol, SCNPhysicsContactDelegate {
         doAdditionalUpdate(headTransform)
     }
     
-    func shootBullet(from: SCNVector3, to:SCNVector3, color: UIColor, size : CGFloat) {
+    func shootBullet(from: SCNVector3, to:SCNVector3, color: UIColor, size : CGFloat, name: String) {
         
         let bullet = SCNSphere(radius: size)
         bullet.materials.first?.diffuse.contents = color
         let bulletNode = SCNNode(geometry: bullet)
         bulletNode.position = from
+        bulletNode.name = name
         
         bulletNode.physicsBody = SCNPhysicsBody(type: SCNPhysicsBodyType.Kinematic, shape: SCNPhysicsShape(geometry: bullet, options: nil))
         bulletNode.physicsBody?.categoryBitMask = CC.bullet.rawValue
@@ -305,6 +320,7 @@ class VRBaseScene : NSObject, VRControllerProtocol, SCNPhysicsContactDelegate {
         floorBox.geometry?.firstMaterial?.diffuse.wrapT = SCNWrapMode.Repeat
         floorBox.position = SCNVector3(0, -20, 0)
         floorBox.physicsBody = SCNPhysicsBody.staticBody()
+        floorBox.physicsBody?.categoryBitMask = CC.floor.rawValue
         world.addChildNode(floorBox)
         
         cameraNode = SCNNode.init(geometry: SCNSphere.init(radius: 10))
@@ -361,12 +377,12 @@ extension VRBaseScene {
             print("bullet hit destroyable")
             if contact.nodeA.physicsBody?.categoryBitMask == CC.destroyable.rawValue {
                 
-                self.bulletDidHitDestroyable(contact.nodeA)
+                self.bulletDidHitDestroyable(contact.nodeA, with: contact.nodeB.name!)
                 
                 
             } else if contact.nodeB.physicsBody?.categoryBitMask == CC.destroyable.rawValue{
                 
-                self.bulletDidHitDestroyable(contact.nodeB)
+                self.bulletDidHitDestroyable(contact.nodeB, with: contact.nodeA.name!)
                 
             }
             
