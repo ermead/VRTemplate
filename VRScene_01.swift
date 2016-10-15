@@ -5,13 +5,13 @@
 //  Created by Eric Mead on 10/14/16.
 //  Copyright © 2016 Eric Mead. All rights reserved.
 //
+import SpriteKit
 
 @objc(VRScene_01)
 class VRScene_01: VRBaseScene {
     
     var torusNode = SCNNode()
     var waveSkinner = SCNSkinner()
-    let sliderNode = SCNNode()
   
     required init() {
         
@@ -40,23 +40,25 @@ class VRScene_01: VRBaseScene {
         
         
         switch input {
+            
+        case "b":     buttonBPressed((control?.from)!, projected: (control?.projected)!)
         case ",":     for bone in waveSkinner.bones {
             
 //            if bone.name == "Armature_001_Bone_067_pose_matrix" {
 //                bone.eulerAngles.y += GLKMathDegreesToRadians(1)
 //            }
     
-            if bone.position.x > sliderNode.position.x {
+          
                 bone.eulerAngles.x += GLKMathDegreesToRadians(1)
-            }
+            
            
             
             }
         case ".":     for bone in waveSkinner.bones {
             
-            if bone.position.x > sliderNode.position.x {
+    
                 bone.eulerAngles.x -= GLKMathDegreesToRadians(1)
-            }
+           
             
             }
             
@@ -116,10 +118,9 @@ class VRScene_01: VRBaseScene {
     }
     
     override func doAdditionalUpdate(headTransform: GVRHeadTransform) {
-       
-        sliderNode.position.x -= 0.1
+    
         
-        //rotateBones()
+        rotateBones()
    
     }
     
@@ -186,6 +187,77 @@ class VRScene_01: VRBaseScene {
         }
     }
     
+    ///////
+    var projectedDistance: Float = 0
+    
+    func makeBox(){
+        
+        let material1 = SCNMaterial()
+        material1.diffuse.contents = UIColor.blackColor()
+        material1.specular.contents = UIColor.whiteColor()
+        material1.shininess = 100.0
+        material1.reflective.contents = backgroundContents
+        
+        let box = SCNBox(width: 1, height: 1, length: 1, chamferRadius: 0.01)
+        box.firstMaterial = material1
+        let spawnPosNode = SCNNode()
+        let position = SCNVector3Make(0, 0, -3)
+        spawnPosNode.position = position
+        cameraNode.addChildNode(spawnPosNode)
+        let boxNode = SCNNode(geometry: box)
+        boxNode.position = cameraNode.convertPosition(spawnPosNode.position, toNode: things)
+        things.addChildNode(boxNode)
+        
+        
+        let delay = SCNAction.waitForDuration(0.5)
+        let runBlock = SCNAction.runBlock { (node) in
+            
+            self.projectBox(self.projectedDistance, node: boxNode)
+            
+            
+        }
+        let seq = SCNAction.sequence([delay, runBlock])
+        boxNode.runAction(seq)
+    }
+    
+    var isMaking = false
+    
+    func makeOrProject(){
+   
+        if isMaking == false {
+            isMaking = true
+            projectedDistance = 0
+            makeBox()
+        } else {
+            projectedDistance += 10
+        }
+    }
+    
+    func projectBox(distance: Float, node: SCNNode){
+        print(distance)
+        let projected = control?.projected
+        let normalProjected = projected!.normalized()
+        print(normalProjected)
+        let scaledNormal = SCNVector3Make(normalProjected.x * distance, normalProjected.y * distance, normalProjected.z * distance)
+        let action = SCNAction.moveBy(scaledNormal, duration: 1)
+        let runBlock = SCNAction.runBlock { (node) in
+            self.isMaking = false
+            
+        }
+        node.runAction(SCNAction.sequence([action, runBlock]))
+        
+    }
+    
+    ////////
+    
+    override func buttonBPressed(from: SCNVector3, projected: SCNVector3){
+        print("buttonB pressed")
+        print("from: \(from)")
+        print("to: \(projected)")
+        
+        makeOrProject()
+    }
+    
     override func doAdditionalSetup() {
         
         setUpCompassPoints(things, backgroundContents: backgroundContents)
@@ -200,21 +272,23 @@ class VRScene_01: VRBaseScene {
         world.addChildNode(torusNode)
         ////////
         
+        //
         let sceneWave = SCNScene(named: "art.scnassets/testWaveRig.scn")
         let wave = sceneWave!.rootNode.childNodeWithName("wave", recursively: true)
+        
         waveSkinner = (wave?.skinner)!
         waveSkinner.skeleton?.position = SCNVector3Zero
         waveSkinner.skeleton?.position.y -= 10
         waveNode.addChildNode(wave!)
         waveSkinner.skeleton?.scale = SCNVector3Make(10, 10, 10)
         world.addChildNode(waveNode)
+        //
         
-        waveNode.addChildNode(sliderNode)
-        let box = SCNBox(width: 1, height: 1, length: 1, chamferRadius: 0)
-        sliderNode.geometry = box
-        sliderNode.position = SCNVector3Zero
+        cameraNode.physicsBody = SCNPhysicsBody.dynamicBody()
+        //cameraNode.physicsBody?.affectedByGravity = true
         
         
+
         let scene3 = SCNScene(named: "art.scnassets/testTree.scn")!
         let tree = scene3.rootNode.childNodeWithName("tree", recursively: true)
         let treeNode = SCNNode()

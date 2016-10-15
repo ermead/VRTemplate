@@ -14,6 +14,11 @@ import GameController
 
 struct ControlScheme {
     
+    //this is the projected line from the camera to the cursor
+    var from: SCNVector3 = SCNVector3Zero
+    var projected: SCNVector3 = SCNVector3Zero
+    //
+    
     var currentLookDirection: MoveStates?
     
     var leftThumbstickUp: Float = 0.0
@@ -64,6 +69,8 @@ class VRBaseScene : NSObject, VRControllerProtocol, SCNPhysicsContactDelegate {
     
     let world = SCNNode();
     let cursor = SCNNode();
+    
+    //things in the world that one can focus the cursor on
     var things = SCNNode();
     var timer = NSTimer()
     var time = 0.0
@@ -195,11 +202,14 @@ class VRBaseScene : NSObject, VRControllerProtocol, SCNPhysicsContactDelegate {
         let positionLine = SCNVector3Make(position.x, position.y - 1,position.z - 1)
         let projected: SCNVector3  = multipliedByRotation(p2, rotation: cameraNode.rotation)
         
+        control?.from = positionLine
+        control?.projected = projected
+        
         if ((control?.buttonBPressed) == true) {
             print("trying to shoot")
-  
             let pos = positionLine
-            shootBullet(pos, to: projected, color: UIColor.yellowColor(), size: 0.25)
+            buttonBPressed(pos, projected: projected)
+            //shootBullet(pos, to: projected, color: UIColor.greenColor(), size: 0.25)
         }
         
         if control?.rightTriggerPressed == true {
@@ -257,6 +267,12 @@ class VRBaseScene : NSObject, VRControllerProtocol, SCNPhysicsContactDelegate {
         
     }
     
+    func buttonBPressed(from: SCNVector3, projected: SCNVector3){
+        
+        //override by subclass
+   
+    }
+    
   
     
     func eventTriggered() {
@@ -288,6 +304,7 @@ class VRBaseScene : NSObject, VRControllerProtocol, SCNPhysicsContactDelegate {
         floorBox.geometry?.firstMaterial?.diffuse.wrapS = SCNWrapMode.Repeat
         floorBox.geometry?.firstMaterial?.diffuse.wrapT = SCNWrapMode.Repeat
         floorBox.position = SCNVector3(0, -20, 0)
+        floorBox.physicsBody = SCNPhysicsBody.staticBody()
         world.addChildNode(floorBox)
         
         cameraNode = SCNNode.init(geometry: SCNSphere.init(radius: 10))

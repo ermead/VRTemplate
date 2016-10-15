@@ -19,7 +19,7 @@ class   CylinderLine: SCNNode
         super.init()
         
         //Calcul the height of our line
-        let  height = v1.distance(v2)
+        let  height = v1.distanceCyl(v2)
         
         //set position to v1 coordonate
         position = v1
@@ -62,7 +62,7 @@ class   CylinderLine: SCNNode
 }
 
 private extension SCNVector3{
-    func distance(receiver:SCNVector3) -> Float{
+    func distanceCyl(receiver:SCNVector3) -> Float{
         let xd = receiver.x - self.x
         let yd = receiver.y - self.y
         let zd = receiver.z - self.z

@@ -27,6 +27,7 @@
 		D72DAAF71DB1C5C0007940C7 /* VRBaseScene.swift in Sources */ = {isa = PBXBuildFile; fileRef = D72DAAF61DB1C5C0007940C7 /* VRBaseScene.swift */; };
 		D72DAAF91DB1C696007940C7 /* VRScene_01.swift in Sources */ = {isa = PBXBuildFile; fileRef = D72DAAF81DB1C696007940C7 /* VRScene_01.swift */; };
 		D7F5AEFD1DB2508500559545 /* waterTexture.jpg in Resources */ = {isa = PBXBuildFile; fileRef = D7F5AEFC1DB2508500559545 /* waterTexture.jpg */; };
+		D7F5AEFF1DB2D34700559545 /* Vector3Extensions.swift in Sources */ = {isa = PBXBuildFile; fileRef = D7F5AEFE1DB2D34700559545 /* Vector3Extensions.swift */; };
 /* End PBXBuildFile section */
 
 /* Begin PBXFileReference section */
@@ -55,6 +56,7 @@
 		D72DAAF81DB1C696007940C7 /* VRScene_01.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = VRScene_01.swift; sourceTree = "<group>"; };
 		D7F523401DB1AB0600583D51 /* VRTemplate.app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; path = VRTemplate.app; sourceTree = BUILT_PRODUCTS_DIR; };
 		D7F5AEFC1DB2508500559545 /* waterTexture.jpg */ = {isa = PBXFileReference; lastKnownFileType = image.jpeg; path = waterTexture.jpg; sourceTree = "<group>"; };
+		D7F5AEFE1DB2D34700559545 /* Vector3Extensions.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = Vector3Extensions.swift; sourceTree = "<group>"; };
 /* End PBXFileReference section */
 
 /* Begin PBXFrameworksBuildPhase section */
@@ -129,6 +131,7 @@
 			isa = PBXGroup;
 			children = (
 				D71C25AA1DB1E54A00B8FFA0 /* SetUpCompassPoints.swift */,
+				D7F5AEFE1DB2D34700559545 /* Vector3Extensions.swift */,
 				D71C25A81DB1DEF500B8FFA0 /* GameController.swift */,
 				D72DAAE71DB1BD66007940C7 /* CylinderLine.swift */,
 				D72DAACC1DB1B9EC007940C7 /* HeadTransformExtension.swift */,
@@ -314,6 +317,7 @@
 				D71C25A91DB1DEF500B8FFA0 /* GameController.swift in Sources */,
 				D72DAADB1DB1B9EC007940C7 /* SceneKitVRRenderer.swift in Sources */,
 				D71C25AB1DB1E54A00B8FFA0 /* SetUpCompassPoints.swift in Sources */,
+				D7F5AEFF1DB2D34700559545 /* Vector3Extensions.swift in Sources */,
 				D72DAAE81DB1BD66007940C7 /* CylinderLine.swift in Sources */,
 				D72DAAF71DB1C5C0007940C7 /* VRBaseScene.swift in Sources */,
 				D72DAAD91DB1B9EC007940C7 /* HeadTransformExtension.swift in Sources */,
