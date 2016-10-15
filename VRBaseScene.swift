@@ -50,6 +50,8 @@ class VRBaseScene : NSObject, VRControllerProtocol, SCNPhysicsContactDelegate {
     let rightKey = "d"
     let forwardKey = "w"
     let backKey = "s"
+    let upKey = "q"
+    let downKey = "z"
     let quitKey = "p"
     
     var camNode = SCNNode()
@@ -79,7 +81,9 @@ class VRBaseScene : NSObject, VRControllerProtocol, SCNPhysicsContactDelegate {
         "art.scnassets/skybox/front.jpg",
         ]
     
-    var floorContents: AnyObject!
+    var floorContents: AnyObject = UIImage(named: "Grass.png")!
+    
+    var waveNode = SCNNode()
 
     func countUp(){
         //print("time incremented: \(time)")
@@ -277,7 +281,7 @@ class VRBaseScene : NSObject, VRControllerProtocol, SCNPhysicsContactDelegate {
         floorBox.geometry?.materials.first?.diffuse.contents = floorContents
         floorBox.geometry?.firstMaterial?.diffuse.wrapS = SCNWrapMode.Repeat
         floorBox.geometry?.firstMaterial?.diffuse.wrapT = SCNWrapMode.Repeat
-        floorBox.position = SCNVector3(0, -10, 0)
+        floorBox.position = SCNVector3(0, -20, 0)
         world.addChildNode(floorBox)
         
         cameraNode = SCNNode.init(geometry: SCNSphere.init(radius: 10))
@@ -301,6 +305,8 @@ class VRBaseScene : NSObject, VRControllerProtocol, SCNPhysicsContactDelegate {
   
         ///////
         doAdditionalSetup()
+        
+    
         
         
     }
@@ -354,7 +360,6 @@ extension VRBaseScene {
         let speed : Float = 3
         
         switch input {
-            
         case leftKey: print("left")
         cameraNode.position.x -= speed
         case rightKey: print("right")

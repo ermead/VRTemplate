@@ -8,6 +8,9 @@
 
 @objc(VRScene_01)
 class VRScene_01: VRBaseScene {
+    
+    var torusNode = SCNNode()
+    var waveSkinner = SCNSkinner()
   
     required init() {
         
@@ -25,12 +28,72 @@ class VRScene_01: VRBaseScene {
             "art.scnassets/skybox/back.jpg",
             "art.scnassets/skybox/front.jpg",
             ]
+ 
+    }
+    
+    override func handleKeyboardEvents(input: String) {
+        
+        let speed : Float = 3
 
+        switch input {
+        case ",":     for bone in waveSkinner.bones {
+            
+//            if bone.name == "Armature_001_Bone_067_pose_matrix" {
+//                bone.eulerAngles.y += GLKMathDegreesToRadians(1)
+//            }
+            
+            bone.eulerAngles.x += GLKMathDegreesToRadians(1)
+            
+           
+            
+            }
+        case ".":     for bone in waveSkinner.bones {
+            
+        
+            bone.eulerAngles.x -= GLKMathDegreesToRadians(1)
+            
+            
+            }
+            
+        case "<":     for bone in waveSkinner.bones {
+            
+           
+            bone.eulerAngles.y += GLKMathDegreesToRadians(1)
+            
+            
+            
+            }
+        case ">":     for bone in waveSkinner.bones {
+            
+         
+            bone.eulerAngles.y -= GLKMathDegreesToRadians(1)
+            
+            
+            }
+        case leftKey: print("left")
+        cameraNode.position.x -= speed
+        case rightKey: print("right")
+        cameraNode.position.x += speed
+        case forwardKey: print("forward")
+        cameraNode.position.z -= speed
+        case backKey: print("back")
+        cameraNode.position.z += speed
+        case upKey: print("up")
+        cameraNode.position.y += speed
+        case downKey: print("down")
+        cameraNode.position.y -= speed
+        case quitKey: cameraNode.position = SCNVector3Zero
+            
+        default: return
+            
+        }
+        
     }
     
     override func doAdditionalUpdate(headTransform: GVRHeadTransform) {
+        waveNode.position.x += 1
         
-        
+    
         
     }
     
@@ -43,10 +106,20 @@ class VRScene_01: VRBaseScene {
         torusGeometry.firstMaterial?.specular.contents = UIColor.whiteColor()
         torusGeometry.firstMaterial?.shininess = 100.0
         torusGeometry.firstMaterial?.reflective.contents = scene.background.contents
-        let torusNode = SCNNode(geometry: torusGeometry)
+        torusNode = SCNNode(geometry: torusGeometry)
         torusNode.position = SCNVector3Make(-10, 0, -10)
         world.addChildNode(torusNode)
         ////////
+        
+        let sceneWave = SCNScene(named: "art.scnassets/testWaveRig.scn")
+        let wave = sceneWave!.rootNode.childNodeWithName("wave", recursively: true)
+        waveSkinner = (wave?.skinner)!
+        waveSkinner.skeleton?.position = SCNVector3Zero
+        waveSkinner.skeleton?.position.y -= 10
+        waveNode.addChildNode(wave!)
+        waveSkinner.skeleton?.scale = SCNVector3Make(100, 100, 10)
+        world.addChildNode(waveNode)
+        
         
         let scene3 = SCNScene(named: "art.scnassets/testTree.scn")!
         let tree = scene3.rootNode.childNodeWithName("tree", recursively: true)
@@ -65,7 +138,7 @@ class VRScene_01: VRBaseScene {
                 let treeClone: SCNNode = duplicateNode(treeNode, material: material)
                 treeClone.pivot = SCNMatrix4MakeTranslation(0, 0, 0)
                 treeClone.position = SCNVector3((Double(i) - 5.0) * 5, -5, (Double(j) - 5.0) * 5)
-                world.addChildNode(treeClone)
+                //world.addChildNode(treeClone)
             }
         }
  
