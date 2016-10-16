@@ -8,9 +8,15 @@
 
 import GameController
 
+func debugPrint(str: String) {
+    let debugJoystick = false
+    if debugJoystick == true {
+        print(str)
+    }
+}
 
 func setUpExtendedController(controller: GCController, scene: VRBaseScene) {
-    print("setting up extended controller")
+    debugPrint("setting up extended controller")
     controller.extendedGamepad?.valueChangedHandler = {
         (gamepad: GCExtendedGamepad, element: GCControllerElement) in
         
@@ -24,10 +30,10 @@ func setUpExtendedController(controller: GCController, scene: VRBaseScene) {
         
         if gamepad.buttonA == element {
             if gamepad.buttonA.pressed {
-                print("button A pressed")
+                debugPrint("button A pressed")
                 scene.control?.buttonAPressed = true
             } else if !gamepad.buttonA.pressed {
-                print("let go button A")
+                debugPrint("let go button A")
                 scene.control?.buttonAPressed = false
                 //reset to 0
                 scene.cameraNode.position = SCNVector3Zero
@@ -37,68 +43,68 @@ func setUpExtendedController(controller: GCController, scene: VRBaseScene) {
             }
         } else if gamepad.buttonB == element {
             if gamepad.buttonB.pressed {
-                print("button B pressed")
+                debugPrint("button B pressed")
                 scene.control?.buttonBPressed = true
             } else if !gamepad.buttonB.pressed {
                 scene.control?.buttonBPressed = false
-                print("let go button B")
+                debugPrint("let go button B")
             }
         } else if gamepad.buttonX == element {
             if gamepad.buttonX.pressed {
-                print("button X pressed")
+                debugPrint("button X pressed")
             } else if !gamepad.buttonX.pressed {
-                print("let go button X")
+                debugPrint("let go button X")
             }
         } else if gamepad.buttonY == element {
             if gamepad.buttonY.pressed {
-                print("button Y pressed")
+                debugPrint("button Y pressed")
             } else if !gamepad.buttonY.pressed {
-                print("let go button Y")
+                debugPrint("let go button Y")
             }
         } else if gamepad.leftTrigger == element {
             if gamepad.leftTrigger.pressed {
-                print("leftTrigger pressed")
+                debugPrint("leftTrigger pressed")
                 scene.control?.leftTriggerPressed = true
             } else if !gamepad.leftTrigger.pressed {
-                print("let go leftTrigger")
+                debugPrint("let go leftTrigger")
                 scene.control?.leftTriggerPressed = false
             }
         } else if gamepad.rightTrigger == element {
             if gamepad.rightTrigger.pressed {
-                print("rightTrigger pressed")
+                debugPrint("rightTrigger pressed")
                 scene.control?.rightTriggerPressed = true
             } else if !gamepad.rightTrigger.pressed {
-                print("let go rightTrigger")
+                debugPrint("let go rightTrigger")
                 scene.control?.rightTriggerPressed = false
             }
         } else if gamepad.leftShoulder == element {
             if gamepad.leftShoulder.pressed {
-                print("leftShoulder pressed")
+                debugPrint("leftShoulder pressed")
             } else if !gamepad.leftShoulder.pressed {
-                print("let go leftShoulder")
+                debugPrint("let go leftShoulder")
             }
         } else if gamepad.rightShoulder == element {
             if gamepad.rightShoulder.pressed {
-                print("rightShoulder pressed")
+                debugPrint("rightShoulder pressed")
             } else if !gamepad.rightShoulder.pressed {
-                print("let go rightShoulder")
+                debugPrint("let go rightShoulder")
             }
         } else if (gamepad.leftThumbstick == element) {
             if (gamepad.leftThumbstick.left.value > 0.2) {
                 //do something for a left thumbstick movement in the left direction
-                print("left thumb left value: \(gamepad.leftThumbstick.left.value)")
+                debugPrint("left thumb left value: \(gamepad.leftThumbstick.left.value)")
                 scene.control?.leftThumbstickLeft = gamepad.leftThumbstick.left.value
             } else if (gamepad.leftThumbstick.right.value > 0.2) {
                 //do something for a left thumbstick movement in the right direction
-                print("left thumb right value: \(gamepad.leftThumbstick.right.value)")
+                debugPrint("left thumb right value: \(gamepad.leftThumbstick.right.value)")
                 scene.control?.leftThumbstickRight = gamepad.leftThumbstick.right.value
             } else if (gamepad.leftThumbstick.up.value > 0.2) {
                 //do something for a left thumbstick movement in the up direction
-                print("left thumb up value: \(gamepad.leftThumbstick.up.value)")
+                debugPrint("left thumb up value: \(gamepad.leftThumbstick.up.value)")
                 scene.control?.leftThumbstickUp = gamepad.leftThumbstick.up.value
             }else if (gamepad.leftThumbstick.down.value > 0.2) {
                 //do something for a left thumbstick movement in the down direction
-                print("left thumb down value: \(gamepad.leftThumbstick.down.value)")
+                debugPrint("left thumb down value: \(gamepad.leftThumbstick.down.value)")
                 scene.control?.leftThumbstickDown = gamepad.leftThumbstick.down.value
             }else if (gamepad.leftThumbstick.left.pressed == false) {
                 // do something if the left movement is let go of
@@ -110,20 +116,20 @@ func setUpExtendedController(controller: GCController, scene: VRBaseScene) {
         } else if (gamepad.rightThumbstick == element) {
             if (gamepad.rightThumbstick.right.value > 0.2) {
                 //do something for a right thumbstick movement in the right direction
-                print("right thumb right value: \(gamepad.rightThumbstick.right.value)")
+                debugPrint("right thumb right value: \(gamepad.rightThumbstick.right.value)")
                 scene.control?.rightThumbstickRight = gamepad.rightThumbstick.right.value
             } else if (gamepad.rightThumbstick.left.value > 0.2) {
                 //do something for a right thumbstick movement in the left direction
-                print("right thumb left value: \(gamepad.rightThumbstick.left.value)")
+                debugPrint("right thumb left value: \(gamepad.rightThumbstick.left.value)")
                 scene.control?.rightThumbstickLeft = gamepad.rightThumbstick.left.value
                 
             }else if (gamepad.rightThumbstick.up.value > 0.2) {
                 //do something for a right thumbstick movement in the up direction
-                print("right thumb up value: \(gamepad.rightThumbstick.up.value)")
+                debugPrint("right thumb up value: \(gamepad.rightThumbstick.up.value)")
                 scene.control?.rightThumbstickUp = gamepad.rightThumbstick.up.value
             }else if (gamepad.rightThumbstick.down.value > 0.2) {
                 //do something for a right thumbstick movement in the down direction
-                print("right thumb down value: \(gamepad.rightThumbstick.down.value)")
+                debugPrint("right thumb down value: \(gamepad.rightThumbstick.down.value)")
                 scene.control?.rightThumbstickDown = gamepad.rightThumbstick.down.value
             } else if (gamepad.rightThumbstick.right.pressed == false) {
                 // do something if the right movement is let go of
@@ -135,26 +141,26 @@ func setUpExtendedController(controller: GCController, scene: VRBaseScene) {
         } else if gamepad.dpad == element {
             
             if (gamepad.dpad.right.value > 0.1) {
-                print("dpad right")
+                debugPrint("dpad right")
             } else if (gamepad.dpad.right.value == 0.0) {
-                print("released right dpad")
+                debugPrint("released right dpad")
             }
             if (gamepad.dpad.left.value > 0.1) {
-                print("dpad left")
+                debugPrint("dpad left")
             } else if (gamepad.dpad.left.value == 0.0) {
-                print("released left dpad")
+                debugPrint("released left dpad")
             }
             
             if (gamepad.dpad.up.value > 0.1) {
-                print("dpad up")
+                debugPrint("dpad up")
             } else if (gamepad.dpad.up.value == 0.0) {
-                print("released up dpad")
+                debugPrint("released up dpad")
             }
             
             if (gamepad.dpad.down.value > 0.1) {
-                print("dpad down")
+                debugPrint("dpad down")
             } else if (gamepad.dpad.down.value == 0.0) {
-                print("released down dpad")
+                debugPrint("released down dpad")
             }
         }
         

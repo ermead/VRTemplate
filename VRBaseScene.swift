@@ -172,7 +172,8 @@ class VRBaseScene : NSObject, VRControllerProtocol, SCNPhysicsContactDelegate {
             
 //            let action = SCNAction.moveTo(node.position, duration: 1)
 //            cameraNode.runAction(action)
-            let action = SCNAction.moveTo(SCNVector3Zero, duration: 0.2)
+            let pos = SCNVector3Make(-node.position.x, -node.position.y, -node.position.z)
+            let action = SCNAction.moveTo(pos, duration: 0.2)
             world.runAction(action)
             
         } else {
@@ -185,7 +186,10 @@ class VRBaseScene : NSObject, VRControllerProtocol, SCNPhysicsContactDelegate {
         
     }
     
+    
     func prepareFrameWithHeadTransform(headTransform: GVRHeadTransform) {
+        
+        //MARK: UPDATE
         
         if focusedNode != nil {
             //print("time:  \(time)")
@@ -206,21 +210,82 @@ class VRBaseScene : NSObject, VRControllerProtocol, SCNPhysicsContactDelegate {
             let moveY = (control?.rightThumbstickUp)! - (control?.rightThumbstickDown)!
             let moveZ = (control?.leftThumbstickDown)! - (control?.leftThumbstickUp)!
             let rotateBy = (control?.rightThumbstickLeft)! - (control?.rightThumbstickRight)!
-            
-//            let actionH = SCNAction.rotateByAngle(CGFloat(GLKMathDegreesToRadians(rotateBy)), aroundAxis: SCNVector3Make(0, 1, 0), duration: 0.1)
-//            cameraNode.runAction(actionH)
+        
         let actionH = SCNAction.rotateByAngle(CGFloat(GLKMathDegreesToRadians(rotateBy)), aroundAxis: SCNVector3Make(0, 1, 0), duration: 0)
         cameraNode.runAction(actionH)
         
+        //This variable controls if the joystick is being used for roytation or not. For example, pressing forward on the controller will make you go in the direction you are facing, if you are standing up and moving around a room. If you are sitting and relying on the joystick to rotate you, sometimes its nice to move independently of head rotation. 
+        //Change this variable to false to rely on joystick rotation
+        let moveAccordingToHeadRotation = true
         
         if usingExtendedGamePad == true {
-//            let newTransform = self.moveCamera(cameraNode, x: moveX, y: moveY, z: moveZ)
-//            cameraNode.transform = newTransform
             let newTransform = self.moveCamera(world, x: -moveX, y: -moveY, z: -moveZ)
-            world.transform = newTransform
+            if moveAccordingToHeadRotation == false {
+                world.transform = newTransform
+            }
+            //
+            ////////////////////////////////////////////////////////
+            if moveAccordingToHeadRotation == true {
+
+                let cursorPos = headTransform.rotateVector(SCNVector3(0, 0, -10));
+                let p2 =
+                    SCNVector3FromGLKVector3(
+                        GLKVector3MultiplyScalar(
+                            GLKVector3Normalize(
+                                SCNVector3ToGLKVector3(cursorPos)
+                            ),
+                            1
+                        )
+                )
+                
+                let p3 = cameraNode.convertPosition(p2, toNode: scene.rootNode)
+          
+                print("p3: \(p3)")
+        
+                let headRot: GLKQuaternion  =
+                    GLKQuaternionMakeWithMatrix4(GLKMatrix4Transpose(headTransform.headPoseInStartSpace()))
+                
+                //        let yRot = Float(headRot.y)
+                //        print(GLKMathRadiansToDegrees(yRot))
+                let rot = SCNVector4Make(headRot.x, headRot.y, headRot.z, headRot.w)
+             
+                //TODO: Try to add this rot to the cameraNode rot
+                let rotHead = GLKMatrix4MakeWithQuaternion(headRot)
+                let rotCamY2 = GLKMatrix4RotateY(rotHead, cameraNode.rotation.y)
+                let qua = GLKQuaternionMakeWithMatrix4(rotCamY2)
+                let rotCamV4 = SCNVector4Make(qua.x, qua.y, qua.z, qua.w)
+                //
+                
+                //let projected: SCNVector3  = multipliedByRotation(p3, rotation: rot)
+                let projected: SCNVector3  = multipliedByRotation(p3, rotation: rotCamV4)
+                print("projected: \(projected)")
+                let multiplier:Float = 1
+                let action = SCNAction.moveByX(CGFloat((projected.x * moveZ) * multiplier), y: 0, z: CGFloat((projected.z * moveZ) * multiplier), duration: 0)
+                world.runAction(action)
+                
+                //
+                if moveX > 0.1 || moveX < -0.1 {
+                var vectorX = SCNVector3Make(-moveX, 0, 0)
+                vectorX = cameraNode.convertPosition(vectorX, toNode: scene.rootNode)
+                vectorX = multipliedByRotation(vectorX, rotation: rot)
+                let actionX = SCNAction.moveByX(CGFloat(vectorX.x), y: 0, z: 0, duration: 0)
+                world.runAction(actionX)
+                }
+                //
+                
+            }
+            ////////////////////////////////////////////////////////
+           
+        
+            if world.position.y > 0 {
+                world.position.y = 0
+            }
         } else {
             let newTransform = self.moveCamera(world, x: -moveX, y: -moveY, z: -moveZ)
             world.transform = newTransform
+            if world.position.y > 0 {
+                world.position.y = 0
+            }
         }
         
         
@@ -228,7 +293,7 @@ class VRBaseScene : NSObject, VRControllerProtocol, SCNPhysicsContactDelegate {
             
         //}
         
-        cursor.position = headTransform.rotateVector(SCNVector3(0, -3, -20));
+        cursor.position = headTransform.rotateVector(SCNVector3(0, 0, -20));
     
         // let's create long ray (100 meters) that goes the same way
         // cursor.position is directed
@@ -479,7 +544,7 @@ extension VRBaseScene {
         let r : GLKVector3 = GLKMatrix4MultiplyVector3(gRotation, gPosition)
         
         return SCNVector3FromGLKVector3(r)
-        
+  
     }
   
     func moveCamera(node: SCNNode, x: Float, y: Float, z: Float)->SCNMatrix4
@@ -490,7 +555,7 @@ extension VRBaseScene {
         let z: Float = z
         
         var cameraTransform = node.transform
-  
+        
         let rotatedPosition: SCNVector3  = multipliedByRotation(SCNVector3Make(x, y, z), rotation: cameraNode.rotation)
         
         cameraTransform = SCNMatrix4Translate(cameraTransform, rotatedPosition.x, rotatedPosition.y, rotatedPosition.z)
@@ -498,6 +563,8 @@ extension VRBaseScene {
         return cameraTransform
         
     }
+    
+
     
 
     

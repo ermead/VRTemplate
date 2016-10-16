@@ -10,8 +10,8 @@ import Foundation
 
 func setUpCompassPoints(things: SCNNode, backgroundContents: AnyObject){
     
-    let distance = 50.0
-    let sizeRadius:CGFloat = 3.0
+    let distance = 150.0
+    let sizeRadius:CGFloat = 5.0
     
     let material1 = SCNMaterial()
     material1.diffuse.contents = UIColor.blackColor()
