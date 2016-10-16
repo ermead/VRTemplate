@@ -27,7 +27,7 @@ class SceneKitVRRenderer: NSObject, GVRCardboardViewDelegate {
         let camNode = self.cameraNode
         camNode.camera = SCNCamera();
         renderer.pointOfView = camNode;
-        print(renderer.pointOfView?.position)
+        //print(renderer.pointOfView?.position)
         renderer.scene = scene;
      
         // comment this out if you would like custom lighting 
@@ -36,7 +36,7 @@ class SceneKitVRRenderer: NSObject, GVRCardboardViewDelegate {
 //        var options = SCNDebugOptions()
 //        options = [SCNDebugOptions.ShowPhysicsFields]
 //        renderer.debugOptions = options
-        print("rendered")
+        //print("rendered")
         return renderer;
     }
     

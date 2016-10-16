@@ -22,7 +22,7 @@ func setUpCompassPoints(things: SCNNode, backgroundContents: AnyObject){
     let backSphereN = SCNNode.init(geometry: SCNSphere.init(radius: sizeRadius))
     backSphereN.geometry?.firstMaterial = material1
     backSphereN.position = SCNVector3(0, 0, -distance)
-    backSphereN.physicsBody = SCNPhysicsBody.staticBody()
+    backSphereN.physicsBody = SCNPhysicsBody.kinematicBody()
     backSphereN.physicsBody!.categoryBitMask = CC.destroyable.rawValue
     backSphereN.physicsBody!.contactTestBitMask = CC.bullet.rawValue
     backSphereN.physicsBody!.collisionBitMask = CC.bullet.rawValue
@@ -31,7 +31,7 @@ func setUpCompassPoints(things: SCNNode, backgroundContents: AnyObject){
     let backSphereS = SCNNode.init(geometry: SCNSphere.init(radius: sizeRadius))
     backSphereS.geometry?.materials.first?.diffuse.contents = UIColor.redColor()
     backSphereS.position = SCNVector3(0, 0, distance)
-    backSphereS.physicsBody = SCNPhysicsBody.staticBody()
+    backSphereS.physicsBody = SCNPhysicsBody.kinematicBody()
     backSphereS.physicsBody!.categoryBitMask = CC.destroyable.rawValue
     backSphereS.physicsBody!.contactTestBitMask = CC.bullet.rawValue
     backSphereS.physicsBody!.collisionBitMask = CC.bullet.rawValue
@@ -40,7 +40,7 @@ func setUpCompassPoints(things: SCNNode, backgroundContents: AnyObject){
     let backSphereE = SCNNode.init(geometry: SCNSphere.init(radius: sizeRadius))
     backSphereE.geometry?.materials.first?.diffuse.contents = UIColor.greenColor()
     backSphereE.position = SCNVector3(distance, 0, 0)
-    backSphereE.physicsBody = SCNPhysicsBody.staticBody()
+    backSphereE.physicsBody = SCNPhysicsBody.kinematicBody()
     backSphereE.physicsBody!.categoryBitMask = CC.destroyable.rawValue
     backSphereE.physicsBody!.contactTestBitMask = CC.bullet.rawValue
     backSphereE.physicsBody!.collisionBitMask = CC.bullet.rawValue
@@ -49,7 +49,7 @@ func setUpCompassPoints(things: SCNNode, backgroundContents: AnyObject){
     let backSphereW = SCNNode.init(geometry: SCNSphere.init(radius: sizeRadius))
     backSphereW.geometry?.materials.first?.diffuse.contents = UIColor.whiteColor()
     backSphereW.position = SCNVector3(-distance, 0, 0)
-    backSphereW.physicsBody = SCNPhysicsBody.staticBody()
+    backSphereW.physicsBody = SCNPhysicsBody.kinematicBody()
     backSphereW.physicsBody!.categoryBitMask = CC.destroyable.rawValue
     backSphereW.physicsBody!.contactTestBitMask = CC.bullet.rawValue
     backSphereW.physicsBody!.collisionBitMask = CC.bullet.rawValue

@@ -120,8 +120,9 @@ class VRScene_01: VRBaseScene {
     override func doAdditionalUpdate(headTransform: GVRHeadTransform) {
     
         
-        rotateBones()
-   
+        //rotateBones()
+        //  world.position.z += 1
+        
     }
     
     
@@ -280,11 +281,16 @@ class VRScene_01: VRBaseScene {
         waveSkinner.skeleton?.position = SCNVector3Zero
         waveSkinner.skeleton?.position.y -= 10
         waveNode.addChildNode(wave!)
+        waveNode.addChildNode(waveSkinner.skeleton!)
         waveSkinner.skeleton?.scale = SCNVector3Make(10, 10, 10)
         world.addChildNode(waveNode)
+        
+        waveNode.eulerAngles.x = GLKMathDegreesToRadians(90)
         //
         
         cameraNode.physicsBody = SCNPhysicsBody.dynamicBody()
+        cameraNode.physicsBody?.categoryBitMask = CC.player.rawValue
+        cameraNode.physicsBody?.collisionBitMask = CC.floor.rawValue
         //cameraNode.physicsBody?.affectedByGravity = true
         
         

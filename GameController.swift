@@ -31,6 +31,9 @@ func setUpExtendedController(controller: GCController, scene: VRBaseScene) {
                 scene.control?.buttonAPressed = false
                 //reset to 0
                 scene.cameraNode.position = SCNVector3Zero
+                scene.cameraNode.rotation = SCNVector4Zero
+                scene.world.position = SCNVector3Zero
+                scene.world.rotation = SCNVector4Zero
             }
         } else if gamepad.buttonB == element {
             if gamepad.buttonB.pressed {

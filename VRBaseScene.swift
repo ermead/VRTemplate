@@ -41,12 +41,34 @@ enum MoveStates: Int {
     case N,S,E,W,NE,NW,SE,SW
 }
 
+//enum CC: Int {
+//    
+//    case bullet = 1
+//    case destroyable
+//    case floor
+//    case player
+//    
+//}
+
 enum CC: Int {
     
-    case bullet = 1
-    case destroyable
-    case floor
+    case bullet = 0
+    case destroyable = 0b1
+    case floor = 0b10
+    case player = 0b100
     
+}
+
+enum ColliderType:UInt32 {
+    case Player        = 0
+    case WaterSegment  = 0b1
+    case Destroyable   = 0b10
+    case Wall          = 0b100
+    case Collectable   = 0b1000
+    case EndLevel      = 0b10000
+    case Projectile    = 0b100000
+    case None          = 0b1000000
+    case ChaseZone      = 0b10000000
 }
 
 @objc(VRBaseScene)
@@ -148,8 +170,10 @@ class VRBaseScene : NSObject, VRControllerProtocol, SCNPhysicsContactDelegate {
         
         if with == "grappling hook" {
             
-            let action = SCNAction.moveTo(node.position, duration: 1)
-            cameraNode.runAction(action)
+//            let action = SCNAction.moveTo(node.position, duration: 1)
+//            cameraNode.runAction(action)
+            let action = SCNAction.moveTo(SCNVector3Zero, duration: 0.2)
+            world.runAction(action)
             
         } else {
         
@@ -183,16 +207,23 @@ class VRBaseScene : NSObject, VRControllerProtocol, SCNPhysicsContactDelegate {
             let moveZ = (control?.leftThumbstickDown)! - (control?.leftThumbstickUp)!
             let rotateBy = (control?.rightThumbstickLeft)! - (control?.rightThumbstickRight)!
             
-            let actionH = SCNAction.rotateByAngle(CGFloat(GLKMathDegreesToRadians(rotateBy)), aroundAxis: SCNVector3Make(0, 1, 0), duration: 0.1)
-            cameraNode.runAction(actionH)
+//            let actionH = SCNAction.rotateByAngle(CGFloat(GLKMathDegreesToRadians(rotateBy)), aroundAxis: SCNVector3Make(0, 1, 0), duration: 0.1)
+//            cameraNode.runAction(actionH)
+        let actionH = SCNAction.rotateByAngle(CGFloat(GLKMathDegreesToRadians(rotateBy)), aroundAxis: SCNVector3Make(0, 1, 0), duration: 0)
+        cameraNode.runAction(actionH)
+        
         
         if usingExtendedGamePad == true {
-            let newTransform = self.moveCamera(cameraNode, x: moveX, y: moveY, z: moveZ)
-            cameraNode.transform = newTransform
+//            let newTransform = self.moveCamera(cameraNode, x: moveX, y: moveY, z: moveZ)
+//            cameraNode.transform = newTransform
+            let newTransform = self.moveCamera(world, x: -moveX, y: -moveY, z: -moveZ)
+            world.transform = newTransform
         } else {
-            let newTransform = self.moveCamera(cameraNode, x: moveX, y: moveY, z: moveZ)
-            cameraNode.transform = newTransform
+            let newTransform = self.moveCamera(world, x: -moveX, y: -moveY, z: -moveZ)
+            world.transform = newTransform
         }
+        
+        
         
             
         //}
@@ -211,8 +242,9 @@ class VRBaseScene : NSObject, VRControllerProtocol, SCNPhysicsContactDelegate {
                     1000
                 )
         );
-        
-        let position = cameraNode.position
+        let newPosition = self.scene.rootNode.convertPosition(cameraNode.position, toNode: world)
+        //let position = cameraNode.position
+        let position = newPosition
         let positionLine = SCNVector3Make(position.x, position.y - 1,position.z - 1)
         let projected: SCNVector3  = multipliedByRotation(p2, rotation: cameraNode.rotation)
         
@@ -321,13 +353,16 @@ class VRBaseScene : NSObject, VRControllerProtocol, SCNPhysicsContactDelegate {
         floorBox.position = SCNVector3(0, -20, 0)
         floorBox.physicsBody = SCNPhysicsBody.staticBody()
         floorBox.physicsBody?.categoryBitMask = CC.floor.rawValue
+        floorBox.name = "floor"
         world.addChildNode(floorBox)
         
         cameraNode = SCNNode.init(geometry: SCNSphere.init(radius: 10))
         cameraNode.position = SCNVector3(0, 0, 0)
-        world.addChildNode(cameraNode)
+        self.scene.rootNode.addChildNode(cameraNode)
+        //world.addChildNode(cameraNode)
         cameraNode.addChildNode(camNode)
         cameraNode.addChildNode(cursor)
+        cameraNode.name = "cameraNode"
         
         let light = SCNLight()
         light.type = SCNLightTypeOmni
@@ -344,10 +379,7 @@ class VRBaseScene : NSObject, VRControllerProtocol, SCNPhysicsContactDelegate {
   
         ///////
         doAdditionalSetup()
-        
-    
-        
-        
+
     }
     
 }
@@ -375,13 +407,16 @@ extension VRBaseScene {
         if isCollisionBetween(CC.bullet, nodeTypeTwo: CC.destroyable, contact: contact) {
             
             print("bullet hit destroyable")
+            
             if contact.nodeA.physicsBody?.categoryBitMask == CC.destroyable.rawValue {
                 
+                guard contact.nodeB.name != nil else {return}
                 self.bulletDidHitDestroyable(contact.nodeA, with: contact.nodeB.name!)
                 
                 
             } else if contact.nodeB.physicsBody?.categoryBitMask == CC.destroyable.rawValue{
                 
+                guard contact.nodeA.name != nil else {return}
                 self.bulletDidHitDestroyable(contact.nodeB, with: contact.nodeA.name!)
                 
             }
@@ -456,7 +491,7 @@ extension VRBaseScene {
         
         var cameraTransform = node.transform
   
-        let rotatedPosition: SCNVector3  = multipliedByRotation(SCNVector3Make(x, y, z), rotation: node.rotation)
+        let rotatedPosition: SCNVector3  = multipliedByRotation(SCNVector3Make(x, y, z), rotation: cameraNode.rotation)
         
         cameraTransform = SCNMatrix4Translate(cameraTransform, rotatedPosition.x, rotatedPosition.y, rotatedPosition.z)
         

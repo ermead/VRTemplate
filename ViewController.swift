@@ -22,15 +22,15 @@ class ViewController: UIViewController, GVRCardboardViewDelegate, UITextFieldDel
     var renderLoop: RenderLoop?;
     
     override func loadView() {
-//        
-//        let vrControllerClassName = NSBundle
-//            .mainBundle()
-//            .objectForInfoDictionaryKey(VRControllerClassKey) as! String;
-//        
-//        guard let vrClass = NSClassFromString(vrControllerClassName) as? VRControllerProtocol.Type else {
-//            fatalError("#fail Unable to find class \(vrControllerClassName), referenced in Info.plist, key=\(VRControllerClassKey)")
-//        }
+        /*
+        let vrControllerClassName = NSBundle
+            .mainBundle()
+            .objectForInfoDictionaryKey(VRControllerClassKey) as! String;
         
+        guard let vrClass = NSClassFromString(vrControllerClassName) as? VRControllerProtocol.Type else {
+            fatalError("#fail Unable to find class \(vrControllerClassName), referenced in Info.plist, key=\(VRControllerClassKey)")
+        }
+        */
       
         
         let vrControllerClassName = "VRScene_01"
@@ -62,18 +62,18 @@ class ViewController: UIViewController, GVRCardboardViewDelegate, UITextFieldDel
         
         self.view = cardboardView;
         
-        setUpBluetoothInput()
+        setUpKeyboardInput()
         
     }
 
     ////////////////////////////////////////////////////////////
-    func setUpBluetoothInput(){
+    func setUpKeyboardInput(){
         
         textbox = UITextField(frame: CGRect(x: 10, y: 10, width: 100, height: 50))
         textbox.delegate = self
         self.view.addSubview(textbox)
         //uncomment this next line to automatically select
-        textbox.becomeFirstResponder()
+        //textbox.becomeFirstResponder()
         
         // Get notified every time the text changes, so we can save it
         notificationCenter.addObserver(self,
@@ -146,6 +146,7 @@ class ViewController: UIViewController, GVRCardboardViewDelegate, UITextFieldDel
     }
     
     func cardboardView(cardboardView: GVRCardboardView!, prepareDrawFrame headTransform: GVRHeadTransform!) {
+    
         vrController!.prepareFrameWithHeadTransform(headTransform);
         renderer?.cardboardView(cardboardView, prepareDrawFrame: headTransform)
      
