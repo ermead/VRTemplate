@@ -10,6 +10,7 @@
 		CA1C25F352D93A5E344AB96F /* libPods-VRTemplate.a in Frameworks */ = {isa = PBXBuildFile; fileRef = B7B5CF30B4247AB7561DB134 /* libPods-VRTemplate.a */; };
 		D71C25A91DB1DEF500B8FFA0 /* GameController.swift in Sources */ = {isa = PBXBuildFile; fileRef = D71C25A81DB1DEF500B8FFA0 /* GameController.swift */; };
 		D71C25AB1DB1E54A00B8FFA0 /* SetUpCompassPoints.swift in Sources */ = {isa = PBXBuildFile; fileRef = D71C25AA1DB1E54A00B8FFA0 /* SetUpCompassPoints.swift */; };
+		D72191FD1DB4443E00023B1B /* VRSceneSceneTemplate.swift in Sources */ = {isa = PBXBuildFile; fileRef = D72191FC1DB4443E00023B1B /* VRSceneSceneTemplate.swift */; };
 		D72DAAD91DB1B9EC007940C7 /* HeadTransformExtension.swift in Sources */ = {isa = PBXBuildFile; fileRef = D72DAACC1DB1B9EC007940C7 /* HeadTransformExtension.swift */; };
 		D72DAADA1DB1B9EC007940C7 /* Info.plist in Resources */ = {isa = PBXBuildFile; fileRef = D72DAACD1DB1B9EC007940C7 /* Info.plist */; };
 		D72DAADB1DB1B9EC007940C7 /* SceneKitVRRenderer.swift in Sources */ = {isa = PBXBuildFile; fileRef = D72DAACE1DB1B9EC007940C7 /* SceneKitVRRenderer.swift */; };
@@ -36,6 +37,7 @@
 		B7B5CF30B4247AB7561DB134 /* libPods-VRTemplate.a */ = {isa = PBXFileReference; explicitFileType = archive.ar; includeInIndex = 0; name = "libPods-VRTemplate.a"; path = "../../../../../../../../../Users/ericmead/Library/Developer/Xcode/DerivedData/VRTemplate-hhrzlodygubapsbsdomjsszkkmns/Build/Products/Debug-iphoneos/libPods-VRTemplate.a"; sourceTree = SDKROOT; };
 		D71C25A81DB1DEF500B8FFA0 /* GameController.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = GameController.swift; sourceTree = "<group>"; };
 		D71C25AA1DB1E54A00B8FFA0 /* SetUpCompassPoints.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = SetUpCompassPoints.swift; sourceTree = "<group>"; };
+		D72191FC1DB4443E00023B1B /* VRSceneSceneTemplate.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = VRSceneSceneTemplate.swift; sourceTree = "<group>"; };
 		D72DAACB1DB1B9EB007940C7 /* VRTemplate-Bridging-Header.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = "VRTemplate-Bridging-Header.h"; sourceTree = "<group>"; };
 		D72DAACC1DB1B9EC007940C7 /* HeadTransformExtension.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = HeadTransformExtension.swift; sourceTree = "<group>"; };
 		D72DAACD1DB1B9EC007940C7 /* Info.plist */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text.plist.xml; path = Info.plist; sourceTree = "<group>"; };
@@ -100,8 +102,17 @@
 			isa = PBXGroup;
 			children = (
 				D72DAAF61DB1C5C0007940C7 /* VRBaseScene.swift */,
+				D72191FE1DB4461B00023B1B /* SceneTemplate */,
 			);
 			name = VRBaseScene;
+			sourceTree = "<group>";
+		};
+		D72191FE1DB4461B00023B1B /* SceneTemplate */ = {
+			isa = PBXGroup;
+			children = (
+				D72191FC1DB4443E00023B1B /* VRSceneSceneTemplate.swift */,
+			);
+			name = SceneTemplate;
 			sourceTree = "<group>";
 		};
 		D72DAAEF1DB1BE32007940C7 /* Artwork */ = {
@@ -322,6 +333,7 @@
 				D72DAAF71DB1C5C0007940C7 /* VRBaseScene.swift in Sources */,
 				D72DAAD91DB1B9EC007940C7 /* HeadTransformExtension.swift in Sources */,
 				D72DAAE21DB1B9EC007940C7 /* RenderLoop.swift in Sources */,
+				D72191FD1DB4443E00023B1B /* VRSceneSceneTemplate.swift in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};

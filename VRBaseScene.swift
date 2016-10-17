@@ -143,21 +143,23 @@ class VRBaseScene : NSObject, VRControllerProtocol, SCNPhysicsContactDelegate {
     
     func playerDidFocus(){
         // override by subclass
-        
+        print("focused")
         guard doingSomething == false else {return}
-        guard usingExtendedGamePad == false else {return}
+        //guard usingExtendedGamePad == false else {return}
         
         if let pos = focusedNode?.position {
             doingSomething = true
-            let action = SCNAction.moveTo(pos, duration: 0.5)
+            let pos = SCNVector3Make(-pos.x, -pos.y, -pos.z)
+            let action = SCNAction.moveTo(pos, duration: 0.2)
             action.timingMode = .EaseOut
+            
             let delay = SCNAction.waitForDuration(0)
             let runBlock = SCNAction.runBlock({ (node) in
                 self.doingSomething = false
             })
             let seq = SCNAction.sequence([action, delay, runBlock])
            
-            cameraNode.runAction(seq)
+           world.runAction(seq)
             
         }
     }
@@ -272,10 +274,18 @@ class VRBaseScene : NSObject, VRControllerProtocol, SCNPhysicsContactDelegate {
                 world.runAction(actionX)
                 }
                 //
+                if moveY > 0.1 || moveY < -0.1 {
+                    var vectorY = SCNVector3Make(0, -moveY, 0)
+                    let actionY = SCNAction.moveByX(0, y: CGFloat(vectorY.y), z: 0, duration: 0)
+                    world.runAction(actionY)
+                }
                 
             }
             ////////////////////////////////////////////////////////
            
+            
+        
+            
         
             if world.position.y > 0 {
                 world.position.y = 0
@@ -411,7 +421,7 @@ class VRBaseScene : NSObject, VRControllerProtocol, SCNPhysicsContactDelegate {
         
         world.addChildNode(things)
         
-        let floorBox = SCNNode.init(geometry: SCNBox(width: 200, height: 20, length: 200, chamferRadius: 0))
+        let floorBox = SCNNode.init(geometry: SCNBox(width: 400, height: 20, length: 400, chamferRadius: 0))
         floorBox.geometry?.materials.first?.diffuse.contents = floorContents
         floorBox.geometry?.firstMaterial?.diffuse.wrapS = SCNWrapMode.Repeat
         floorBox.geometry?.firstMaterial?.diffuse.wrapT = SCNWrapMode.Repeat

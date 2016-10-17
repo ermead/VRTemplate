@@ -8,11 +8,8 @@
 
 import Foundation
 
-func setUpCompassPoints(things: SCNNode, backgroundContents: AnyObject){
-    
-    let distance = 150.0
-    let sizeRadius:CGFloat = 5.0
-    
+func setUpCompassPoints(things: SCNNode, backgroundContents: AnyObject, distance: Float, sizeRadius: CGFloat){
+
     let material1 = SCNMaterial()
     material1.diffuse.contents = UIColor.blackColor()
     material1.specular.contents = UIColor.whiteColor()
