@@ -11,6 +11,8 @@
 		D71C25A91DB1DEF500B8FFA0 /* GameController.swift in Sources */ = {isa = PBXBuildFile; fileRef = D71C25A81DB1DEF500B8FFA0 /* GameController.swift */; };
 		D71C25AB1DB1E54A00B8FFA0 /* SetUpCompassPoints.swift in Sources */ = {isa = PBXBuildFile; fileRef = D71C25AA1DB1E54A00B8FFA0 /* SetUpCompassPoints.swift */; };
 		D72191FD1DB4443E00023B1B /* VRSceneSceneTemplate.swift in Sources */ = {isa = PBXBuildFile; fileRef = D72191FC1DB4443E00023B1B /* VRSceneSceneTemplate.swift */; };
+		D72192001DB496E800023B1B /* OverlayScene.swift in Sources */ = {isa = PBXBuildFile; fileRef = D72191FF1DB496E800023B1B /* OverlayScene.swift */; };
+		D72192021DB49E5600023B1B /* RandomLocationGenerator.swift in Sources */ = {isa = PBXBuildFile; fileRef = D72192011DB49E5600023B1B /* RandomLocationGenerator.swift */; };
 		D72DAAD91DB1B9EC007940C7 /* HeadTransformExtension.swift in Sources */ = {isa = PBXBuildFile; fileRef = D72DAACC1DB1B9EC007940C7 /* HeadTransformExtension.swift */; };
 		D72DAADA1DB1B9EC007940C7 /* Info.plist in Resources */ = {isa = PBXBuildFile; fileRef = D72DAACD1DB1B9EC007940C7 /* Info.plist */; };
 		D72DAADB1DB1B9EC007940C7 /* SceneKitVRRenderer.swift in Sources */ = {isa = PBXBuildFile; fileRef = D72DAACE1DB1B9EC007940C7 /* SceneKitVRRenderer.swift */; };
@@ -38,6 +40,8 @@
 		D71C25A81DB1DEF500B8FFA0 /* GameController.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = GameController.swift; sourceTree = "<group>"; };
 		D71C25AA1DB1E54A00B8FFA0 /* SetUpCompassPoints.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = SetUpCompassPoints.swift; sourceTree = "<group>"; };
 		D72191FC1DB4443E00023B1B /* VRSceneSceneTemplate.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = VRSceneSceneTemplate.swift; sourceTree = "<group>"; };
+		D72191FF1DB496E800023B1B /* OverlayScene.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = OverlayScene.swift; sourceTree = "<group>"; };
+		D72192011DB49E5600023B1B /* RandomLocationGenerator.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = RandomLocationGenerator.swift; sourceTree = "<group>"; };
 		D72DAACB1DB1B9EB007940C7 /* VRTemplate-Bridging-Header.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = "VRTemplate-Bridging-Header.h"; sourceTree = "<group>"; };
 		D72DAACC1DB1B9EC007940C7 /* HeadTransformExtension.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = HeadTransformExtension.swift; sourceTree = "<group>"; };
 		D72DAACD1DB1B9EC007940C7 /* Info.plist */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text.plist.xml; path = Info.plist; sourceTree = "<group>"; };
@@ -146,6 +150,7 @@
 				D71C25A81DB1DEF500B8FFA0 /* GameController.swift */,
 				D72DAAE71DB1BD66007940C7 /* CylinderLine.swift */,
 				D72DAACC1DB1B9EC007940C7 /* HeadTransformExtension.swift */,
+				D72192011DB49E5600023B1B /* RandomLocationGenerator.swift */,
 			);
 			name = Helpers;
 			sourceTree = "<group>";
@@ -169,6 +174,7 @@
 		D7F523371DB1AB0600583D51 = {
 			isa = PBXGroup;
 			children = (
+				D72191FF1DB496E800023B1B /* OverlayScene.swift */,
 				D72DAAF81DB1C696007940C7 /* VRScene_01.swift */,
 				D72DAACF1DB1B9EC007940C7 /* ViewController.swift */,
 				D71C25AD1DB1F01500B8FFA0 /* VRBaseScene */,
@@ -329,8 +335,10 @@
 				D72DAADB1DB1B9EC007940C7 /* SceneKitVRRenderer.swift in Sources */,
 				D71C25AB1DB1E54A00B8FFA0 /* SetUpCompassPoints.swift in Sources */,
 				D7F5AEFF1DB2D34700559545 /* Vector3Extensions.swift in Sources */,
+				D72192021DB49E5600023B1B /* RandomLocationGenerator.swift in Sources */,
 				D72DAAE81DB1BD66007940C7 /* CylinderLine.swift in Sources */,
 				D72DAAF71DB1C5C0007940C7 /* VRBaseScene.swift in Sources */,
+				D72192001DB496E800023B1B /* OverlayScene.swift in Sources */,
 				D72DAAD91DB1B9EC007940C7 /* HeadTransformExtension.swift in Sources */,
 				D72DAAE21DB1B9EC007940C7 /* RenderLoop.swift in Sources */,
 				D72191FD1DB4443E00023B1B /* VRSceneSceneTemplate.swift in Sources */,

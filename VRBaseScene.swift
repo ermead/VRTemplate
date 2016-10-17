@@ -98,7 +98,7 @@ class VRBaseScene : NSObject, VRControllerProtocol, SCNPhysicsContactDelegate {
     var timer = NSTimer()
     var time = 0.0
     
-    var doingSomething: Bool = false
+    var doingSomething: Bool = true
     var focusedNode : SCNNode?
     
     var backgroundContents: AnyObject = [
@@ -489,7 +489,7 @@ extension VRBaseScene {
                 self.bulletDidHitDestroyable(contact.nodeA, with: contact.nodeB.name!)
                 
                 
-            } else if contact.nodeB.physicsBody?.categoryBitMask == CC.destroyable.rawValue{
+            } else if contact.nodeB.physicsBody?.categoryBitMask == CC.destroyable.rawValue {
                 
                 guard contact.nodeA.name != nil else {return}
                 self.bulletDidHitDestroyable(contact.nodeB, with: contact.nodeA.name!)
@@ -530,17 +530,7 @@ extension VRBaseScene {
     }
 }
 
-extension VRBaseScene {
-    
-    func duplicateNode(node: SCNNode, material:SCNMaterial) -> SCNNode
-    {
-        let newNode: SCNNode = node.clone()
-        newNode.geometry = node.geometry?.copy() as? SCNGeometry
-        newNode.geometry?.firstMaterial = material
-        
-        return newNode
-    }
-}
+
 
 extension VRBaseScene {
     

@@ -297,6 +297,8 @@ class VRScene_01: VRBaseScene {
         setUpCompassPoints(things, backgroundContents: backgroundContents, distance: 150.0, sizeRadius: 5.0)
         setUpCompassPoints(things, backgroundContents: backgroundContents, distance: 50.0, sizeRadius: 5.0)
         
+        generateRandomNodesOnMap(nil, mapNode: things, widthOfMap: 200, lengthOfMap: 200, count: 10)
+        
         let torusGeometry = SCNTorus(ringRadius: 4, pipeRadius: 1)
         torusGeometry.firstMaterial?.diffuse.contents = UIColor.blackColor()
         torusGeometry.firstMaterial?.specular.contents = UIColor.whiteColor()
@@ -349,6 +351,14 @@ class VRScene_01: VRBaseScene {
                 world.addChildNode(treeClone)
             }
         }
+        
+        let delay = SCNAction.waitForDuration(5)
+        let runBlock = SCNAction.runBlock { (node) in
+            
+            self.doingSomething = false
+        }
+        let seq = SCNAction.sequence([delay, runBlock])
+        self.world.runAction(seq)
  
     }
     
