@@ -9,10 +9,17 @@
 import Foundation
 import SpriteKit
 
+struct Hub {
+    
+    let image = SKSpriteNode(imageNamed: "Grass.png")
+    var overlayHealth:String = "100"
+    let health = SKLabelNode(text: "Test")
+}
+
 
 class OverlayScene : SKScene {
     
-    var overlayHealth:String = "100"
+   
     
     override init() {
         
@@ -20,13 +27,14 @@ class OverlayScene : SKScene {
         
         print("loaded overlayScene")
         
-        let node = SKSpriteNode(imageNamed: "Grass.png")
+        let hub = Hub()
+        let node = hub.image
         node.position.x = self.size.width/2
         node.position.y  = self.size.height/2
         node.size = CGSize(width: 50, height: 50)
         self.addChild(node)
         
-        let nodeHealth = SKLabelNode(text: overlayHealth)
+        let nodeHealth = hub.health
         nodeHealth.fontSize = 24
         nodeHealth.fontColor = SKColor.whiteColor()
         nodeHealth.position.x = 4 * (self.size.width/5)

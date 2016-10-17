@@ -28,7 +28,7 @@ class SceneKitVRRenderer: NSObject, GVRCardboardViewDelegate {
         let camNode = self.cameraNode
         camNode.camera = SCNCamera();
         renderer.pointOfView = camNode;
-        //print(renderer.pointOfView?.position)
+        print(renderer.pointOfView?.position)
         renderer.scene = scene;
         //renderer.overlaySKScene = overlayScene
         // comment this out if you would like custom lighting

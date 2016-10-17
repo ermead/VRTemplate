@@ -150,6 +150,10 @@ class VRScene_01: VRBaseScene {
         
         //rotateBones()
         //  world.position.z += 1
+        let text = SCNText(string: String(Int(time)), extrusionDepth: 0.5)
+        text.chamferRadius = 1
+        torusNode.geometry = text
+        
         
     }
     
@@ -297,7 +301,7 @@ class VRScene_01: VRBaseScene {
         setUpCompassPoints(things, backgroundContents: backgroundContents, distance: 150.0, sizeRadius: 5.0)
         setUpCompassPoints(things, backgroundContents: backgroundContents, distance: 50.0, sizeRadius: 5.0)
         
-        generateRandomNodesOnMap(nil, mapNode: things, widthOfMap: 200, lengthOfMap: 200, count: 10)
+        generateRandomNodesOnMap(nil, mapNode: things, widthOfMap: 200, lengthOfMap: 200, count: 50)
         
         let torusGeometry = SCNTorus(ringRadius: 4, pipeRadius: 1)
         torusGeometry.firstMaterial?.diffuse.contents = UIColor.blackColor()
@@ -308,6 +312,10 @@ class VRScene_01: VRBaseScene {
         torusNode.position = SCNVector3Make(-10, 0, -10)
         world.addChildNode(torusNode)
         ////////
+        
+        let text = SCNText(string: "TEST", extrusionDepth: 1)
+        text.chamferRadius = 0.2
+        torusNode.geometry = text
         
         //
         let sceneWave = SCNScene(named: "art.scnassets/testWaveRig.scn")

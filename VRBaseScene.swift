@@ -100,6 +100,7 @@ class VRBaseScene : NSObject, VRControllerProtocol, SCNPhysicsContactDelegate {
     
     var doingSomething: Bool = true
     var focusedNode : SCNNode?
+    var sphereFocusNode = SCNNode()
     
     var backgroundContents: AnyObject = [
         
@@ -142,6 +143,7 @@ class VRBaseScene : NSObject, VRControllerProtocol, SCNPhysicsContactDelegate {
     }
     
     func playerDidFocus(){
+        //MARK: FOCUSED
         // override by subclass
         print("focused")
         guard doingSomething == false else {return}
@@ -165,7 +167,7 @@ class VRBaseScene : NSObject, VRControllerProtocol, SCNPhysicsContactDelegate {
     }
     
     func bulletDidHitDestroyable(node: SCNNode, with: String){
-        
+        //MARK:BULLET HIT SOMETHING
         guard node.physicsBody?.categoryBitMask == CC.destroyable.rawValue else {return}
         
         print("\(with) hit something")
@@ -344,7 +346,7 @@ class VRBaseScene : NSObject, VRControllerProtocol, SCNPhysicsContactDelegate {
         }
         
         let hits = things.hitTestWithSegmentFromPoint(position, toPoint: p2, options: [SCNHitTestFirstFoundOnlyKey: true]);
-        
+        //MARK:FOCUS TEST
         if let hit = hits.first {
             if hit.node.name == "cursor" {
                 return
@@ -361,8 +363,18 @@ class VRBaseScene : NSObject, VRControllerProtocol, SCNPhysicsContactDelegate {
         things.enumerateChildNodesUsingBlock { (node, end) in
             node.geometry?.materials.first?.emission.contents = UIColor.clearColor()
         };
-        
-        focusedNode?.geometry?.materials.first?.emission.contents = UIColor.yellowColor().colorWithAlphaComponent(0.3)
+
+        if let pos = focusedNode?.position {
+
+            sphereFocusNode.geometry = focusedNode?.geometry
+            sphereFocusNode.geometry?.materials.first?.emission.contents = UIColor.yellowColor().colorWithAlphaComponent(0.3)
+            sphereFocusNode.scale = SCNVector3Make(1.5, 1.5, 1.5)
+            //sphereFocusNode.hidden = false
+            sphereFocusNode.position = pos
+        } else {
+            //sphereFocusNode.hidden = true
+        }
+        //focusedNode?.geometry?.materials.first?.emission.contents = UIColor.yellowColor().colorWithAlphaComponent(0.3)
         
         doAdditionalUpdate(headTransform)
     }
@@ -451,6 +463,13 @@ class VRBaseScene : NSObject, VRControllerProtocol, SCNPhysicsContactDelegate {
         cursor.name = "cursor"
 
         scene.rootNode.addChildNode(world)
+        
+        let sphere = SCNSphere(radius: 3)
+        sphere.materials.first?.diffuse.contents = UIColor.yellowColor()
+        sphere.materials.first?.specular.contents = UIColor.whiteColor()
+        sphere.materials.first?.transparency = 0.75
+        sphereFocusNode = SCNNode(geometry: sphere)
+        world.addChildNode(sphereFocusNode)
   
         ///////
         doAdditionalSetup()

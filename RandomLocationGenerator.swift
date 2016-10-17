@@ -23,19 +23,19 @@ func generateRandomNodesOnMap(arrayOfNodes: [SCNNode]?, mapNode: SCNNode, widthO
     var randomNodeCollection: [SCNNode]? = arrayOfNodes
     if randomNodeCollection == nil {
         
+        randomNodeCollection = []
+        
+        let defaultGeometries = geometries
+        
+        let randomDefault = GKRandomDistribution(forDieWithSideCount: geometries.count)
+        
         for i in 0 ..< count {
-            
-            let boxNode = SCNNode()
-            //            let light = SCNLight()
-            //            light.type = SCNLightTypeSpot
-            //            let lightNode = SCNNode()
-            //            lightNode.light = light
-            //            lightNode.position = SCNVector3Make(0, 1, 0)
-            //            boxNode.addChildNode(lightNode)
-            boxNode.geometry = SCNBox(width: 5, height: 5, length: 5, chamferRadius: 1)
-            boxNode.geometry?.firstMaterial?.diffuse.contents = UIColor.blueColor()
-            randomNodeCollection = []
-            randomNodeCollection?.append(boxNode)
+            let randomIndex = randomDefault.nextInt() - 1
+            let node = SCNNode()
+            node.geometry = defaultGeometries[randomIndex]
+            let color = UIColor(hue: ((CGFloat(i) * (359/CGFloat(count)))) / 359.0, saturation: 0.8, brightness: 0.7, alpha: 1.0)
+            node.geometry?.firstMaterial?.diffuse.contents = color
+            randomNodeCollection?.append(node)
             
         }
         
@@ -45,12 +45,18 @@ func generateRandomNodesOnMap(arrayOfNodes: [SCNNode]?, mapNode: SCNNode, widthO
     
     for i in 1 ..< count {
         
-        let random = GKRandomDistribution(forDieWithSideCount: randomNodeCollection!.count)
-        let index = random.nextInt() - 1
-        let material = SCNMaterial()
-        material.diffuse.contents = UIColor.blueColor()
+//        let random = GKRandomDistribution(forDieWithSideCount: randomNodeCollection!.count)
+//        let index = random.nextInt() - 1
+//        let material = SCNMaterial()
+//        
+//        let color = UIColor(hue: ((CGFloat(i) * (359/CGFloat(count)))) / 359.0, saturation: 0.8, brightness: 0.7, alpha: 1.0)
+//        
+//        material.diffuse.contents = color
+//        
+//        let node = duplicateNode(randomNodeCollection![index], material: material)
         
-        let node = duplicateNode(randomNodeCollection![index], material: material)
+        let node = randomNodeCollection![i]
+        
         node.physicsBody = SCNPhysicsBody.kinematicBody()
         node.physicsBody!.categoryBitMask = CC.destroyable.rawValue
         node.physicsBody!.contactTestBitMask = CC.bullet.rawValue
