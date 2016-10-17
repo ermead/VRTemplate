@@ -145,15 +145,17 @@ class VRScene_01: VRBaseScene {
         
     }
     
+    //MARK:UPDATE
     override func doAdditionalUpdate(headTransform: GVRHeadTransform) {
     
         
-        //rotateBones()
+        rotateBones()
         //  world.position.z += 1
         let text = SCNText(string: String(Int(time)), extrusionDepth: 0.5)
         text.chamferRadius = 1
         torusNode.geometry = text
         
+        waveSkinner.skeleton?.position = world.position
         
     }
     
@@ -161,6 +163,7 @@ class VRScene_01: VRBaseScene {
     func rotateBones(){
         let amount:Float = 1
         for bone in waveSkinner.bones {
+            
             if time > 1 {
                 
                 if bone.name == "Armature_001_Bone_015_pose_matrix" {
@@ -296,8 +299,9 @@ class VRScene_01: VRBaseScene {
         makeOrProject()
     }
     
+    //MARK:SETUP
     override func doAdditionalSetup() {
- 
+        
         setUpCompassPoints(things, backgroundContents: backgroundContents, distance: 150.0, sizeRadius: 5.0)
         setUpCompassPoints(things, backgroundContents: backgroundContents, distance: 50.0, sizeRadius: 5.0)
         
@@ -323,13 +327,13 @@ class VRScene_01: VRBaseScene {
         
         waveSkinner = (wave?.skinner)!
         waveSkinner.skeleton?.position = SCNVector3Zero
-        waveSkinner.skeleton?.position.y -= 10
+        waveSkinner.skeleton?.position.y = 30
         waveNode.addChildNode(wave!)
-        waveNode.addChildNode(waveSkinner.skeleton!)
+        //world.addChildNode(waveSkinner.skeleton!)
         waveSkinner.skeleton?.scale = SCNVector3Make(10, 10, 10)
         world.addChildNode(waveNode)
         
-        waveNode.eulerAngles.x = GLKMathDegreesToRadians(90)
+        waveNode.eulerAngles.x = GLKMathDegreesToRadians(180)
         //
         
         cameraNode.physicsBody = SCNPhysicsBody.dynamicBody()
