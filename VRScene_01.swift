@@ -302,10 +302,15 @@ class VRScene_01: VRBaseScene {
     //MARK:SETUP
     override func doAdditionalSetup() {
         
+        self.scene.fogColor = UIColor.grayColor().colorWithAlphaComponent(0.3)
+        self.scene.fogStartDistance = 100
+        self.scene.fogEndDistance = 250
+        self.scene.fogDensityExponent = 0.8
+        
         setUpCompassPoints(things, backgroundContents: backgroundContents, distance: 150.0, sizeRadius: 5.0)
         setUpCompassPoints(things, backgroundContents: backgroundContents, distance: 50.0, sizeRadius: 5.0)
         
-        generateRandomNodesOnMap(nil, mapNode: things, widthOfMap: 200, lengthOfMap: 200, count: 50)
+        generateRandomNodesOnMap(nil, mapNode: things, widthOfMap: 200, lengthOfMap: 200, count: 10)
         
         let torusGeometry = SCNTorus(ringRadius: 4, pipeRadius: 1)
         torusGeometry.firstMaterial?.diffuse.contents = UIColor.blackColor()
@@ -313,7 +318,7 @@ class VRScene_01: VRBaseScene {
         torusGeometry.firstMaterial?.shininess = 100.0
         torusGeometry.firstMaterial?.reflective.contents = scene.background.contents
         torusNode = SCNNode(geometry: torusGeometry)
-        torusNode.position = SCNVector3Make(-10, 0, -10)
+        torusNode.position = SCNVector3Make(-10, 0, -100)
         world.addChildNode(torusNode)
         ////////
         
@@ -329,9 +334,8 @@ class VRScene_01: VRBaseScene {
         waveSkinner.skeleton?.position = SCNVector3Zero
         waveSkinner.skeleton?.position.y = 30
         waveNode.addChildNode(wave!)
-        //world.addChildNode(waveSkinner.skeleton!)
         waveSkinner.skeleton?.scale = SCNVector3Make(10, 10, 10)
-        world.addChildNode(waveNode)
+        //world.addChildNode(waveNode)
         
         waveNode.eulerAngles.x = GLKMathDegreesToRadians(180)
         //
@@ -350,7 +354,7 @@ class VRScene_01: VRBaseScene {
         treeNode.addChildNode(tree!)
         treeNode.scale = SCNVector3Make(15, 20, 15)
         treeNode.position = SCNVector3Make(5, -3, -5)
-        world.addChildNode(treeNode)
+        //world.addChildNode(treeNode)
         
         let material = SCNMaterial()
         material.diffuse.contents = UIImage(named: "testTreeMaterial")
@@ -360,7 +364,7 @@ class VRScene_01: VRBaseScene {
                 let treeClone: SCNNode = duplicateNode(treeNode, material: material)
                 treeClone.pivot = SCNMatrix4MakeTranslation(0, 0, 0)
                 treeClone.position = SCNVector3((Double(i) - 5.0) * 35, -10, (Double(j) - 5.0) * 35)
-                world.addChildNode(treeClone)
+                //world.addChildNode(treeClone)
             }
         }
         
@@ -371,7 +375,103 @@ class VRScene_01: VRBaseScene {
         }
         let seq = SCNAction.sequence([delay, runBlock])
         self.world.runAction(seq)
- 
+        
+        //
+        setUpModels()
+        //
+    }
+    
+    func setUpModels(){
+        
+        let scene = SCNScene(named: "models.scnassets/Models.scn")!
+        
+        let barrel = scene.rootNode.childNodeWithName("barrel", recursively: true)
+        let barrelNode = SCNNode()
+        barrelNode.addChildNode(barrel!)
+        barrelNode.pivot = SCNMatrix4MakeTranslation(0, 0, 0)
+        barrelNode.scale = SCNVector3Make(2, 2, 2)
+        barrelNode.position = SCNVector3Make(0, -5, -42)
+        barrelNode.physicsBody = SCNPhysicsBody.kinematicBody()
+        //world.addChildNode(barrelNode)
+        
+        let structure = scene.rootNode.childNodeWithName("structure", recursively: true)
+        let structureNode = SCNNode()
+        structureNode.addChildNode(structure!)
+        structureNode.pivot = SCNMatrix4MakeTranslation(0, 0, 0)
+        structureNode.scale = SCNVector3Make(1, 1, 1)
+        structureNode.position = SCNVector3Make(0, -5, -20)
+        structureNode.physicsBody = SCNPhysicsBody.kinematicBody()
+        //world.addChildNode(structureNode)
+        
+        let rock = scene.rootNode.childNodeWithName("rock", recursively: true)
+        let rockNode = SCNNode()
+        rockNode.addChildNode(rock!)
+        rockNode.pivot = SCNMatrix4MakeTranslation(0, 0, 0)
+        rockNode.scale = SCNVector3Make(1, 1, 1)
+        rockNode.position = SCNVector3Make(0, -5, -20)
+        rockNode.physicsBody = SCNPhysicsBody.kinematicBody()
+        //world.addChildNode(rockNode)
+        
+        let tree = scene.rootNode.childNodeWithName("tree", recursively: true)
+        let treeNode = SCNNode()
+        treeNode.addChildNode(tree!)
+        treeNode.pivot = SCNMatrix4MakeTranslation(0, 0, 0)
+        treeNode.scale = SCNVector3Make(1, 1, 1)
+        treeNode.position = SCNVector3Make(0, -10, -30)
+        treeNode.physicsBody = SCNPhysicsBody.kinematicBody()
+        //world.addChildNode(treeNode)
+        
+        let bamboo_1 = scene.rootNode.childNodeWithName("bamboo_1", recursively: true)
+        let bamboo_1Node = SCNNode()
+        bamboo_1Node.addChildNode(bamboo_1!)
+        bamboo_1Node.pivot = SCNMatrix4MakeTranslation(0, 0, 0)
+        bamboo_1Node.scale = SCNVector3Make(1, 1, 1)
+        bamboo_1Node.position = SCNVector3Make(0, -10, -40)
+        //world.addChildNode(bamboo_1Node)
+        
+        let bamboo_2 = scene.rootNode.childNodeWithName("bamboo_2", recursively: true)
+        let bamboo_2Node = SCNNode()
+        bamboo_2Node.addChildNode(bamboo_2!)
+        bamboo_2Node.pivot = SCNMatrix4MakeTranslation(0, 0, 0)
+        bamboo_2Node.scale = SCNVector3Make(1, 1, 1)
+        bamboo_2Node.position = SCNVector3Make(0, -10, -50)
+        //world.addChildNode(bamboo_2Node)
+        
+        let bamboo_3 = scene.rootNode.childNodeWithName("bamboo_3", recursively: true)
+        let bamboo_3Node = SCNNode()
+        bamboo_3Node.addChildNode(bamboo_3!)
+        bamboo_3Node.pivot = SCNMatrix4MakeTranslation(0, 0, 0)
+        bamboo_3Node.scale = SCNVector3Make(1, 1, 1)
+        bamboo_3Node.position = SCNVector3Make(0, -10, -60)
+        //world.addChildNode(bamboo_3Node)
+        
+        let fern = scene.rootNode.childNodeWithName("fern", recursively: true)
+        let fernNode = SCNNode()
+        fernNode.addChildNode(fern!)
+        fernNode.pivot = SCNMatrix4MakeTranslation(0, 0, 0)
+        fernNode.scale = SCNVector3Make(10, 10, 10)
+        fernNode.position = SCNVector3Make(0, -10, -70)
+        //world.addChildNode(fernNode)
+        
+        let lily = scene.rootNode.childNodeWithName("lily", recursively: true)
+        let lilyNode = SCNNode()
+        lilyNode.addChildNode(lily!)
+        lilyNode.pivot = SCNMatrix4MakeTranslation(0, 0, 0)
+        lilyNode.scale = SCNVector3Make(10, 10, 10)
+        lilyNode.position = SCNVector3Make(0, -10, -80)
+        //world.addChildNode(lilyNode)
+        
+        let light = SCNLight()
+        light.type = SCNLightTypeOmni
+        let lightNode = SCNNode()
+        lightNode.light = light
+        lightNode.position = SCNVector3(0, 10, -70)
+        world.addChildNode(lightNode)
+        
+        let nodes = [barrelNode, structureNode, bamboo_1Node, bamboo_2Node, bamboo_3Node, lilyNode, rockNode, treeNode, fernNode]
+        generateRandomNodesOnMap(nodes, mapNode: world, widthOfMap: 400, lengthOfMap: 400, count: 100)
+        
+        
     }
     
 }

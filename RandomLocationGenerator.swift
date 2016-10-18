@@ -45,17 +45,27 @@ func generateRandomNodesOnMap(arrayOfNodes: [SCNNode]?, mapNode: SCNNode, widthO
     
     for i in 1 ..< count {
         
-//        let random = GKRandomDistribution(forDieWithSideCount: randomNodeCollection!.count)
-//        let index = random.nextInt() - 1
-//        let material = SCNMaterial()
-//        
-//        let color = UIColor(hue: ((CGFloat(i) * (359/CGFloat(count)))) / 359.0, saturation: 0.8, brightness: 0.7, alpha: 1.0)
-//        
-//        material.diffuse.contents = color
-//        
-//        let node = duplicateNode(randomNodeCollection![index], material: material)
+        var index = i - 1
         
-        let node = randomNodeCollection![i]
+        func adjustIndexForCount(){
+            if index >= randomNodeCollection!.count {
+                index = index - randomNodeCollection!.count
+                adjustIndexForCount()
+            } else {
+                return
+            }
+        }
+        
+        adjustIndexForCount()
+        
+        guard index < randomNodeCollection!.count else {return}
+        
+        let nodeA = randomNodeCollection![index]
+        var materialA = SCNMaterial()
+        if let material = (nodeA.geometry?.firstMaterial) {
+            materialA = material
+        }
+        let node = duplicateNode(nodeA, material: materialA)
         
         node.physicsBody = SCNPhysicsBody.kinematicBody()
         node.physicsBody!.categoryBitMask = CC.destroyable.rawValue
@@ -76,7 +86,7 @@ func generateRandomNodesOnMap(arrayOfNodes: [SCNNode]?, mapNode: SCNNode, widthO
             return Int((arc4random_uniform(2) == 0) ? 1.0 : -1.0)
         }
         
-        node.position = SCNVector3Make(Float(randomX.nextInt() * randomSignX), 0, Float(randomZ.nextInt() * randomSignX))
+        node.position = SCNVector3Make(Float(randomX.nextInt() * randomSignX), -10, Float(randomZ.nextInt() * randomSignX))
         
         
         mapNode.addChildNode(node)
