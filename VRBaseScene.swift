@@ -218,9 +218,10 @@ class VRBaseScene : NSObject, VRControllerProtocol, SCNPhysicsContactDelegate {
         let actionH = SCNAction.rotateByAngle(CGFloat(GLKMathDegreesToRadians(rotateBy)), aroundAxis: SCNVector3Make(0, 1, 0), duration: 0)
         cameraNode.runAction(actionH)
         
-        //This variable controls if the joystick is being used for roytation or not. For example, pressing forward on the controller will make you go in the direction you are facing, if you are standing up and moving around a room. If you are sitting and relying on the joystick to rotate you, sometimes its nice to move independently of head rotation. 
+        //This variable controls if the joystick is being used for roytation or not. For example, pressing forward on the controller will make you go in the direction you are facing, if you are standing up and moving around a room. If you are sitting and relying on the joystick to rotate you, sometimes its nice to move independently of head rotation.
+        
         //Change this variable to false to rely on joystick rotation
-        let moveAccordingToHeadRotation = true
+        let moveAccordingToHeadRotation = false
         
         if usingExtendedGamePad == true {
             let newTransform = self.moveCamera(world, x: -moveX, y: -moveY, z: -moveZ)

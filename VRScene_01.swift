@@ -389,7 +389,7 @@ class VRScene_01: VRBaseScene {
         let barrelNode = SCNNode()
         barrelNode.addChildNode(barrel!)
         barrelNode.pivot = SCNMatrix4MakeTranslation(0, 0, 0)
-        barrelNode.scale = SCNVector3Make(2, 2, 2)
+        barrelNode.scale = SCNVector3Make(5, 5, 5)
         barrelNode.position = SCNVector3Make(0, -5, -42)
         barrelNode.physicsBody = SCNPhysicsBody.kinematicBody()
         //world.addChildNode(barrelNode)
@@ -398,16 +398,16 @@ class VRScene_01: VRBaseScene {
         let structureNode = SCNNode()
         structureNode.addChildNode(structure!)
         structureNode.pivot = SCNMatrix4MakeTranslation(0, 0, 0)
-        structureNode.scale = SCNVector3Make(1, 1, 1)
-        structureNode.position = SCNVector3Make(0, -5, -20)
+        structureNode.scale = SCNVector3Make(3, 3, 3)
+        structureNode.position = SCNVector3Make(0, -10, 0)
         structureNode.physicsBody = SCNPhysicsBody.kinematicBody()
-        //world.addChildNode(structureNode)
+        world.addChildNode(structureNode)
         
         let rock = scene.rootNode.childNodeWithName("rock", recursively: true)
         let rockNode = SCNNode()
         rockNode.addChildNode(rock!)
         rockNode.pivot = SCNMatrix4MakeTranslation(0, 0, 0)
-        rockNode.scale = SCNVector3Make(1, 1, 1)
+        rockNode.scale = SCNVector3Make(5, 5, 5)
         rockNode.position = SCNVector3Make(0, -5, -20)
         rockNode.physicsBody = SCNPhysicsBody.kinematicBody()
         //world.addChildNode(rockNode)
@@ -416,34 +416,18 @@ class VRScene_01: VRBaseScene {
         let treeNode = SCNNode()
         treeNode.addChildNode(tree!)
         treeNode.pivot = SCNMatrix4MakeTranslation(0, 0, 0)
-        treeNode.scale = SCNVector3Make(1, 1, 1)
+        treeNode.scale = SCNVector3Make(2, 2, 2)
         treeNode.position = SCNVector3Make(0, -10, -30)
         treeNode.physicsBody = SCNPhysicsBody.kinematicBody()
         //world.addChildNode(treeNode)
         
-        let bamboo_1 = scene.rootNode.childNodeWithName("bamboo_1", recursively: true)
+        let bamboo_1 = scene.rootNode.childNodeWithName("bambooCluster", recursively: true)
         let bamboo_1Node = SCNNode()
         bamboo_1Node.addChildNode(bamboo_1!)
         bamboo_1Node.pivot = SCNMatrix4MakeTranslation(0, 0, 0)
-        bamboo_1Node.scale = SCNVector3Make(1, 1, 1)
+        bamboo_1Node.scale = SCNVector3Make(3, 3, 3)
         bamboo_1Node.position = SCNVector3Make(0, -10, -40)
         //world.addChildNode(bamboo_1Node)
-        
-        let bamboo_2 = scene.rootNode.childNodeWithName("bamboo_2", recursively: true)
-        let bamboo_2Node = SCNNode()
-        bamboo_2Node.addChildNode(bamboo_2!)
-        bamboo_2Node.pivot = SCNMatrix4MakeTranslation(0, 0, 0)
-        bamboo_2Node.scale = SCNVector3Make(1, 1, 1)
-        bamboo_2Node.position = SCNVector3Make(0, -10, -50)
-        //world.addChildNode(bamboo_2Node)
-        
-        let bamboo_3 = scene.rootNode.childNodeWithName("bamboo_3", recursively: true)
-        let bamboo_3Node = SCNNode()
-        bamboo_3Node.addChildNode(bamboo_3!)
-        bamboo_3Node.pivot = SCNMatrix4MakeTranslation(0, 0, 0)
-        bamboo_3Node.scale = SCNVector3Make(1, 1, 1)
-        bamboo_3Node.position = SCNVector3Make(0, -10, -60)
-        //world.addChildNode(bamboo_3Node)
         
         let fern = scene.rootNode.childNodeWithName("fern", recursively: true)
         let fernNode = SCNNode()
@@ -468,8 +452,11 @@ class VRScene_01: VRBaseScene {
         lightNode.position = SCNVector3(0, 10, -70)
         world.addChildNode(lightNode)
         
-        let nodes = [barrelNode, structureNode, bamboo_1Node, bamboo_2Node, bamboo_3Node, lilyNode, rockNode, treeNode, fernNode]
-        generateRandomNodesOnMap(nodes, mapNode: world, widthOfMap: 400, lengthOfMap: 400, count: 100)
+        let nodes = [barrelNode, bamboo_1Node, lilyNode, rockNode, treeNode, treeNode, treeNode, treeNode, treeNode, fernNode]
+        
+        generateRandomNodesOnMap(nodes, mapNode: world, widthOfMap: 300, lengthOfMap: 300, count: 100)
+        
+        
         
         
     }

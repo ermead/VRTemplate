@@ -126,6 +126,7 @@
 			isa = PBXGroup;
 			children = (
 				D72DAAF61DB1C5C0007940C7 /* VRBaseScene.swift */,
+				D72DAACE1DB1B9EC007940C7 /* SceneKitVRRenderer.swift */,
 				D72191FE1DB4461B00023B1B /* SceneTemplate */,
 			);
 			name = VRBaseScene;
@@ -170,7 +171,6 @@
 				D72DAACD1DB1B9EC007940C7 /* Info.plist */,
 				D72DAACB1DB1B9EB007940C7 /* VRTemplate-Bridging-Header.h */,
 				D72DAAD61DB1B9EC007940C7 /* RenderLoop.swift */,
-				D72DAACE1DB1B9EC007940C7 /* SceneKitVRRenderer.swift */,
 				D72DAAF31DB1BF2A007940C7 /* ExampleScene */,
 				D72DAAD31DB1B9EC007940C7 /* AppDelegate.swift */,
 			);
