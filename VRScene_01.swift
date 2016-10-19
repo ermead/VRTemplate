@@ -12,7 +12,7 @@ class VRScene_01: VRBaseScene {
     
     var torusNode = SCNNode()
     var waveSkinner = SCNSkinner()
-  
+    
     required init() {
         
         print("loaded vr scene_01")
@@ -28,8 +28,8 @@ class VRScene_01: VRBaseScene {
             "art.scnassets/skybox/bottom.jpg",
             "art.scnassets/skybox/back.jpg",
             "art.scnassets/skybox/front.jpg",
-            ]
- 
+        ]
+        
     }
     
     
@@ -63,11 +63,11 @@ class VRScene_01: VRBaseScene {
                 let seq = SCNAction.sequence([delay, runBlock])
                 world.runAction(seq)
             }
-//            for bone in waveSkinner.bones {
-////            if bone.name == "Armature_001_Bone_067_pose_matrix" {
-////                bone.eulerAngles.y += GLKMathDegreesToRadians(1)
-////            }
-//            }
+            //            for bone in waveSkinner.bones {
+            ////            if bone.name == "Armature_001_Bone_067_pose_matrix" {
+            ////                bone.eulerAngles.y += GLKMathDegreesToRadians(1)
+            ////            }
+            //            }
             
         case ".":
             
@@ -80,13 +80,13 @@ class VRScene_01: VRBaseScene {
                 let seq = SCNAction.sequence([delay, runBlock])
                 world.runAction(seq)
             }
-//            for bone in waveSkinner.bones {
-//                bone.eulerAngles.x -= GLKMathDegreesToRadians(1)
-//            }
+            //            for bone in waveSkinner.bones {
+            //                bone.eulerAngles.x -= GLKMathDegreesToRadians(1)
+            //            }
             
         case "<":     for bone in waveSkinner.bones {
             
-           
+            
             bone.eulerAngles.y += GLKMathDegreesToRadians(1)
             
             
@@ -94,7 +94,7 @@ class VRScene_01: VRBaseScene {
             }
         case ">":     for bone in waveSkinner.bones {
             
-         
+            
             bone.eulerAngles.y -= GLKMathDegreesToRadians(1)
             
             
@@ -141,13 +141,13 @@ class VRScene_01: VRBaseScene {
             
         }
         
-
+        
         
     }
     
     //MARK:UPDATE
     override func doAdditionalUpdate(headTransform: GVRHeadTransform) {
-    
+        
         
         rotateBones()
         //  world.position.z += 1
@@ -259,7 +259,7 @@ class VRScene_01: VRBaseScene {
     var isMaking = false
     
     func makeOrProject(){
-   
+        
         if isMaking == false {
             isMaking = true
             projectedDistance = 0
@@ -346,7 +346,7 @@ class VRScene_01: VRBaseScene {
         //cameraNode.physicsBody?.affectedByGravity = true
         
         
-
+        
         let scene3 = SCNScene(named: "art.scnassets/testTree.scn")!
         let tree = scene3.rootNode.childNodeWithName("tree", recursively: true)
         let treeNode = SCNNode()
@@ -454,12 +454,45 @@ class VRScene_01: VRBaseScene {
         
         let nodes = [barrelNode, bamboo_1Node, lilyNode, rockNode, treeNode, treeNode, treeNode, treeNode, treeNode, fernNode]
         
-        generateRandomNodesOnMap(nodes, mapNode: world, widthOfMap: 300, lengthOfMap: 300, count: 100)
+        generateRandomNodesOnMap(nodes, mapNode: world, widthOfMap: 300, lengthOfMap: 300, count: 50)
         
-        
-        
+        addShaders()
         
     }
     
+    func addShaders(){
+        ///////////////////////////////////
+        let torus1 = SCNTorus(ringRadius: 1, pipeRadius: 0.5)
+        let torusNode1 = SCNNode(geometry: torus1)
+        world.addChildNode(torusNode1)
+        
+        let material = SCNMaterial()
+        material.diffuse.contents = UIColor.greenColor()
+        torusNode1.geometry?.firstMaterial = material
+        
+        torusNode1.position.z = -20
+        
+        var shaders = NSMutableDictionary()
+        
+        do {
+            
+            shaders[SCNShaderModifierEntryPointFragment] = try String(contentsOfFile: NSBundle.mainBundle().pathForResource("colorShader", ofType: "fsh")!, encoding: NSUTF8StringEncoding)
+            
+        } catch {
+            print("error making shader")
+        }
+      
+        if let shaders = shaders as? NSDictionary {
+            
+            if let shaderDict = shaders as? [String: String] {
+                material.shaderModifiers = shaderDict
+            }
+        }
+        ///////////////////////////////////
+    }
+
+    
+    
+///END OF CLASS
 }
 
