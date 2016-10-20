@@ -9,13 +9,13 @@
             shouldBeEnabled = "Yes"
             ignoreCount = "0"
             continueAfterRunningActions = "No"
-            filePath = "VRScene_01.swift"
-            timestampString = "498631653.511724"
+            filePath = "BuilderClass.swift"
+            timestampString = "498642708.067592"
             startingColumnNumber = "9223372036854775807"
             endingColumnNumber = "9223372036854775807"
-            startingLineNumber = "520"
-            endingLineNumber = "520"
-            landmarkName = "setUpBuildMode()"
+            startingLineNumber = "124"
+            endingLineNumber = "124"
+            landmarkName = "placeNodeInLevel(_:selectedNodeTransform:)"
             landmarkType = "5">
          </BreakpointContent>
       </BreakpointProxy>
@@ -25,14 +25,94 @@
             shouldBeEnabled = "Yes"
             ignoreCount = "0"
             continueAfterRunningActions = "No"
-            filePath = "VRScene_01.swift"
-            timestampString = "498631688.303474"
+            filePath = "BuilderClass.swift"
+            timestampString = "498642708.067592"
             startingColumnNumber = "9223372036854775807"
             endingColumnNumber = "9223372036854775807"
-            startingLineNumber = "394"
-            endingLineNumber = "394"
-            landmarkName = "doAdditionalSetup()"
+            startingLineNumber = "117"
+            endingLineNumber = "117"
+            landmarkName = "placeNodeInLevel(_:selectedNodeTransform:)"
             landmarkType = "5">
+            <Locations>
+               <Location
+                  shouldBeEnabled = "Yes"
+                  ignoreCount = "0"
+                  continueAfterRunningActions = "No"
+                  symbolName = "VRTemplate.BuilderTools.placeNodeInLevel (__C.SCNVector3, selectedNodeTransform : __C.SCNMatrix4) -&gt; ()"
+                  moduleName = "VRTemplate"
+                  usesParentBreakpointCondition = "Yes"
+                  urlString = "file:///Users/ericmead/Desktop/VR%20projects/VRTemplate/BuilderClass.swift"
+                  timestampString = "498641964.994625"
+                  startingColumnNumber = "9223372036854775807"
+                  endingColumnNumber = "9223372036854775807"
+                  startingLineNumber = "100"
+                  endingLineNumber = "100"
+                  offsetFromSymbolStart = "3023">
+               </Location>
+               <Location
+                  shouldBeEnabled = "Yes"
+                  ignoreCount = "0"
+                  continueAfterRunningActions = "No"
+                  symbolName = "VRTemplate.BuilderTools.placeNodeInLevel (__C.SCNVector3, selectedNodeTransform : __C.SCNMatrix4) -&gt; ()"
+                  moduleName = "VRTemplate"
+                  usesParentBreakpointCondition = "Yes"
+                  urlString = "file:///Users/ericmead/Desktop/VR%20projects/VRTemplate/BuilderClass.swift"
+                  timestampString = "498641964.994705"
+                  startingColumnNumber = "9223372036854775807"
+                  endingColumnNumber = "9223372036854775807"
+                  startingLineNumber = "100"
+                  endingLineNumber = "100"
+                  offsetFromSymbolStart = "4129">
+               </Location>
+            </Locations>
+         </BreakpointContent>
+      </BreakpointProxy>
+      <BreakpointProxy
+         BreakpointExtensionID = "Xcode.Breakpoint.FileBreakpoint">
+         <BreakpointContent
+            shouldBeEnabled = "Yes"
+            ignoreCount = "0"
+            continueAfterRunningActions = "No"
+            filePath = "BuilderClass.swift"
+            timestampString = "498642708.067592"
+            startingColumnNumber = "9223372036854775807"
+            endingColumnNumber = "9223372036854775807"
+            startingLineNumber = "115"
+            endingLineNumber = "115"
+            landmarkName = "placeNodeInLevel(_:selectedNodeTransform:)"
+            landmarkType = "5">
+            <Locations>
+               <Location
+                  shouldBeEnabled = "Yes"
+                  ignoreCount = "0"
+                  continueAfterRunningActions = "No"
+                  symbolName = "VRTemplate.BuilderTools.placeNodeInLevel (__C.SCNVector3, selectedNodeTransform : __C.SCNMatrix4) -&gt; ()"
+                  moduleName = "VRTemplate"
+                  usesParentBreakpointCondition = "Yes"
+                  urlString = "file:///Users/ericmead/Desktop/VR%20projects/VRTemplate/BuilderClass.swift"
+                  timestampString = "498641964.995247"
+                  startingColumnNumber = "9223372036854775807"
+                  endingColumnNumber = "9223372036854775807"
+                  startingLineNumber = "100"
+                  endingLineNumber = "100"
+                  offsetFromSymbolStart = "3023">
+               </Location>
+               <Location
+                  shouldBeEnabled = "Yes"
+                  ignoreCount = "0"
+                  continueAfterRunningActions = "No"
+                  symbolName = "VRTemplate.BuilderTools.placeNodeInLevel (__C.SCNVector3, selectedNodeTransform : __C.SCNMatrix4) -&gt; ()"
+                  moduleName = "VRTemplate"
+                  usesParentBreakpointCondition = "Yes"
+                  urlString = "file:///Users/ericmead/Desktop/VR%20projects/VRTemplate/BuilderClass.swift"
+                  timestampString = "498641964.995325"
+                  startingColumnNumber = "9223372036854775807"
+                  endingColumnNumber = "9223372036854775807"
+                  startingLineNumber = "100"
+                  endingLineNumber = "100"
+                  offsetFromSymbolStart = "4129">
+               </Location>
+            </Locations>
          </BreakpointContent>
       </BreakpointProxy>
    </Breakpoints>

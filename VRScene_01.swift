@@ -162,6 +162,29 @@ class VRScene_01: VRBaseScene {
         waveSkinner.skeleton?.position = world.position
         waveSkinner.skeleton?.position.y -= 20
         
+        if isBuildMode == true {
+            updateForBuilderMode(headTransform)
+        }
+    }
+    
+    //MARK: updateBUILDER
+    func updateForBuilderMode(headTransform: GVRHeadTransform) {
+        
+        guard isBuildMode == true else {return}
+        
+        buildModeNode?.selectedNode?.transform = headTransform.rotateMatrixForPosition(SCNVector3Make(10, 5, -10))
+        buildModeNode?.selectedNode?.scale = SCNVector3Make(0.25, 0.25, 0.25)
+        
+        if control?.rightTriggerPressed == true {
+            
+            buildModeNode?.placeNodeInLevel(cursor.position, selectedNodeTransform: (buildModeNode?.selectedNode?.transform)!)
+        }
+        
+        if control?.leftTriggerPressed == true {
+            
+            buildModeNode?.printDictionaryOfSmallNodes()
+        }
+        
     }
     
     
@@ -317,7 +340,7 @@ class VRScene_01: VRBaseScene {
         setUpCompassPoints(things, backgroundContents: backgroundContents, distance: 150.0, sizeRadius: 5.0)
         setUpCompassPoints(things, backgroundContents: backgroundContents, distance: 50.0, sizeRadius: 5.0)
         
-        generateRandomNodesOnMap(nil, mapNode: things, widthOfMap: 200, lengthOfMap: 200, count: 10, yValue: 0, isDestroyable: true)
+        generateRandomNodesOnMap(nil, mapNode: things, widthOfMap: 200, lengthOfMap: 200, count: 10, yValue: 10, isDestroyable: true)
         
         let torusGeometry = SCNTorus(ringRadius: 4, pipeRadius: 1)
         torusGeometry.firstMaterial?.diffuse.contents = UIColor.blackColor()
@@ -415,7 +438,7 @@ class VRScene_01: VRBaseScene {
         structureNode.addChildNode(structure!)
         structureNode.pivot = SCNMatrix4MakeTranslation(0, 0, 0)
         structureNode.scale = SCNVector3Make(3, 3, 3)
-        structureNode.position = SCNVector3Make(0, -10, -30)
+        structureNode.position = SCNVector3Make(0, 0, -30)
         world.addChildNode(structureNode)
         
         let rock = scene.rootNode.childNodeWithName("rock", recursively: true)
@@ -434,7 +457,7 @@ class VRScene_01: VRBaseScene {
         treeNode.addChildNode(tree!)
         treeNode.pivot = SCNMatrix4MakeTranslation(0, 0, 0)
         treeNode.scale = SCNVector3Make(2, 2, 2)
-        treeNode.position = SCNVector3Make(0, -10, -30)
+        treeNode.position = SCNVector3Make(0, 0, -30)
         treeNode.physicsBody = SCNPhysicsBody.kinematicBody()
         //world.addChildNode(treeNode)
         
@@ -444,7 +467,7 @@ class VRScene_01: VRBaseScene {
         bamboo_1Node.addChildNode(bamboo_1!)
         bamboo_1Node.pivot = SCNMatrix4MakeTranslation(0, 0, 0)
         bamboo_1Node.scale = SCNVector3Make(3, 3, 3)
-        bamboo_1Node.position = SCNVector3Make(0, -10, -40)
+        bamboo_1Node.position = SCNVector3Make(0, 0, -40)
         //world.addChildNode(bamboo_1Node)
         
         let fern = scene.rootNode.childNodeWithName("fern", recursively: true)
@@ -453,7 +476,7 @@ class VRScene_01: VRBaseScene {
         fernNode.addChildNode(fern!)
         fernNode.pivot = SCNMatrix4MakeTranslation(0, 0, 0)
         fernNode.scale = SCNVector3Make(10, 10, 10)
-        fernNode.position = SCNVector3Make(0, -10, -70)
+        fernNode.position = SCNVector3Make(0, 0, -70)
         //world.addChildNode(fernNode)
         
         let lily = scene.rootNode.childNodeWithName("lily", recursively: true)
@@ -462,7 +485,7 @@ class VRScene_01: VRBaseScene {
         lilyNode.addChildNode(lily!)
         lilyNode.pivot = SCNMatrix4MakeTranslation(0, 0, 0)
         lilyNode.scale = SCNVector3Make(10, 10, 10)
-        lilyNode.position = SCNVector3Make(0, -10, -80)
+        lilyNode.position = SCNVector3Make(0, 0, -80)
         //world.addChildNode(lilyNode)
         
         let light = SCNLight()
@@ -474,7 +497,7 @@ class VRScene_01: VRBaseScene {
         
         let nodes = [barrelNode, bamboo_1Node, lilyNode, rockNode, treeNode, treeNode, treeNode, treeNode, treeNode, fernNode]
         
-        generateRandomNodesOnMap(nodes, mapNode: world, widthOfMap: 300, lengthOfMap: 300, count: 50, yValue: -10, isDestroyable: false)
+        generateRandomNodesOnMap(nodes, mapNode: world, widthOfMap: 300, lengthOfMap: 300, count: 50, yValue: 0, isDestroyable: false)
         
         addShaders()
         
@@ -517,8 +540,10 @@ extension VRBaseScene {
     
     func setUpBuildMode(){
         
-        let buildModeNode = BuilderTools()
-        self.world.addChildNode(buildModeNode)
+        buildModeNode = BuilderTools()
+        self.world.addChildNode(buildModeNode!)
+        buildModeNode!.cameraNode = self.cameraNode
+        buildModeNode!.setUpTools()
         
     }
 }

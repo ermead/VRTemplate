@@ -99,6 +99,7 @@ class VRBaseScene : NSObject, VRControllerProtocol, SCNPhysicsContactDelegate {
     var things = SCNNode();
     var timer = NSTimer()
     var time = 0.0
+    var startedFocusAtTime = 0.0
     
     var doingSomething: Bool = true
     var focusedNode : SCNNode?
@@ -118,7 +119,7 @@ class VRBaseScene : NSObject, VRControllerProtocol, SCNPhysicsContactDelegate {
     
     var waveNode = SCNNode()
     
-    var buildMode: Bool = false 
+    var buildModeNode: BuilderTools?
 
     func countUp(){
         //print("time incremented: \(time)")
@@ -127,7 +128,7 @@ class VRBaseScene : NSObject, VRControllerProtocol, SCNPhysicsContactDelegate {
     
     func startFocusCount(){
         
-        //time = 0
+        startedFocusAtTime = time
         
     }
     
@@ -159,7 +160,7 @@ class VRBaseScene : NSObject, VRControllerProtocol, SCNPhysicsContactDelegate {
             let action = SCNAction.moveTo(pos, duration: 0.2)
             action.timingMode = .EaseOut
             
-            let delay = SCNAction.waitForDuration(0)
+            let delay = SCNAction.waitForDuration(1)
             let runBlock = SCNAction.runBlock({ (node) in
                 self.doingSomething = false
             })
@@ -212,14 +213,14 @@ class VRBaseScene : NSObject, VRControllerProtocol, SCNPhysicsContactDelegate {
         
         if focusedNode != nil {
             //print("time:  \(time)")
-            if time >= 0.5 {
+            if (time - startedFocusAtTime) > 5 {
                 //they focused on something for that long
                 playerDidFocus()
             }
         }
         
-        if cameraNode.position.y <= 0 {
-            cameraNode.position.y = 0
+        if cameraNode.position.y <= 10 {
+            cameraNode.position.y = 10
         }
         
         
@@ -299,15 +300,14 @@ class VRBaseScene : NSObject, VRControllerProtocol, SCNPhysicsContactDelegate {
                 }
                 
             }
-            ////////////////////////////////////////////////////////
-           
+            //////////////////////////////////////////////////
             
-        
             
-        
             if world.position.y > 0 {
                 world.position.y = 0
             }
+            
+            
         } else {
             let newTransform = self.moveCamera(world, x: -moveX, y: -moveY, z: -moveZ)
             world.transform = newTransform
@@ -315,10 +315,7 @@ class VRBaseScene : NSObject, VRControllerProtocol, SCNPhysicsContactDelegate {
                 world.position.y = 0
             }
         }
-        
-        
-        
-            
+         
         //}
         
         cursor.position = headTransform.rotateVector(SCNVector3(0, 0, -20));
@@ -453,7 +450,7 @@ class VRBaseScene : NSObject, VRControllerProtocol, SCNPhysicsContactDelegate {
         floorBox.geometry?.materials.first?.diffuse.contents = floorContents
         floorBox.geometry?.firstMaterial?.diffuse.wrapS = SCNWrapMode.Repeat
         floorBox.geometry?.firstMaterial?.diffuse.wrapT = SCNWrapMode.Repeat
-        floorBox.position = SCNVector3(0, -20, 0)
+        floorBox.position = SCNVector3(0, -10, 0)
         floorBox.physicsBody = SCNPhysicsBody.staticBody()
         floorBox.physicsBody?.categoryBitMask = CC.floor.rawValue
         floorBox.name = "floor"
