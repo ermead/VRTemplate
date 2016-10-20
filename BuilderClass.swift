@@ -21,13 +21,22 @@ struct SmallNodeStruct {
 }
 
 class BuilderTools: SCNNode {
-
+    
+    var size: Int!
+    var divisions: Int!
+    var increment: Int!
+    
     var cameraNode: SCNNode?
     var selectedNode: SCNNode?
     var dictionaryOfSmallNodes: [String : Int]?
     
-    override init() {
-
+    init(size: Int, divisions: Int) {
+        self.size = size
+        self.divisions = divisions
+        self.increment = size/divisions
+        if size % divisions != 0 {
+            print("error number of divisions is not an even increment")
+        }
         super.init()
         
         print("loaded build mode")
@@ -68,8 +77,8 @@ class BuilderTools: SCNNode {
         }
         
         print("setting up builder tools")
-        
-        selectedNode = SCNNode(geometry: SCNBox(width: 10, height: 10, length: 10, chamferRadius: 0))
+        let size: CGFloat = CGFloat(increment)
+        selectedNode = SCNNode(geometry: SCNBox(width: size, height: size, length: size, chamferRadius: 0))
         selectedNode?.geometry?.firstMaterial?.diffuse.contents = UIColor.yellowColor()
         selectedNode?.position = SCNVector3Make(10, 5, -10)
         selectedNode?.name = "Default_\(SmallNodeType.defaultNode.rawValue)"
@@ -86,16 +95,50 @@ class BuilderTools: SCNNode {
             
             let nodeCopy: SCNNode = node.copy() as! SCNNode
             nodeCopy.position = cameraNode!.convertPosition(selNodePos, toNode: self)
-            //nodeCopy.scale = SCNVector3Make(1, 1, 1)
             self.addChildNode(nodeCopy)
-            let goToPosition = cameraNode!.convertPosition(pos, toNode: self)
+
+            var goToPosition = cameraNode!.convertPosition(pos, toNode: self)
             print(goToPosition)
+            
+            var gridCoordinates = setPosAccordingToGrid(goToPosition)
+            if gridCoordinates.x == 0 {
+                gridCoordinates.x = Float(Float(increment)/2)
+            } else if gridCoordinates.x == abs(gridCoordinates.x) {
+                gridCoordinates.x = (gridCoordinates.x) * Float(increment) + Float(Float(increment)/2)
+            } else {
+                gridCoordinates.x = (gridCoordinates.x) * Float(increment) + Float(Float(increment)/2)
+            }
+            
+            if gridCoordinates.y == 0 {
+                gridCoordinates.y = Float(Float(increment)/2)
+            } else if gridCoordinates.y == abs(gridCoordinates.y) {
+                gridCoordinates.y = (gridCoordinates.y) * Float(increment) + Float(Float(increment)/2)
+            } else {
+                gridCoordinates.y = (gridCoordinates.y) * Float(increment) + Float(Float(increment)/2)
+            }
+            
+            if gridCoordinates.z == 0 {
+                gridCoordinates.z = Float(Float(increment)/2)
+            } else if gridCoordinates.z == abs(gridCoordinates.z) {
+                gridCoordinates.z = (gridCoordinates.z) * Float(increment) + Float(Float(increment)/2)
+            } else {
+                gridCoordinates.z = (gridCoordinates.z) * Float(increment) + Float(Float(increment)/2)
+            }
+            
+            goToPosition = SCNVector3Make(gridCoordinates.x, gridCoordinates.y, gridCoordinates.z)
+            
+            
             let action1 = SCNAction.moveTo(goToPosition, duration: 0.3)
             let action2 = SCNAction.scaleTo(1, duration: 0.3)
-            let group = SCNAction.group([action1, action2])
+            let action3 = SCNAction.rotateToX(0, y: 0, z: 0, duration: 0.3)
+            let group = SCNAction.group([action1, action2, action3])
             
             nodeCopy.runAction(group)
             nodeCopy.position = goToPosition
+            nodeCopy.eulerAngles.x = 0
+            nodeCopy.eulerAngles.y = 0
+            nodeCopy.eulerAngles.z = 0
+          
             
             var thisSmallNodeType: SmallNodeType.RawValue?
             
@@ -118,6 +161,70 @@ class BuilderTools: SCNNode {
 
         }
         
+    }
+    
+    func setPosAccordingToGrid(pos: SCNVector3)-> SCNVector3 {
+        
+        //print("size: \(size)")
+        print("divisions: \(divisions)")
+        print("increment: \(increment)")
+      
+        var updatedPosition = pos
+        
+        var xCoordinate = (pos.x/Float(increment))
+        var yCoordinate = (pos.y/Float(increment))
+        var zCoordinate = (pos.z/Float(increment))
+        
+        if abs(pos.x % Float(increment)) > Float(Float(increment)/2) {
+            
+            print("rounding x up")
+            if xCoordinate == abs(xCoordinate) {
+                xCoordinate = Float(Int(xCoordinate)) + 1
+            } else {
+                xCoordinate = Float(Int(xCoordinate)) - 1
+            }
+            
+        } else {
+            
+            print("rounding x down")
+            xCoordinate = Float(Int(xCoordinate))
+        }
+        
+        if abs(pos.y % Float(increment)) > Float(Float(increment)/2) {
+            
+            print("rounding y up")
+            if yCoordinate == abs(yCoordinate) {
+                yCoordinate = Float(Int(yCoordinate)) + 1
+            } else {
+                yCoordinate = Float(Int(yCoordinate)) - 1
+            }
+            
+        } else {
+            
+            print("rounding y down")
+            yCoordinate = Float(Int(yCoordinate))
+        }
+        
+        if abs(pos.z % Float(increment)) > Float(Float(increment)/2) {
+            
+            print("rounding z up")
+            if zCoordinate == abs(zCoordinate) {
+                zCoordinate = Float(Int(zCoordinate)) + 1
+            } else {
+                zCoordinate = Float(Int(zCoordinate)) - 1
+            }
+            
+        } else {
+            
+            print("rounding z down")
+            zCoordinate = Float(Int(zCoordinate))
+        }
+        
+        yCoordinate = 0
+        
+        updatedPosition = SCNVector3Make(Float(xCoordinate), Float(yCoordinate), Float(zCoordinate))
+        print("coordinates: \(updatedPosition)")
+        return updatedPosition
     }
     
     required init?(coder aDecoder: NSCoder) {

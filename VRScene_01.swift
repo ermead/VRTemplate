@@ -540,7 +540,7 @@ extension VRBaseScene {
     
     func setUpBuildMode(){
         
-        buildModeNode = BuilderTools()
+        buildModeNode = BuilderTools(size: 50, divisions: 10)
         self.world.addChildNode(buildModeNode!)
         buildModeNode!.cameraNode = self.cameraNode
         buildModeNode!.setUpTools()
