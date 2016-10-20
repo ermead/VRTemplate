@@ -18,7 +18,7 @@ func duplicateNode(node: SCNNode, material:SCNMaterial) -> SCNNode
     return newNode
 }
 
-func generateRandomNodesOnMap(arrayOfNodes: [SCNNode]?, mapNode: SCNNode, widthOfMap: Int, lengthOfMap: Int, count: Int) {
+func generateRandomNodesOnMap(arrayOfNodes: [SCNNode]?, mapNode: SCNNode, widthOfMap: Int, lengthOfMap: Int, count: Int, yValue: Float, isDestroyable: Bool) {
     
     var randomNodeCollection: [SCNNode]? = arrayOfNodes
     if randomNodeCollection == nil {
@@ -67,11 +67,15 @@ func generateRandomNodesOnMap(arrayOfNodes: [SCNNode]?, mapNode: SCNNode, widthO
         }
         let node = duplicateNode(nodeA, material: materialA)
         
-        node.physicsBody = SCNPhysicsBody.kinematicBody()
-        node.physicsBody!.categoryBitMask = CC.destroyable.rawValue
-        node.physicsBody!.contactTestBitMask = CC.bullet.rawValue
-        node.physicsBody!.collisionBitMask = CC.bullet.rawValue | CC.floor.rawValue
-        node.name = "\(i)"
+        if isDestroyable == true {
+            node.physicsBody = SCNPhysicsBody.kinematicBody()
+            node.physicsBody!.categoryBitMask = CC.destroyable.rawValue
+            node.physicsBody!.contactTestBitMask = CC.bullet.rawValue
+            node.physicsBody!.collisionBitMask = CC.bullet.rawValue | CC.floor.rawValue
+        }
+        
+        node.name = "\(i)_\(node.name)"
+        
         let randomX = GKRandomDistribution(forDieWithSideCount: widthOfMap/2)
         let randomZ = GKRandomDistribution(forDieWithSideCount: lengthOfMap/2)
         
@@ -86,7 +90,24 @@ func generateRandomNodesOnMap(arrayOfNodes: [SCNNode]?, mapNode: SCNNode, widthO
             return Int((arc4random_uniform(2) == 0) ? 1.0 : -1.0)
         }
         
-        node.position = SCNVector3Make(Float(randomX.nextInt() * randomSignX), -10, Float(randomZ.nextInt() * randomSignX))
+        var thisXPos = randomX.nextInt() * randomSignX
+        var thisZPos = randomZ.nextInt() * randomSignX
+        
+        func checkXZ() {
+            if thisXPos == abs(thisXPos) && thisZPos == abs(thisZPos) {
+              
+                //then in this quadrant
+                //get new varible, because ocean is in that corner
+                thisXPos = randomX.nextInt() * randomSignX
+                thisZPos = randomZ.nextInt() * randomSignX
+                checkXZ()
+            } else {
+                // do nothing, it's okay
+            }
+        }
+        checkXZ()
+        
+        node.position = SCNVector3Make(Float(thisXPos), yValue, Float(thisZPos))
         
         
         mapNode.addChildNode(node)

@@ -35,6 +35,8 @@ struct ControlScheme {
     var buttonBPressed = false
     var leftTriggerPressed = false
     var rightTriggerPressed = false
+    
+    var isTeleporting = false
 }
 
 enum MoveStates: Int {
@@ -115,6 +117,8 @@ class VRBaseScene : NSObject, VRControllerProtocol, SCNPhysicsContactDelegate {
     var floorContents: AnyObject = UIImage(named: "Grass.png")!
     
     var waveNode = SCNNode()
+    
+    var buildMode: Bool = false 
 
     func countUp(){
         //print("time incremented: \(time)")
@@ -123,7 +127,7 @@ class VRBaseScene : NSObject, VRControllerProtocol, SCNPhysicsContactDelegate {
     
     func startFocusCount(){
         
-        time = 0
+        //time = 0
         
     }
     
@@ -168,17 +172,28 @@ class VRBaseScene : NSObject, VRControllerProtocol, SCNPhysicsContactDelegate {
     
     func bulletDidHitDestroyable(node: SCNNode, with: String){
         //MARK:BULLET HIT SOMETHING
+        
         guard node.physicsBody?.categoryBitMask == CC.destroyable.rawValue else {return}
         
         print("\(with) hit something")
+        print(node.name)
+        print(node.physicsBody?.categoryBitMask)
         
         if with == "grappling hook" {
-            
-//            let action = SCNAction.moveTo(node.position, duration: 1)
-//            cameraNode.runAction(action)
-            let pos = SCNVector3Make(-node.position.x, -node.position.y, -node.position.z)
-            let action = SCNAction.moveTo(pos, duration: 0.2)
-            world.runAction(action)
+
+            if control?.isTeleporting == true {
+                return
+            } else {
+                control?.isTeleporting = true
+                let pos = SCNVector3Make(-node.position.x, -node.position.y, -node.position.z)
+                let action = SCNAction.moveTo(pos, duration: 0.2)
+                let runBlock = SCNAction.runBlock({ (node) in
+                    
+                    self.control?.isTeleporting = false
+                })
+                let seq = SCNAction.sequence([action, runBlock])
+                world.runAction(seq)
+            }
             
         } else {
         
