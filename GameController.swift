@@ -15,6 +15,8 @@ func debugPrint(str: String) {
     }
 }
 
+
+
 func setUpExtendedController(controller: GCController, scene: VRBaseScene) {
     debugPrint("setting up extended controller")
     controller.extendedGamepad?.valueChangedHandler = {
@@ -52,14 +54,18 @@ func setUpExtendedController(controller: GCController, scene: VRBaseScene) {
         } else if gamepad.buttonX == element {
             if gamepad.buttonX.pressed {
                 debugPrint("button X pressed")
+                scene.control?.buttonXPressed = true
             } else if !gamepad.buttonX.pressed {
                 debugPrint("let go button X")
+                scene.control?.buttonXPressed = false
             }
         } else if gamepad.buttonY == element {
             if gamepad.buttonY.pressed {
                 debugPrint("button Y pressed")
+                scene.control?.buttonYPressed = true
             } else if !gamepad.buttonY.pressed {
                 debugPrint("let go button Y")
+                scene.control?.buttonYPressed = false
             }
         } else if gamepad.leftTrigger == element {
             if gamepad.leftTrigger.pressed {
@@ -80,14 +86,18 @@ func setUpExtendedController(controller: GCController, scene: VRBaseScene) {
         } else if gamepad.leftShoulder == element {
             if gamepad.leftShoulder.pressed {
                 debugPrint("leftShoulder pressed")
+                 scene.control?.leftShoulderPressed = true
             } else if !gamepad.leftShoulder.pressed {
                 debugPrint("let go leftShoulder")
+                 scene.control?.leftShoulderPressed = false
             }
         } else if gamepad.rightShoulder == element {
             if gamepad.rightShoulder.pressed {
                 debugPrint("rightShoulder pressed")
+                 scene.control?.rightShoulderPressed = false
             } else if !gamepad.rightShoulder.pressed {
                 debugPrint("let go rightShoulder")
+                 scene.control?.rightShoulderPressed = false
             }
         } else if (gamepad.leftThumbstick == element) {
             if (gamepad.leftThumbstick.left.value > 0.2) {

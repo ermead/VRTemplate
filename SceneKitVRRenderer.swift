@@ -30,7 +30,13 @@ class SceneKitVRRenderer: NSObject, GVRCardboardViewDelegate {
         renderer.pointOfView = camNode;
         print(renderer.pointOfView?.position)
         renderer.scene = scene;
+        /* overlay scene displays wrong images!
+        let sceneSK = SKScene(fileNamed: "art.scnassets/SpriteKitScene.sks")
+        let scene1 = sceneSK?.scene
+        renderer.overlaySKScene = scene1
         //renderer.overlaySKScene = overlayScene
+        */
+        
         // comment this out if you would like custom lighting
         //renderer.autoenablesDefaultLighting = true;
         //renderer.showsStatistics = true

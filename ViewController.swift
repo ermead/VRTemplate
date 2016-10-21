@@ -22,21 +22,12 @@ class ViewController: UIViewController, GVRCardboardViewDelegate, UITextFieldDel
     var renderLoop: RenderLoop?;
     
     override func loadView() {
-        /*
-        let vrControllerClassName = NSBundle
-            .mainBundle()
-            .objectForInfoDictionaryKey(VRControllerClassKey) as! String;
-        
-        guard let vrClass = NSClassFromString(vrControllerClassName) as? VRControllerProtocol.Type else {
-            fatalError("#fail Unable to find class \(vrControllerClassName), referenced in Info.plist, key=\(VRControllerClassKey)")
-        }
-        */
-      
+     
         
         let vrControllerClassName = "VRScene_01"
         
         guard let vrClass = NSClassFromString(vrControllerClassName) as? VRControllerProtocol.Type else {
-            fatalError("#fail Unable to find class \(vrControllerClassName), referenced in Info.plist, key=\(VRControllerClassKey)")
+            fatalError("#fail Unable to find class \(vrControllerClassName)")
         }
      
         

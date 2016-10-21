@@ -33,8 +33,12 @@ struct ControlScheme {
     
     var buttonAPressed = false
     var buttonBPressed = false
+    var buttonXPressed = false
+    var buttonYPressed = false
     var leftTriggerPressed = false
     var rightTriggerPressed = false
+    var leftShoulderPressed = false
+    var rightShoulderPressed = false
     
     var isTeleporting = false
 }
@@ -240,6 +244,7 @@ class VRBaseScene : NSObject, VRControllerProtocol, SCNPhysicsContactDelegate {
         let moveAccordingToHeadRotation = false
         
         if usingExtendedGamePad == true {
+            
             let newTransform = self.moveCamera(world, x: -moveX, y: -moveY, z: -moveZ)
             if moveAccordingToHeadRotation == false {
                 world.transform = newTransform
@@ -276,15 +281,16 @@ class VRBaseScene : NSObject, VRControllerProtocol, SCNPhysicsContactDelegate {
                 let qua = GLKQuaternionMakeWithMatrix4(rotCamY2)
                 let rotCamV4 = SCNVector4Make(qua.x, qua.y, qua.z, qua.w)
                 //
+                print("quaterionY:  \(qua.y)")
                 
-                //let projected: SCNVector3  = multipliedByRotation(p3, rotation: rot)
-                let projected: SCNVector3  = multipliedByRotation(p3, rotation: rotCamV4)
+                let projected: SCNVector3  = multipliedByRotation(p3, rotation: rot)
+                //let projected: SCNVector3  = multipliedByRotation(p3, rotation: rotCamV4)
+                //TODO: I think here we should rotate the cameraNode just a little bit to make it move right
                 print("projected: \(projected)")
                 let multiplier:Float = 1
                 let action = SCNAction.moveByX(CGFloat((projected.x * moveZ) * multiplier), y: 0, z: CGFloat((projected.z * moveZ) * multiplier), duration: 0)
                 world.runAction(action)
-                
-                //
+         
                 if moveX > 0.1 || moveX < -0.1 {
                 var vectorX = SCNVector3Make(-moveX, 0, 0)
                 vectorX = cameraNode.convertPosition(vectorX, toNode: scene.rootNode)
@@ -358,6 +364,7 @@ class VRBaseScene : NSObject, VRControllerProtocol, SCNPhysicsContactDelegate {
             shootBullet(pos, to: projected, color: UIColor.blueColor(), size: 0.25, name: "grappling hook")
         }
         
+        /////////////////////////////////////
         let hits = things.hitTestWithSegmentFromPoint(position, toPoint: p2, options: [SCNHitTestFirstFoundOnlyKey: true]);
         //MARK:FOCUS TEST
         if let hit = hits.first {
@@ -381,14 +388,15 @@ class VRBaseScene : NSObject, VRControllerProtocol, SCNPhysicsContactDelegate {
 
             sphereFocusNode.geometry = focusedNode?.geometry
             sphereFocusNode.geometry?.materials.first?.emission.contents = UIColor.yellowColor().colorWithAlphaComponent(0.3)
-            sphereFocusNode.scale = SCNVector3Make(1.5, 1.5, 1.5)
+            sphereFocusNode.scale = SCNVector3Make(1.25, 1.25, 1.25)
             //sphereFocusNode.hidden = false
             sphereFocusNode.position = pos
         } else {
             //sphereFocusNode.hidden = true
         }
-        //focusedNode?.geometry?.materials.first?.emission.contents = UIColor.yellowColor().colorWithAlphaComponent(0.3)
+        /////////////////////////////////////
         
+        //update in subclass
         doAdditionalUpdate(headTransform)
     }
     
@@ -576,9 +584,9 @@ extension VRBaseScene {
         let r : GLKVector3 = GLKMatrix4MultiplyVector3(gRotation, gPosition)
         
         return SCNVector3FromGLKVector3(r)
-  
+        
     }
-  
+    
     func moveCamera(node: SCNNode, x: Float, y: Float, z: Float)->SCNMatrix4
     {
         
@@ -595,11 +603,7 @@ extension VRBaseScene {
         return cameraTransform
         
     }
-    
-
-    
-
-    
+     
 }
 
 extension VRBaseScene {

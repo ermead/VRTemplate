@@ -52,6 +52,24 @@ class BuilderTools: SCNNode {
         
     }
     
+    //MARK: updateBUILDER
+    func updateForBuilderMode(headTransform: GVRHeadTransform, control: ControlScheme, scene: VRBaseScene){
+        
+        self.selectedNode?.transform = headTransform.rotateMatrixForPosition(SCNVector3Make(10, 5, -10))
+        self.selectedNode?.scale = SCNVector3Make(0.25, 0.25, 0.25)
+        
+        if control.rightTriggerPressed == true {
+            
+            self.placeNodeInLevel(scene.cursor.position, selectedNodeTransform: (self.selectedNode?.transform)!)
+        }
+        
+        if control.leftTriggerPressed == true {
+            
+            self.printDictionaryOfSmallNodes()
+        }
+        
+    }
+    
     func addToDictionary(smallNode: SmallNodeStruct){
         
         let key = "\(smallNode.pos.x),\(smallNode.pos.y),\(smallNode.pos.z)"
@@ -101,6 +119,7 @@ class BuilderTools: SCNNode {
             print(goToPosition)
             
             var gridCoordinates = setPosAccordingToGrid(goToPosition)
+            
             if gridCoordinates.x == 0 {
                 gridCoordinates.x = Float(Float(increment)/2)
             } else if gridCoordinates.x == abs(gridCoordinates.x) {
@@ -220,7 +239,9 @@ class BuilderTools: SCNNode {
             zCoordinate = Float(Int(zCoordinate))
         }
         
-        yCoordinate = 0
+        if yCoordinate < 0 {
+            yCoordinate = 0
+        }
         
         updatedPosition = SCNVector3Make(Float(xCoordinate), Float(yCoordinate), Float(zCoordinate))
         print("coordinates: \(updatedPosition)")

@@ -104,41 +104,35 @@ class VRScene_01: VRBaseScene {
             
             }
         case leftKey: print("left")
-        //cameraNode.position.x -= speed
         let input: Float = control?.leftThumbstickLeft == -0.5 ? 0.0 : -0.5
         resetControls()
         control?.leftThumbstickLeft = input
-        control?.leftThumbstickRight = 0
+
         case rightKey: print("right")
-        //cameraNode.position.x += speed
         let input: Float = control?.leftThumbstickRight == -0.5 ? 0.0 : -0.5
         resetControls()
         control?.leftThumbstickRight = input
-        control?.leftThumbstickLeft = 0
+
         case forwardKey: print("forward")
-        //cameraNode.position.z -= speed
         let input: Float = control?.leftThumbstickUp == -0.5 ? 0.0 : -0.5
         resetControls()
         control?.leftThumbstickUp = input
-        control?.leftThumbstickDown = 0
+
         case backKey: print("back")
-        //cameraNode.position.z += speed
         let input: Float = control?.leftThumbstickDown == -0.5 ? 0.0 : -0.5
         resetControls()
         control?.leftThumbstickDown = input
-        control?.leftThumbstickUp = 0
+
         case upKey: print("up")
-        //cameraNode.position.y += speed
         let input: Float = control?.rightThumbstickUp == 0.5 ? 0.0 : 0.5
         resetControls()
         control?.rightThumbstickUp = input
-        control?.rightThumbstickDown = 0
+
         case downKey: print("down")
-        //cameraNode.position.y -= speed
         let input: Float = control?.rightThumbstickDown == 0.5 ? 0.0 : 0.5
         resetControls()
         control?.rightThumbstickDown = input
-        control?.rightThumbstickUp = 0
+
         case quitKey: cameraNode.position = SCNVector3Zero
             
         default: return
@@ -160,32 +154,17 @@ class VRScene_01: VRBaseScene {
         torusNode.geometry = text
         
         waveSkinner.skeleton?.position = world.position
-        waveSkinner.skeleton?.position.y -= 20
+        waveSkinner.skeleton?.position.y -= 10
         
         if isBuildMode == true {
-            updateForBuilderMode(headTransform)
+             //MARK: updateBUILDER
+            buildModeNode?.updateForBuilderMode(headTransform, control: control!, scene: self)
         }
+        
     }
     
-    //MARK: updateBUILDER
-    func updateForBuilderMode(headTransform: GVRHeadTransform) {
-        
-        guard isBuildMode == true else {return}
-        
-        buildModeNode?.selectedNode?.transform = headTransform.rotateMatrixForPosition(SCNVector3Make(10, 5, -10))
-        buildModeNode?.selectedNode?.scale = SCNVector3Make(0.25, 0.25, 0.25)
-        
-        if control?.rightTriggerPressed == true {
-            
-            buildModeNode?.placeNodeInLevel(cursor.position, selectedNodeTransform: (buildModeNode?.selectedNode?.transform)!)
-        }
-        
-        if control?.leftTriggerPressed == true {
-            
-            buildModeNode?.printDictionaryOfSmallNodes()
-        }
-        
-    }
+   
+
     
     
     func rotateBones(){
@@ -416,11 +395,16 @@ class VRScene_01: VRBaseScene {
             
             setUpBuildMode()
         }
+        
+
+    
     }
     
     func setUpModels(){
         
         let scene = SCNScene(named: "models.scnassets/Models.scn")!
+        
+        let treeScene = SCNScene(named: "models.scnassets/Tree.scn")!
         
         let barrel = scene.rootNode.childNodeWithName("barrel", recursively: true)
         let barrelNode = SCNNode()
@@ -451,7 +435,7 @@ class VRScene_01: VRBaseScene {
         rockNode.physicsBody = SCNPhysicsBody.kinematicBody()
         //world.addChildNode(rockNode)
         
-        let tree = scene.rootNode.childNodeWithName("tree", recursively: true)
+        let tree = treeScene.rootNode.childNodeWithName("tree", recursively: true)
         let treeNode = SCNNode()
         treeNode.name = "tree"
         treeNode.addChildNode(tree!)
