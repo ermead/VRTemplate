@@ -55,6 +55,31 @@ class VRScene_01: VRBaseScene {
         
         switch input {
             
+        case "1":
+            
+            if control?.leftShoulderPressed == false {
+                control?.leftShoulderPressed = true
+                let delay = SCNAction.waitForDuration(0)
+                let runBlock = SCNAction.runBlock({ (node) in
+                    self.control?.leftShoulderPressed = false
+                })
+                let seq = SCNAction.sequence([delay, runBlock])
+                world.runAction(seq)
+            }
+            
+        case "0":
+            
+            if control?.rightShoulderPressed == false {
+                control?.rightShoulderPressed = true
+                let delay = SCNAction.waitForDuration(0)
+                let runBlock = SCNAction.runBlock({ (node) in
+                    self.control?.rightShoulderPressed = false
+                })
+                let seq = SCNAction.sequence([delay, runBlock])
+                world.runAction(seq)
+            }
+
+
         case "b":     buttonBPressed((control?.from)!, projected: (control?.projected)!)
         case ",":
             
@@ -386,15 +411,17 @@ class VRScene_01: VRBaseScene {
         }
         let seq = SCNAction.sequence([delay, runBlock])
         self.world.runAction(seq)
-        
-        //
-        setUpModels()
-        //
+       
         
         if isBuildMode == true {
             
             setUpBuildMode()
         }
+        
+        
+        //
+        setUpModels()
+        //
         
 
     
@@ -481,9 +508,16 @@ class VRScene_01: VRBaseScene {
         
         let nodes = [barrelNode, bamboo_1Node, lilyNode, rockNode, treeNode, treeNode, treeNode, treeNode, treeNode, fernNode]
         
-        generateRandomNodesOnMap(nodes, mapNode: world, widthOfMap: 300, lengthOfMap: 300, count: 50, yValue: 0, isDestroyable: false)
+        generateRandomNodesOnMap(nodes, mapNode: world, widthOfMap: 300, lengthOfMap: 300, count: 5, yValue: 0, isDestroyable: false)
         
         addShaders()
+        
+        for node in nodes {
+            node.name = node.name! + "_9"
+            //TODO: Change this
+        }
+        
+        buildModeNode?.arrayOfNodesToBuildWith = nodes
         
     }
     

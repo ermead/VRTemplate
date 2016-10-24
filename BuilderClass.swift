@@ -22,6 +22,8 @@ struct SmallNodeStruct {
 
 class BuilderTools: SCNNode {
     
+    let builderDictionaryKey = "BuilderDictionary"
+    
     var size: Int!
     var divisions: Int!
     var increment: Int!
@@ -29,6 +31,9 @@ class BuilderTools: SCNNode {
     var cameraNode: SCNNode?
     var selectedNode: SCNNode?
     var dictionaryOfSmallNodes: [String : Int]?
+    
+    var arrayOfNodesToBuildWith: [SCNNode]?
+    var counter = 0
     
     init(size: Int, divisions: Int) {
         self.size = size
@@ -55,8 +60,11 @@ class BuilderTools: SCNNode {
     //MARK: updateBUILDER
     func updateForBuilderMode(headTransform: GVRHeadTransform, control: ControlScheme, scene: VRBaseScene){
         
-        self.selectedNode?.transform = headTransform.rotateMatrixForPosition(SCNVector3Make(10, 5, -10))
+        self.selectedNode?.transform = headTransform.rotateMatrixForPosition(SCNVector3Make(5, 3, -10))
         self.selectedNode?.scale = SCNVector3Make(0.25, 0.25, 0.25)
+        if arrayOfNodesToBuildWith != nil {
+            self.selectedNode? = arrayOfNodesToBuildWith![counter]
+        }
         
         if control.rightTriggerPressed == true {
             
@@ -68,8 +76,38 @@ class BuilderTools: SCNNode {
             self.printDictionaryOfSmallNodes()
         }
         
+        if control.leftShoulderPressed == true {
+            switchSelectedNode(-1)
+        }
+        
+        if control.rightShoulderPressed == true {
+            switchSelectedNode(1)
+        }
+        
     }
     
+    func switchSelectedNode(increaseBy: Int){
+        guard arrayOfNodesToBuildWith != nil else {return}
+        
+        selectedNode?.removeFromParentNode()
+        selectedNode = nil
+        
+        
+        counter = counter + increaseBy
+        if counter >= arrayOfNodesToBuildWith!.count {
+            counter = 0
+        }
+        
+        if counter < 0 {
+            counter = 0
+        }
+        
+        selectedNode = arrayOfNodesToBuildWith![counter]
+        cameraNode?.addChildNode(selectedNode!)
+        
+    }
+    
+    /////////////////////////////////////////////////////////
     func addToDictionary(smallNode: SmallNodeStruct){
         
         let key = "\(smallNode.pos.x),\(smallNode.pos.y),\(smallNode.pos.z)"
@@ -79,12 +117,18 @@ class BuilderTools: SCNNode {
             dictionaryOfSmallNodes![key] = smallNode.type
         }
         
+        let defaults = NSUserDefaults()
+        defaults.setObject(dictionaryOfSmallNodes, forKey: builderDictionaryKey)
+        
     }
   
 
     func printDictionaryOfSmallNodes(){
         print("dictionary of small nodes:")
-        print(dictionaryOfSmallNodes)
+        //print(dictionaryOfSmallNodes)
+        
+        let defaults = NSUserDefaults()
+        print(defaults.dictionaryForKey(builderDictionaryKey))
     }
     
     func setUpTools(){
@@ -96,13 +140,42 @@ class BuilderTools: SCNNode {
         
         print("setting up builder tools")
         let size: CGFloat = CGFloat(increment)
-        selectedNode = SCNNode(geometry: SCNBox(width: size, height: size, length: size, chamferRadius: 0))
-        selectedNode?.geometry?.firstMaterial?.diffuse.contents = UIColor.yellowColor()
-        selectedNode?.position = SCNVector3Make(10, 5, -10)
-        selectedNode?.name = "Default_\(SmallNodeType.defaultNode.rawValue)"
+        selectedNode = SCNNode()
+//       selectedNode = SCNNode(geometry: SCNBox(width: size, height: size, length: size, chamferRadius: 0))
+//        selectedNode?.geometry?.firstMaterial?.diffuse.contents = UIColor.yellowColor()
+//        selectedNode?.position = SCNVector3Make(5, 3, -10)
+//        selectedNode?.name = "Default_\(SmallNodeType.defaultNode.rawValue)"
         cameraNode?.addChildNode(selectedNode!)
         
+        setUpArrayWithNodesToBuildWith()
+        
     }
+    /////////////////////////////////////////////////////////
+    func setUpArrayWithNodesToBuildWith(){
+        
+        var array: [SCNNode] = []
+        
+        var counter = 1
+        
+        for geometry in geometries {
+            
+            let node = SCNNode(geometry: geometry)
+            node.name = "geometries_\(counter)"
+            array.append(node)
+            counter = counter + 1
+        }
+        
+        guard arrayOfNodesToBuildWith != nil else {
+            arrayOfNodesToBuildWith = array
+            return
+        }
+        
+        for node in array {
+            arrayOfNodesToBuildWith!.append(node)
+        }
+    }
+    
+    /////////////////////////////////////////////////////////
     
     func placeNodeInLevel(pos: SCNVector3, selectedNodeTransform: SCNMatrix4){
         
@@ -157,7 +230,7 @@ class BuilderTools: SCNNode {
             nodeCopy.eulerAngles.x = 0
             nodeCopy.eulerAngles.y = 0
             nodeCopy.eulerAngles.z = 0
-          
+            nodeCopy.scale = SCNVector3Make(1, 1, 1)
             
             var thisSmallNodeType: SmallNodeType.RawValue?
             
@@ -176,7 +249,9 @@ class BuilderTools: SCNNode {
                 
             }
             
-            print("placing node at \(nodeCopy.position)")
+            guard thisSmallNodeType != nil else {return}
+            print("placing node of type \(thisSmallNodeType!) at \(nodeCopy.position)")
+            
 
         }
         
