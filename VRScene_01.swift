@@ -434,12 +434,13 @@ class VRScene_01: VRBaseScene {
         let treeScene = SCNScene(named: "models.scnassets/Tree.scn")!
         
         let barrel = scene.rootNode.childNodeWithName("barrel", recursively: true)
+        barrel?.position = SCNVector3Zero
         let barrelNode = SCNNode()
         barrelNode.name = "barrel"
         barrelNode.addChildNode(barrel!)
         barrelNode.pivot = SCNMatrix4MakeTranslation(0, 0, 0)
         barrelNode.scale = SCNVector3Make(5, 5, 5)
-        barrelNode.position = SCNVector3Make(0, -5, -42)
+        //barrelNode.position = SCNVector3Make(0, -5, -42)
         barrelNode.physicsBody = SCNPhysicsBody.kinematicBody()
         //world.addChildNode(barrelNode)
         
@@ -453,50 +454,55 @@ class VRScene_01: VRBaseScene {
         world.addChildNode(structureNode)
         
         let rock = scene.rootNode.childNodeWithName("rock", recursively: true)
+        rock?.position = SCNVector3Zero
         let rockNode = SCNNode()
         rockNode.name = "rock"
         rockNode.addChildNode(rock!)
         rockNode.pivot = SCNMatrix4MakeTranslation(0, 0, 0)
         rockNode.scale = SCNVector3Make(5, 5, 5)
-        rockNode.position = SCNVector3Make(0, -5, -20)
+        //rockNode.position = SCNVector3Make(0, -5, -20)
         rockNode.physicsBody = SCNPhysicsBody.kinematicBody()
         //world.addChildNode(rockNode)
         
         let tree = treeScene.rootNode.childNodeWithName("tree", recursively: true)
+        tree?.position = SCNVector3Zero
         let treeNode = SCNNode()
         treeNode.name = "tree"
         treeNode.addChildNode(tree!)
         treeNode.pivot = SCNMatrix4MakeTranslation(0, 0, 0)
         treeNode.scale = SCNVector3Make(2, 2, 2)
-        treeNode.position = SCNVector3Make(0, 0, -30)
+        //treeNode.position = SCNVector3Make(0, 0, -30)
         treeNode.physicsBody = SCNPhysicsBody.kinematicBody()
         //world.addChildNode(treeNode)
         
         let bamboo_1 = scene.rootNode.childNodeWithName("bambooCluster", recursively: true)
+        bamboo_1?.position = SCNVector3Zero
         let bamboo_1Node = SCNNode()
         bamboo_1Node.name = "bamboo"
         bamboo_1Node.addChildNode(bamboo_1!)
         bamboo_1Node.pivot = SCNMatrix4MakeTranslation(0, 0, 0)
         bamboo_1Node.scale = SCNVector3Make(3, 3, 3)
-        bamboo_1Node.position = SCNVector3Make(0, 0, -40)
+        //bamboo_1Node.position = SCNVector3Make(0, 0, -40)
         //world.addChildNode(bamboo_1Node)
         
         let fern = scene.rootNode.childNodeWithName("fern", recursively: true)
+        fern?.position = SCNVector3Zero
         let fernNode = SCNNode()
         fernNode.name = "fern"
         fernNode.addChildNode(fern!)
         fernNode.pivot = SCNMatrix4MakeTranslation(0, 0, 0)
         fernNode.scale = SCNVector3Make(10, 10, 10)
-        fernNode.position = SCNVector3Make(0, 0, -70)
+        //fernNode.position = SCNVector3Make(0, 0, -70)
         //world.addChildNode(fernNode)
         
         let lily = scene.rootNode.childNodeWithName("lily", recursively: true)
+        lily?.position = SCNVector3Zero
         let lilyNode = SCNNode()
         lilyNode.name = "lily"
         lilyNode.addChildNode(lily!)
         lilyNode.pivot = SCNMatrix4MakeTranslation(0, 0, 0)
         lilyNode.scale = SCNVector3Make(10, 10, 10)
-        lilyNode.position = SCNVector3Make(0, 0, -80)
+        //lilyNode.position = SCNVector3Make(0, 0, -80)
         //world.addChildNode(lilyNode)
         
         let light = SCNLight()
@@ -506,7 +512,7 @@ class VRScene_01: VRBaseScene {
         lightNode.position = SCNVector3(0, 10, -70)
         world.addChildNode(lightNode)
         
-        let nodes = [barrelNode, bamboo_1Node, lilyNode, rockNode, treeNode, treeNode, treeNode, treeNode, treeNode, fernNode]
+        let nodes = [barrelNode, bamboo_1Node, lilyNode, rockNode,treeNode,fernNode]
         
         generateRandomNodesOnMap(nodes, mapNode: world, widthOfMap: 300, lengthOfMap: 300, count: 5, yValue: 0, isDestroyable: false)
         
@@ -517,7 +523,15 @@ class VRScene_01: VRBaseScene {
             //TODO: Change this
         }
         
-        buildModeNode?.arrayOfNodesToBuildWith = nodes
+        guard buildModeNode?.arrayOfNodesToBuildWith != nil else {
+            buildModeNode?.arrayOfNodesToBuildWith = nodes
+            return
+        }
+        
+        for node in nodes {
+            buildModeNode?.arrayOfNodesToBuildWith!.append(node)
+        }
+     
         
     }
     

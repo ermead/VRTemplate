@@ -61,7 +61,7 @@ class BuilderTools: SCNNode {
     func updateForBuilderMode(headTransform: GVRHeadTransform, control: ControlScheme, scene: VRBaseScene){
         
         self.selectedNode?.transform = headTransform.rotateMatrixForPosition(SCNVector3Make(5, 3, -10))
-        self.selectedNode?.scale = SCNVector3Make(0.25, 0.25, 0.25)
+        //self.selectedNode?.scale = SCNVector3Make(0.25, 0.25, 0.25)
         if arrayOfNodesToBuildWith != nil {
             self.selectedNode? = arrayOfNodesToBuildWith![counter]
         }
@@ -86,9 +86,14 @@ class BuilderTools: SCNNode {
         
     }
     
+    var isSwitching = false
     func switchSelectedNode(increaseBy: Int){
         guard arrayOfNodesToBuildWith != nil else {return}
         
+        if isSwitching == false {
+        
+        isSwitching = true
+        let transform = selectedNode?.transform
         selectedNode?.removeFromParentNode()
         selectedNode = nil
         
@@ -103,7 +108,18 @@ class BuilderTools: SCNNode {
         }
         
         selectedNode = arrayOfNodesToBuildWith![counter]
+        selectedNode?.transform = transform!
         cameraNode?.addChildNode(selectedNode!)
+        
+        let delay = SCNAction.waitForDuration(0.5)
+        let run = SCNAction.runBlock { (node) in
+            self.isSwitching = false
+        }
+        let seq = SCNAction.sequence([delay, run])
+        cameraNode?.runAction(seq)
+        } else {
+            return
+        }
         
     }
     
@@ -182,11 +198,25 @@ class BuilderTools: SCNNode {
         let selNodeQua = GLKQuaternionMakeWithMatrix4(SCNMatrix4ToGLKMatrix4(selectedNodeTransform))
         let selNodePos = SCNVector3Make(selNodeQua.x, selNodeQua.y, selNodeQua.z)
         
-        if let node = selectedNode {
+        guard arrayOfNodesToBuildWith != nil else {return}
+        
+            let node = arrayOfNodesToBuildWith![counter]
             
             let nodeCopy: SCNNode = node.copy() as! SCNNode
             nodeCopy.position = cameraNode!.convertPosition(selNodePos, toNode: self)
             self.addChildNode(nodeCopy)
+            
+            if node.childNodes.count > 0 {
+                
+                for child in node.childNodes {
+                    nodeCopy.addChildNode(child.copy() as! SCNNode)
+                    if child.childNodes.count > 0 {
+                        for grandchild in child.childNodes {
+                            child.addChildNode(grandchild)
+                        }
+                    }
+                }
+            }
 
             var goToPosition = cameraNode!.convertPosition(pos, toNode: self)
             print(goToPosition)
@@ -225,12 +255,13 @@ class BuilderTools: SCNNode {
             let action3 = SCNAction.rotateToX(0, y: 0, z: 0, duration: 0.3)
             let group = SCNAction.group([action1, action2, action3])
             
-            nodeCopy.runAction(group)
+            //nodeCopy.runAction(group)
             nodeCopy.position = goToPosition
+            nodeCopy.position.y = 0
             nodeCopy.eulerAngles.x = 0
             nodeCopy.eulerAngles.y = 0
             nodeCopy.eulerAngles.z = 0
-            nodeCopy.scale = SCNVector3Make(1, 1, 1)
+            nodeCopy.scale = node.scale
             
             var thisSmallNodeType: SmallNodeType.RawValue?
             
@@ -253,7 +284,7 @@ class BuilderTools: SCNNode {
             print("placing node of type \(thisSmallNodeType!) at \(nodeCopy.position)")
             
 
-        }
+        
         
     }
     
