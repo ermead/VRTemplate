@@ -30,10 +30,13 @@ class BuilderTools: SCNNode {
     
     var cameraNode: SCNNode?
     var selectedNode: SCNNode?
+    var previewNode: SCNNode?
     var dictionaryOfSmallNodes: [String : Int]?
     
     var arrayOfNodesToBuildWith: [SCNNode]?
     var counter = 0
+    
+    var isSwitching = false
     
     init(size: Int, divisions: Int) {
         self.size = size
@@ -51,6 +54,9 @@ class BuilderTools: SCNNode {
         box.firstMaterial?.emission.contents = UIColor.yellowColor()
         let boxNode = SCNNode(geometry: box)
         self.addChildNode(boxNode)
+        
+        previewNode = SCNNode()
+        self.addChildNode(previewNode!)
     }
     
     func loadLevel(){
@@ -84,39 +90,66 @@ class BuilderTools: SCNNode {
             switchSelectedNode(1)
         }
         
+        previewPlaceNodeInLevel(scene.cursor.position, selectedNodeTransform: (self.selectedNode?.transform)!)
     }
     
-    var isSwitching = false
+    
     func switchSelectedNode(increaseBy: Int){
         guard arrayOfNodesToBuildWith != nil else {return}
         
         if isSwitching == false {
-        
-        isSwitching = true
-        let transform = selectedNode?.transform
-        selectedNode?.removeFromParentNode()
-        selectedNode = nil
-        
-        
-        counter = counter + increaseBy
-        if counter >= arrayOfNodesToBuildWith!.count {
-            counter = 0
-        }
-        
-        if counter < 0 {
-            counter = 0
-        }
-        
-        selectedNode = arrayOfNodesToBuildWith![counter]
-        selectedNode?.transform = transform!
-        cameraNode?.addChildNode(selectedNode!)
-        
-        let delay = SCNAction.waitForDuration(0.5)
-        let run = SCNAction.runBlock { (node) in
-            self.isSwitching = false
-        }
-        let seq = SCNAction.sequence([delay, run])
-        cameraNode?.runAction(seq)
+            
+            isSwitching = true
+            
+            for child in (previewNode?.childNodes)! {
+                
+                child.removeFromParentNode()
+            }
+            
+            let transform = selectedNode?.transform
+            selectedNode?.removeFromParentNode()
+            selectedNode = nil
+            
+            
+            counter = counter + increaseBy
+            if counter >= arrayOfNodesToBuildWith!.count {
+                counter = 0
+            }
+            
+            if counter < 0 {
+                counter = 0
+            }
+            
+            selectedNode = arrayOfNodesToBuildWith![counter]
+            selectedNode?.transform = transform!
+            cameraNode?.addChildNode(selectedNode!)
+            
+            //
+            let node = arrayOfNodesToBuildWith![counter]
+            
+            let nodeCopy: SCNNode = node.copy() as! SCNNode
+            
+            if node.childNodes.count > 0 {
+                
+                for child in node.childNodes {
+                    nodeCopy.addChildNode(child.copy() as! SCNNode)
+                }
+            }
+            previewNode?.addChildNode(nodeCopy)
+            
+            nodeCopy.position = SCNVector3Zero
+            nodeCopy.eulerAngles.x = 0
+            nodeCopy.eulerAngles.y = 0
+            nodeCopy.eulerAngles.z = 0
+            nodeCopy.scale = node.scale
+            //
+            
+            let delay = SCNAction.waitForDuration(0.5)
+            let run = SCNAction.runBlock { (node) in
+                self.isSwitching = false
+            }
+            let seq = SCNAction.sequence([delay, run])
+            cameraNode?.runAction(seq)
         } else {
             return
         }
@@ -137,8 +170,8 @@ class BuilderTools: SCNNode {
         defaults.setObject(dictionaryOfSmallNodes, forKey: builderDictionaryKey)
         
     }
-  
-
+    
+    
     func printDictionaryOfSmallNodes(){
         print("dictionary of small nodes:")
         //print(dictionaryOfSmallNodes)
@@ -157,10 +190,10 @@ class BuilderTools: SCNNode {
         print("setting up builder tools")
         let size: CGFloat = CGFloat(increment)
         selectedNode = SCNNode()
-//       selectedNode = SCNNode(geometry: SCNBox(width: size, height: size, length: size, chamferRadius: 0))
-//        selectedNode?.geometry?.firstMaterial?.diffuse.contents = UIColor.yellowColor()
-//        selectedNode?.position = SCNVector3Make(5, 3, -10)
-//        selectedNode?.name = "Default_\(SmallNodeType.defaultNode.rawValue)"
+        //       selectedNode = SCNNode(geometry: SCNBox(width: size, height: size, length: size, chamferRadius: 0))
+        //        selectedNode?.geometry?.firstMaterial?.diffuse.contents = UIColor.yellowColor()
+        //        selectedNode?.position = SCNVector3Make(5, 3, -10)
+        //        selectedNode?.name = "Default_\(SmallNodeType.defaultNode.rawValue)"
         cameraNode?.addChildNode(selectedNode!)
         
         setUpArrayWithNodesToBuildWith()
@@ -192,6 +225,44 @@ class BuilderTools: SCNNode {
     }
     
     /////////////////////////////////////////////////////////
+    func previewPlaceNodeInLevel(pos: SCNVector3, selectedNodeTransform: SCNMatrix4){
+        
+        guard arrayOfNodesToBuildWith != nil else {return}
+        
+        var goToPosition = cameraNode!.convertPosition(pos, toNode: self)
+        
+        
+        var gridCoordinates = setPosAccordingToGrid(goToPosition)
+        
+        if gridCoordinates.x == 0 {
+            gridCoordinates.x = Float(Float(increment)/2)
+        } else if gridCoordinates.x == abs(gridCoordinates.x) {
+            gridCoordinates.x = (gridCoordinates.x) * Float(increment) + Float(Float(increment)/2)
+        } else {
+            gridCoordinates.x = (gridCoordinates.x) * Float(increment) + Float(Float(increment)/2)
+        }
+        
+        if gridCoordinates.y == 0 {
+            gridCoordinates.y = Float(Float(increment)/2)
+        } else if gridCoordinates.y == abs(gridCoordinates.y) {
+            gridCoordinates.y = (gridCoordinates.y) * Float(increment) + Float(Float(increment)/2)
+        } else {
+            gridCoordinates.y = (gridCoordinates.y) * Float(increment) + Float(Float(increment)/2)
+        }
+        
+        if gridCoordinates.z == 0 {
+            gridCoordinates.z = Float(Float(increment)/2)
+        } else if gridCoordinates.z == abs(gridCoordinates.z) {
+            gridCoordinates.z = (gridCoordinates.z) * Float(increment) + Float(Float(increment)/2)
+        } else {
+            gridCoordinates.z = (gridCoordinates.z) * Float(increment) + Float(Float(increment)/2)
+        }
+        
+        goToPosition = SCNVector3Make(gridCoordinates.x, gridCoordinates.y, gridCoordinates.z)
+        
+        previewNode?.position = goToPosition
+        
+    }
     
     func placeNodeInLevel(pos: SCNVector3, selectedNodeTransform: SCNMatrix4){
         
@@ -200,90 +271,90 @@ class BuilderTools: SCNNode {
         
         guard arrayOfNodesToBuildWith != nil else {return}
         
-            let node = arrayOfNodesToBuildWith![counter]
+        let node = arrayOfNodesToBuildWith![counter]
+        
+        let nodeCopy: SCNNode = node.copy() as! SCNNode
+        nodeCopy.position = cameraNode!.convertPosition(selNodePos, toNode: self)
+        self.addChildNode(nodeCopy)
+        
+        if node.childNodes.count > 0 {
             
-            let nodeCopy: SCNNode = node.copy() as! SCNNode
-            nodeCopy.position = cameraNode!.convertPosition(selNodePos, toNode: self)
-            self.addChildNode(nodeCopy)
-            
-            if node.childNodes.count > 0 {
-                
-                for child in node.childNodes {
-                    nodeCopy.addChildNode(child.copy() as! SCNNode)
-                    if child.childNodes.count > 0 {
-                        for grandchild in child.childNodes {
-                            child.addChildNode(grandchild)
-                        }
+            for child in node.childNodes {
+                nodeCopy.addChildNode(child.copy() as! SCNNode)
+                if child.childNodes.count > 0 {
+                    for grandchild in child.childNodes {
+                        child.addChildNode(grandchild)
                     }
                 }
             }
-
-            var goToPosition = cameraNode!.convertPosition(pos, toNode: self)
-            print(goToPosition)
-            
-            var gridCoordinates = setPosAccordingToGrid(goToPosition)
-            
-            if gridCoordinates.x == 0 {
-                gridCoordinates.x = Float(Float(increment)/2)
-            } else if gridCoordinates.x == abs(gridCoordinates.x) {
-                gridCoordinates.x = (gridCoordinates.x) * Float(increment) + Float(Float(increment)/2)
-            } else {
-                gridCoordinates.x = (gridCoordinates.x) * Float(increment) + Float(Float(increment)/2)
-            }
-            
-            if gridCoordinates.y == 0 {
-                gridCoordinates.y = Float(Float(increment)/2)
-            } else if gridCoordinates.y == abs(gridCoordinates.y) {
-                gridCoordinates.y = (gridCoordinates.y) * Float(increment) + Float(Float(increment)/2)
-            } else {
-                gridCoordinates.y = (gridCoordinates.y) * Float(increment) + Float(Float(increment)/2)
-            }
-            
-            if gridCoordinates.z == 0 {
-                gridCoordinates.z = Float(Float(increment)/2)
-            } else if gridCoordinates.z == abs(gridCoordinates.z) {
-                gridCoordinates.z = (gridCoordinates.z) * Float(increment) + Float(Float(increment)/2)
-            } else {
-                gridCoordinates.z = (gridCoordinates.z) * Float(increment) + Float(Float(increment)/2)
-            }
-            
-            goToPosition = SCNVector3Make(gridCoordinates.x, gridCoordinates.y, gridCoordinates.z)
-            
-            
-            let action1 = SCNAction.moveTo(goToPosition, duration: 0.3)
-            let action2 = SCNAction.scaleTo(1, duration: 0.3)
-            let action3 = SCNAction.rotateToX(0, y: 0, z: 0, duration: 0.3)
-            let group = SCNAction.group([action1, action2, action3])
-            
-            //nodeCopy.runAction(group)
-            nodeCopy.position = goToPosition
-            nodeCopy.position.y = 0
-            nodeCopy.eulerAngles.x = 0
-            nodeCopy.eulerAngles.y = 0
-            nodeCopy.eulerAngles.z = 0
-            nodeCopy.scale = node.scale
-            
-            var thisSmallNodeType: SmallNodeType.RawValue?
-            
-            if let suffix = nodeCopy.name?.componentsSeparatedByString("_").last {
-                
-                thisSmallNodeType = Int(suffix)
-            }
-            
-            
-            
-            if let thisSmallNodeType = thisSmallNodeType {
-                
-                let thisSmallNodeStruct  = SmallNodeStruct(type: thisSmallNodeType, pos: nodeCopy.position)
+        }
         
-                addToDictionary(thisSmallNodeStruct)
-                
-            }
+        var goToPosition = cameraNode!.convertPosition(pos, toNode: self)
+        print(goToPosition)
+        
+        var gridCoordinates = setPosAccordingToGrid(goToPosition)
+        
+        if gridCoordinates.x == 0 {
+            gridCoordinates.x = Float(Float(increment)/2)
+        } else if gridCoordinates.x == abs(gridCoordinates.x) {
+            gridCoordinates.x = (gridCoordinates.x) * Float(increment) + Float(Float(increment)/2)
+        } else {
+            gridCoordinates.x = (gridCoordinates.x) * Float(increment) + Float(Float(increment)/2)
+        }
+        
+        if gridCoordinates.y == 0 {
+            gridCoordinates.y = Float(Float(increment)/2)
+        } else if gridCoordinates.y == abs(gridCoordinates.y) {
+            gridCoordinates.y = (gridCoordinates.y) * Float(increment) + Float(Float(increment)/2)
+        } else {
+            gridCoordinates.y = (gridCoordinates.y) * Float(increment) + Float(Float(increment)/2)
+        }
+        
+        if gridCoordinates.z == 0 {
+            gridCoordinates.z = Float(Float(increment)/2)
+        } else if gridCoordinates.z == abs(gridCoordinates.z) {
+            gridCoordinates.z = (gridCoordinates.z) * Float(increment) + Float(Float(increment)/2)
+        } else {
+            gridCoordinates.z = (gridCoordinates.z) * Float(increment) + Float(Float(increment)/2)
+        }
+        
+        goToPosition = SCNVector3Make(gridCoordinates.x, gridCoordinates.y, gridCoordinates.z)
+        
+        
+        let action1 = SCNAction.moveTo(goToPosition, duration: 0.3)
+        let action2 = SCNAction.scaleTo(1, duration: 0.3)
+        let action3 = SCNAction.rotateToX(0, y: 0, z: 0, duration: 0.3)
+        let group = SCNAction.group([action1, action2, action3])
+        
+        //nodeCopy.runAction(group)
+        nodeCopy.position = goToPosition
+        //nodeCopy.position.y = 0
+        nodeCopy.eulerAngles.x = 0
+        nodeCopy.eulerAngles.y = 0
+        nodeCopy.eulerAngles.z = 0
+        nodeCopy.scale = node.scale
+        
+        var thisSmallNodeType: SmallNodeType.RawValue?
+        
+        if let suffix = nodeCopy.name?.componentsSeparatedByString("_").last {
             
-            guard thisSmallNodeType != nil else {return}
-            print("placing node of type \(thisSmallNodeType!) at \(nodeCopy.position)")
+            thisSmallNodeType = Int(suffix)
+        }
+        
+        
+        
+        if let thisSmallNodeType = thisSmallNodeType {
             
-
+            let thisSmallNodeStruct  = SmallNodeStruct(type: thisSmallNodeType, pos: nodeCopy.position)
+            
+            addToDictionary(thisSmallNodeStruct)
+            
+        }
+        
+        guard thisSmallNodeType != nil else {return}
+        print("placing node of type \(thisSmallNodeType!) at \(nodeCopy.position)")
+        
+        
         
         
     }
@@ -293,7 +364,7 @@ class BuilderTools: SCNNode {
         //print("size: \(size)")
         print("divisions: \(divisions)")
         print("increment: \(increment)")
-      
+        
         var updatedPosition = pos
         
         var xCoordinate = (pos.x/Float(increment))
@@ -357,5 +428,5 @@ class BuilderTools: SCNNode {
     required init?(coder aDecoder: NSCoder) {
         fatalError("init(coder:) has not been implemented")
     }
- 
+    
 }
