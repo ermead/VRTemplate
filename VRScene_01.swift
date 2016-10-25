@@ -40,6 +40,10 @@ class VRScene_01: VRBaseScene {
     
     override func handleKeyboardEvents(input: String) {
         
+        if buildModeNode != nil {
+            buildModeNode!.handleKeyboardEvents(input)
+        }
+        
         let speed : Float = 3
         
         func resetControls(){

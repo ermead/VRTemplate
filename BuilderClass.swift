@@ -24,6 +24,9 @@ class BuilderTools: SCNNode {
     
     let builderDictionaryKey = "BuilderDictionary"
     
+    let scaleUpKey = "t"
+    let scaleDownKey = "g"
+    
     var size: Int!
     var divisions: Int!
     var increment: Int!
@@ -31,6 +34,7 @@ class BuilderTools: SCNNode {
     var cameraNode: SCNNode?
     var selectedNode: SCNNode?
     var previewNode: SCNNode?
+    var nodeToTransform: SCNNode?
     var dictionaryOfSmallNodes: [String : Int]?
     
     var arrayOfNodesToBuildWith: [SCNNode]?
@@ -60,6 +64,24 @@ class BuilderTools: SCNNode {
     }
     
     func loadLevel(){
+        
+    }
+    
+    func handleKeyboardEvents(input: String) {
+        
+        switch input {
+            
+        case scaleUpKey:
+            if let node = nodeToTransform {
+            node.scale = SCNVector3Make(1.1 * node.scale.x, 1.1 * node.scale.y, 1.1 * node.scale.z)
+            
+            }
+        case scaleDownKey:
+            if let node = nodeToTransform {
+                node.scale = SCNVector3Make(0.9 * node.scale.x, 0.9  * node.scale.y, 0.9  * node.scale.z)
+            }
+        default: print("unrecognized input")
+        }
         
     }
     
@@ -264,7 +286,13 @@ class BuilderTools: SCNNode {
         
     }
     
+    
+    var isPlacingNode = false
+    
     func placeNodeInLevel(pos: SCNVector3, selectedNodeTransform: SCNMatrix4){
+        
+        guard isPlacingNode == false else {return}
+        isPlacingNode = true
         
         let selNodeQua = GLKQuaternionMakeWithMatrix4(SCNMatrix4ToGLKMatrix4(selectedNodeTransform))
         let selNodePos = SCNVector3Make(selNodeQua.x, selNodeQua.y, selNodeQua.z)
@@ -326,7 +354,7 @@ class BuilderTools: SCNNode {
         let action3 = SCNAction.rotateToX(0, y: 0, z: 0, duration: 0.3)
         let group = SCNAction.group([action1, action2, action3])
         
-        //nodeCopy.runAction(group)
+        nodeCopy.runAction(group)
         nodeCopy.position = goToPosition
         //nodeCopy.position.y = 0
         nodeCopy.eulerAngles.x = 0
@@ -352,10 +380,17 @@ class BuilderTools: SCNNode {
         }
         
         guard thisSmallNodeType != nil else {return}
-        print("placing node of type \(thisSmallNodeType!) at \(nodeCopy.position)")
+        print("placing \(nodeCopy.name) node of type \(thisSmallNodeType!) at \(nodeCopy.position)")
         
+     
+        nodeToTransform = nodeCopy
         
-        
+        let delay = SCNAction.waitForDuration(0.5)
+        let run = SCNAction.runBlock { (node) in
+            self.isPlacingNode = false
+        }
+        let seq = SCNAction.sequence([delay, run])
+        cameraNode?.runAction(seq)
         
     }
     
